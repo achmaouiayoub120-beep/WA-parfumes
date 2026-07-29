@@ -10,6 +10,7 @@ interface MagneticButtonProps {
   strength?: number;
   as?: 'button' | 'a';
   href?: string;
+  style?: React.CSSProperties;
 }
 
 export default function MagneticButton({
@@ -19,6 +20,7 @@ export default function MagneticButton({
   strength = 0.35,
   as: Component = 'button',
   href,
+  style,
 }: MagneticButtonProps) {
   const btnRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
@@ -58,6 +60,7 @@ export default function MagneticButton({
     onMouseMove: handleMouseMove,
     onMouseLeave: handleMouseLeave,
     onClick,
+    style,
     ...(Component === 'a' && href ? { href } : {}),
   };
 
