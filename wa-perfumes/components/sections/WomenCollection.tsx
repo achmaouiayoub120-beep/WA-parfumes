@@ -51,7 +51,7 @@ export default function WomenCollection() {
       }}
     >
       {/* Subtle rose-gold ambient glow */}
-      <div className="absolute inset-0 bg-[rgba(201,123,132,0.02)] pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: 'color-mix(in srgb, var(--color-accent-rose) 2%, transparent)' }} />
 
       <div className="max-w-[1440px] mx-auto relative z-10">
         {/* Gold Divider */}
@@ -59,16 +59,16 @@ export default function WomenCollection() {
 
         {/* Header */}
         <div className="mb-16 text-right">
-          <p className="editorial-subtitle mb-4" style={{ color: '#C97B84' }}>
+          <p className="editorial-subtitle mb-4" style={{ color: 'var(--color-accent-rose)' }}>
             Femme Collection
           </p>
-          <h2 className="heading-section text-[#F5F2EC]">WA Elegance</h2>
+          <h2 className="heading-section text-[var(--color-text)]">WA Elegance</h2>
           <p className="body-large mt-4 max-w-xl ml-auto">
             Nine refined fragrances for the sophisticated woman. Lush florals, warm vanilla, and radiant musk.
           </p>
         </div>
 
-        {/* Asymmetric Product Grid — opposite stagger from men */}
+        {/* Asymmetric Product Grid - opposite stagger from men */}
         <div
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"

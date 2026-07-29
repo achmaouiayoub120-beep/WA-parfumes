@@ -1,20 +1,28 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════
-   WA PERFUMES — DARK LUXURY MAISON DESIGN SYSTEM
+   WA PERFUMES — DUAL LUXURY THEME DESIGN SYSTEM
+   Dark Luxury (default) + Light Luxury
    ═══════════════════════════════════════════════════════ */
 
-@theme inline {
-  /* ── Color Palette ── */
+/* ── Dark Luxury Theme (Default) ── */
+:root,
+[data-theme="dark"] {
   --color-bg: #0A0A0A;
   --color-bg-elevated: #111111;
   --color-bg-card: #141414;
   --color-bg-glass: rgba(17, 17, 17, 0.6);
+  --color-bg-overlay: rgba(10, 10, 10, 0.85);
+  --color-bg-overlay-medium: rgba(10, 10, 10, 0.6);
 
   --color-gold: #C9A876;
   --color-gold-light: #E0C99A;
   --color-gold-dark: #A68B5B;
   --color-gold-muted: rgba(201, 168, 118, 0.15);
+  --color-gold-border: rgba(201, 168, 118, 0.12);
+  --color-gold-border-hover: rgba(201, 168, 118, 0.25);
+  --color-gold-bg-hover: rgba(201, 168, 118, 0.08);
+  --color-gold-bg-subtle: rgba(201, 168, 118, 0.04);
 
   --color-text: #F5F2EC;
   --color-text-muted: #9A9590;
@@ -22,11 +30,128 @@
 
   --color-border: rgba(201, 168, 118, 0.12);
   --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-faint: rgba(255, 255, 255, 0.04);
+
+  --color-accent-rose: #C97B84;
+  --color-accent-rose-muted: rgba(201, 123, 132, 0.1);
+  --color-accent-rose-border: rgba(201, 123, 132, 0.15);
+  --color-accent-rose-glow: rgba(201, 123, 132, 0.02);
 
   --color-terracotta: #B87333;
   --color-terracotta-muted: rgba(184, 115, 51, 0.1);
 
-  /* ── Typography Scale ── */
+  --color-card-shadow: none;
+  --color-grain-opacity: 0.03;
+
+  /* Hero overlays */
+  --color-hero-from: rgba(10, 10, 10, 0.7);
+  --color-hero-via: rgba(10, 10, 10, 0.4);
+  --color-hero-to: #0A0A0A;
+  --color-gradient-card-bottom: #141414;
+  --color-gradient-section: #0A0A0A;
+
+  /* Selection */
+  --color-selection-bg: #C9A876;
+  --color-selection-text: #0A0A0A;
+
+  /* Scrollbar */
+  --color-scrollbar-thumb: #A68B5B;
+  --color-scrollbar-thumb-hover: #C9A876;
+
+  /* CTA */
+  --color-cta-bg: #C9A876;
+  --color-cta-text: #0A0A0A;
+  --color-cta-hover: #E0C99A;
+
+  /* Cart badge */
+  --color-badge-bg: #C9A876;
+  --color-badge-text: #0A0A0A;
+
+  /* Inputs */
+  --color-input-bg: #111111;
+  --color-input-border: rgba(255, 255, 255, 0.06);
+  --color-input-focus: #C9A876;
+
+  /* Floating buttons */
+  --color-float-bg: rgba(10, 10, 10, 0.7);
+  --color-float-border: rgba(201, 168, 118, 0.4);
+  --color-float-shadow: rgba(201, 168, 118, 0.2);
+}
+
+/* ── Light Luxury Theme ── */
+[data-theme="light"] {
+  --color-bg: #FAF7F2;
+  --color-bg-elevated: #F7F4EE;
+  --color-bg-card: #EFEAE1;
+  --color-bg-glass: rgba(250, 247, 242, 0.75);
+  --color-bg-overlay: rgba(250, 247, 242, 0.92);
+  --color-bg-overlay-medium: rgba(250, 247, 242, 0.6);
+
+  --color-gold: #A87C4F;
+  --color-gold-light: #C49A6C;
+  --color-gold-dark: #8B6340;
+  --color-gold-muted: rgba(168, 124, 79, 0.12);
+  --color-gold-border: rgba(168, 124, 79, 0.18);
+  --color-gold-border-hover: rgba(168, 124, 79, 0.35);
+  --color-gold-bg-hover: rgba(168, 124, 79, 0.08);
+  --color-gold-bg-subtle: rgba(168, 124, 79, 0.04);
+
+  --color-text: #161412;
+  --color-text-muted: #6B6155;
+  --color-text-subtle: #9A9085;
+
+  --color-border: rgba(168, 124, 79, 0.15);
+  --color-border-subtle: rgba(0, 0, 0, 0.06);
+  --color-border-faint: rgba(0, 0, 0, 0.04);
+
+  --color-accent-rose: #B8687A;
+  --color-accent-rose-muted: rgba(184, 104, 122, 0.1);
+  --color-accent-rose-border: rgba(184, 104, 122, 0.18);
+  --color-accent-rose-glow: rgba(184, 104, 122, 0.04);
+
+  --color-terracotta: #A05E28;
+  --color-terracotta-muted: rgba(160, 94, 40, 0.08);
+
+  --color-card-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  --color-grain-opacity: 0.015;
+
+  /* Hero overlays */
+  --color-hero-from: rgba(250, 247, 242, 0.6);
+  --color-hero-via: rgba(250, 247, 242, 0.3);
+  --color-hero-to: #FAF7F2;
+  --color-gradient-card-bottom: #EFEAE1;
+  --color-gradient-section: #FAF7F2;
+
+  /* Selection */
+  --color-selection-bg: #A87C4F;
+  --color-selection-text: #FAF7F2;
+
+  /* Scrollbar */
+  --color-scrollbar-thumb: #C49A6C;
+  --color-scrollbar-thumb-hover: #A87C4F;
+
+  /* CTA */
+  --color-cta-bg: #A87C4F;
+  --color-cta-text: #FAF7F2;
+  --color-cta-hover: #C49A6C;
+
+  /* Cart badge */
+  --color-badge-bg: #A87C4F;
+  --color-badge-text: #FAF7F2;
+
+  /* Inputs */
+  --color-input-bg: #F7F4EE;
+  --color-input-border: rgba(0, 0, 0, 0.08);
+  --color-input-focus: #A87C4F;
+
+  /* Floating buttons */
+  --color-float-bg: rgba(250, 247, 242, 0.85);
+  --color-float-border: rgba(168, 124, 79, 0.35);
+  --color-float-shadow: rgba(168, 124, 79, 0.15);
+}
+
+@theme inline {
+  /* ── Typography Scale (shared across themes) ── */
   --font-serif: var(--font-cormorant), 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --font-sans: var(--font-inter), 'Inter', 'Helvetica Neue', Arial, sans-serif;
 
@@ -65,6 +190,20 @@ html {
   scroll-behavior: initial; /* Lenis handles smooth scroll */
 }
 
+/* Theme transition — applied only after initial load to prevent FOUC */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.5s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.4s ease,
+              fill 0.3s ease,
+              stroke 0.3s ease !important;
+  transition-delay: 0s !important;
+}
+
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -90,8 +229,8 @@ body {
 }
 
 ::selection {
-  background-color: var(--color-gold);
-  color: var(--color-bg);
+  background-color: var(--color-selection-bg);
+  color: var(--color-selection-text);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -107,12 +246,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-gold-dark);
+  background: var(--color-scrollbar-thumb);
   border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold);
+  background: var(--color-scrollbar-thumb-hover);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -128,7 +267,7 @@ body {
 }
 
 .glass-gold {
-  background: rgba(201, 168, 118, 0.04);
+  background: var(--color-gold-bg-subtle);
   backdrop-filter: blur(24px) saturate(1.3);
   -webkit-backdrop-filter: blur(24px) saturate(1.3);
   border: 1px solid var(--color-border);
@@ -175,7 +314,7 @@ body {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: var(--color-grain-opacity);
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
@@ -232,6 +371,11 @@ body {
 @keyframes scaleIn {
   from { opacity: 0; transform: scale(0.92); }
   to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 
 /* ═══════════════════════════════════════════════════════

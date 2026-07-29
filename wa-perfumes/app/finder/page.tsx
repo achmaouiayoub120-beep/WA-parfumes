@@ -91,7 +91,7 @@ export default function PerfumeFinder() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-6 md:px-10 relative overflow-hidden pt-24 pb-16">
+    <main className="min-h-screen bg-[var(--color-bg)] flex items-center justify-center px-6 md:px-10 relative overflow-hidden pt-24 pb-16">
       <div className="max-w-4xl w-full relative z-10">
         <AnimatePresence mode="wait">
           
@@ -105,11 +105,11 @@ export default function PerfumeFinder() {
               transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
               className="flex flex-col items-center text-center"
             >
-              <span className="text-[0.65rem] uppercase tracking-[0.3em] text-[#C9A876] mb-6">
+              <span className="text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-gold)] mb-6">
                 Step {currentStep + 1} of {QUESTIONS.length}
               </span>
               
-              <h1 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.04em] text-[#F5F2EC] mb-12">
+              <h1 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.04em] text-[var(--color-text)] mb-12">
                 {QUESTIONS[currentStep].question}
               </h1>
 
@@ -120,11 +120,11 @@ export default function PerfumeFinder() {
                     onClick={() => handleSelect(QUESTIONS[currentStep].id, option.value)}
                     className={`p-6 border transition-all duration-300 ${
                       answers[QUESTIONS[currentStep].id] === option.value
-                        ? 'border-[#C9A876] bg-[rgba(201,168,118,0.1)]'
-                        : 'border-[rgba(255,255,255,0.06)] hover:border-[rgba(201,168,118,0.5)] bg-transparent'
+                        ? 'border-[var(--color-gold)] bg-[var(--color-gold-muted)]'
+                        : 'border-[var(--color-border-subtle)] hover:border-[var(--color-gold-muted)] bg-transparent'
                     }`}
                   >
-                    <span className="text-[#F5F2EC] font-[family-name:var(--font-sans)] text-[0.7rem] uppercase tracking-[0.25em]">
+                    <span className="text-[var(--color-text)] font-[family-name:var(--font-sans)] text-[0.7rem] uppercase tracking-[0.25em]">
                       {option.label}
                     </span>
                   </button>
@@ -142,11 +142,11 @@ export default function PerfumeFinder() {
               exit={{ opacity: 0 }}
               className="flex flex-col items-center text-center"
             >
-              <div className="w-16 h-16 border-t-[1px] border-b-[1px] border-[#C9A876] rounded-full animate-spin mb-8" />
-              <h2 className="font-[family-name:var(--font-cormorant)] text-3xl font-light tracking-[0.04em] text-[#C9A876] animate-pulse">
+              <div className="w-16 h-16 border-t-[1px] border-b-[1px] border-[var(--color-gold)] rounded-full animate-spin mb-8" />
+              <h2 className="font-[family-name:var(--font-cormorant)] text-3xl font-light tracking-[0.04em] text-[var(--color-gold)] animate-pulse">
                 Analyzing your aura...
               </h2>
-              <p className="text-[#6B6560] font-[family-name:var(--font-sans)] mt-4 uppercase tracking-[0.25em] text-[0.65rem]">
+              <p className="text-[var(--color-text-subtle)] font-[family-name:var(--font-sans)] mt-4 uppercase tracking-[0.25em] text-[0.65rem]">
                 Curating your signature scent
               </p>
             </motion.div>
@@ -159,9 +159,9 @@ export default function PerfumeFinder() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-              className="flex flex-col md:flex-row items-center gap-8 md:gap-12 bg-[#141414] border border-[rgba(201,168,118,0.12)] p-6 md:p-12 rounded-none"
+              className="flex flex-col md:flex-row items-center gap-8 md:gap-12 bg-[var(--color-bg-card)] border border-[var(--color-border)] p-6 md:p-12 rounded-none"
             >
-              <div className="relative w-full md:w-1/2 aspect-[3/4] bg-[#111111] overflow-hidden">
+              <div className="relative w-full md:w-1/2 aspect-[3/4] bg-[var(--color-bg-elevated)] overflow-hidden">
                 <Image 
                   src={recommendation.image} 
                   alt={recommendation.name} 
@@ -169,25 +169,25 @@ export default function PerfumeFinder() {
                   className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105" 
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-card)] via-transparent to-transparent opacity-80" />
               </div>
               
               <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left">
-                <span className="text-[#C9A876] text-[0.65rem] tracking-[0.3em] uppercase mb-4 block">
+                <span className="text-[var(--color-gold)] text-[0.65rem] tracking-[0.3em] uppercase mb-4 block">
                   Your Signature Match
                 </span>
                 
-                <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl text-[#F5F2EC] mb-4 font-light">
+                <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl text-[var(--color-text)] mb-4 font-light">
                   {recommendation.name}
                 </h2>
                 
-                <p className="body-large mb-8">
+                <p className="body-large mb-8 text-[var(--color-text)]">
                   Based on your preferences, we selected this {recommendation.fragranceFamily} masterpiece. {recommendation.description}
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
                   <Link href={`/product/${recommendation.id}`}>
-                    <MagneticButton className="px-8 py-3 bg-[#C9A876] text-[#0A0A0A] text-[0.7rem] uppercase tracking-[0.3em] hover:bg-[#E0C99A] transition-colors duration-500 rounded-none border-none">
+                    <MagneticButton className="px-8 py-3 bg-[var(--color-cta-bg)] text-[var(--color-cta-text)] text-[0.7rem] uppercase tracking-[0.3em] hover:bg-[var(--color-cta-hover)] transition-colors duration-500 rounded-none border-none">
                       Discover Fragrance
                     </MagneticButton>
                   </Link>
@@ -198,7 +198,7 @@ export default function PerfumeFinder() {
                       setCurrentStep(0);
                       setAnswers({});
                     }}
-                    className="text-[#9A9590] hover:text-[#F5F2EC] text-[0.65rem] uppercase tracking-[0.25em] transition-colors py-3 px-4"
+                    className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] text-[0.65rem] uppercase tracking-[0.25em] transition-colors py-3 px-4"
                   >
                     Retake Quiz
                   </button>

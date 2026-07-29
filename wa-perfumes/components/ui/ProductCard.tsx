@@ -45,10 +45,11 @@ export default function ProductCard({ product }: { product: Product }) {
     <Link href={`/product/${product.id}`} className="block group">
       <div
         ref={cardRef}
-        className="relative overflow-hidden bg-[#141414] border border-[rgba(255,255,255,0.04)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="relative overflow-hidden bg-[var(--color-bg-card)] border border-[var(--color-border-faint)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
           transform: `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
           transformStyle: 'preserve-3d',
+          boxShadow: 'var(--color-card-shadow)',
         }}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
@@ -58,27 +59,27 @@ export default function ProductCard({ product }: { product: Product }) {
         <div
           className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${spotX}% ${spotY}%, rgba(201,168,118,0.08) 0%, transparent 60%)`,
+            background: `radial-gradient(circle at ${spotX}% ${spotY}%, var(--color-gold-bg-hover) 0%, transparent 60%)`,
           }}
         />
 
         {/* Hover border glow */}
-        <div className="absolute inset-0 z-10 border border-[rgba(201,168,118,0)] group-hover:border-[rgba(201,168,118,0.15)] transition-colors duration-500 pointer-events-none" />
+        <div className="absolute inset-0 z-10 border border-transparent group-hover:border-[var(--color-gold-border)] transition-colors duration-500 pointer-events-none" />
 
         {/* Collection Badge */}
         <div className="absolute top-4 left-4 z-20">
           <span
             className="text-[0.55rem] uppercase tracking-[0.25em] px-2.5 py-1 backdrop-blur-sm rounded-sm"
             style={{
-              color: product.collection === 'signature' ? '#C9A876' : '#C97B84',
+              color: product.collection === 'signature' ? 'var(--color-gold)' : 'var(--color-accent-rose)',
               background:
                 product.collection === 'signature'
-                  ? 'rgba(201,168,118,0.1)'
-                  : 'rgba(201,123,132,0.1)',
+                  ? 'var(--color-gold-muted)'
+                  : 'var(--color-accent-rose-muted)',
               border: `1px solid ${
                 product.collection === 'signature'
-                  ? 'rgba(201,168,118,0.15)'
-                  : 'rgba(201,123,132,0.15)'
+                  ? 'var(--color-gold-border)'
+                  : 'var(--color-accent-rose-border)'
               }`,
             }}
           >
@@ -98,7 +99,7 @@ export default function ProductCard({ product }: { product: Product }) {
           />
 
           {/* Bottom gradient */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-[#141414] to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-[var(--color-bg-card)] to-transparent" />
 
           {/* Notes on hover */}
           {product.topNotes && product.topNotes.length > 0 && (
@@ -110,7 +111,7 @@ export default function ProductCard({ product }: { product: Product }) {
               {product.topNotes.slice(0, 3).map((note) => (
                 <span
                   key={note}
-                  className="text-[0.55rem] uppercase tracking-[0.2em] px-2 py-1 bg-[rgba(10,10,10,0.7)] backdrop-blur-sm text-[#C9A876] border border-[rgba(201,168,118,0.15)] rounded-sm"
+                  className="text-[0.55rem] uppercase tracking-[0.2em] px-2 py-1 bg-[var(--color-bg-overlay-medium)] backdrop-blur-sm text-[var(--color-gold)] border border-[var(--color-gold-border)] rounded-sm"
                 >
                   {note}
                 </span>
@@ -121,17 +122,17 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Info */}
         <div className="p-5">
-          <h3 className="font-[family-name:var(--font-cormorant)] text-lg tracking-[0.04em] text-[#F5F2EC] mb-1 group-hover:text-[#C9A876] transition-colors duration-300">
+          <h3 className="font-[family-name:var(--font-cormorant)] text-lg tracking-[0.04em] text-[var(--color-text)] mb-1 group-hover:text-[var(--color-gold)] transition-colors duration-300">
             {product.name}
           </h3>
 
           {product.inspirationNote && (
-            <p className="text-[0.65rem] text-[#6B6560] mb-3 italic">
+            <p className="text-[0.65rem] text-[var(--color-text-subtle)] mb-3 italic">
               {product.inspirationNote}
             </p>
           )}
 
-          <p className="text-sm text-[#C9A876] font-[family-name:var(--font-sans)] tracking-wider">
+          <p className="text-sm text-[var(--color-gold)] font-[family-name:var(--font-sans)] tracking-wider">
             {product.price} DH
           </p>
         </div>

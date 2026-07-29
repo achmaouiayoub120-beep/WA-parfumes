@@ -28,7 +28,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer ref={footerRef} className="relative border-t border-[rgba(255,255,255,0.04)]">
+    <footer ref={footerRef} className="relative border-t border-[var(--color-border-faint)]">
       {/* Main Footer */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 pt-24 pb-16">
         {/* Large Brand Title */}
@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
 
         {/* Tagline */}
-        <p className="text-center text-[0.65rem] uppercase tracking-[0.5em] text-[#C9A876] mb-12">
+        <p className="text-center text-[0.65rem] uppercase tracking-[0.5em] text-[var(--color-gold)] mb-12">
           Leave Your Signature
         </p>
 
@@ -56,7 +56,7 @@ export default function Footer() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-[0.7rem] uppercase tracking-[0.25em] text-[#6B6560] hover:text-[#C9A876] transition-colors duration-300"
+              className="text-[0.7rem] uppercase tracking-[0.25em] text-[var(--color-text-subtle)] hover:text-[var(--color-gold)] transition-colors duration-300"
             >
               {link.label}
             </Link>
@@ -70,7 +70,7 @@ export default function Footer() {
             href="https://www.instagram.com/w_a_perfume/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#6B6560] hover:text-[#C9A876] transition-colors duration-300"
+            className="text-[var(--color-text-subtle)] hover:text-[var(--color-gold)] transition-colors duration-300"
             aria-label="Instagram"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -85,7 +85,7 @@ export default function Footer() {
             href="https://wa.me/message/JKNKD5ZOFPR2A1"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#6B6560] hover:text-[#C9A876] transition-colors duration-300"
+            className="text-[var(--color-text-subtle)] hover:text-[var(--color-gold)] transition-colors duration-300"
             aria-label="WhatsApp"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -97,8 +97,8 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-[rgba(255,255,255,0.04)] py-6">
-        <p className="text-center text-[0.6rem] uppercase tracking-[0.3em] text-[#6B6560]">
+      <div className="border-t border-[var(--color-border-faint)] py-6">
+        <p className="text-center text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">
           © {new Date().getFullYear()} WA Perfumes. All rights reserved.
         </p>
       </div>

@@ -47,7 +47,7 @@ export default function MenCollection() {
       {/* Header */}
       <div className="mb-16">
         <p className="editorial-subtitle mb-4">Homme Collection</p>
-        <h2 className="heading-section text-[#F5F2EC]">WA Signature</h2>
+        <h2 className="heading-section text-[var(--color-text)]">WA Signature</h2>
         <p className="body-large mt-4 max-w-xl">
           Thirteen powerful fragrances crafted for the modern gentleman. Bold, deep, unforgettable.
         </p>

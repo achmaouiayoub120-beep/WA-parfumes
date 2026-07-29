@@ -119,11 +119,11 @@ export default function HeroSection() {
           quality={85}
         />
         {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/70 via-[#0A0A0A]/40 to-[#0A0A0A]" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, color-mix(in srgb, var(--color-bg) 70%, transparent), color-mix(in srgb, var(--color-bg) 40%, transparent), var(--color-bg))' }} />
       </div>
 
       {/* Initial black overlay for reveal */}
-      <div ref={overlayRef} className="absolute inset-0 bg-[#0A0A0A] z-10" />
+      <div ref={overlayRef} className="absolute inset-0 bg-[var(--color-bg)] z-10" />
 
       {/* Hero Content */}
       <div className="relative z-20 text-center px-6 max-w-5xl mx-auto">
@@ -135,7 +135,7 @@ export default function HeroSection() {
         {/* Main Title */}
         <h1
           ref={titleRef}
-          className="heading-display text-[#F5F2EC] mb-8"
+          className="heading-display text-[var(--color-text)] mb-8"
         >
           Leave Your Signature
         </h1>
@@ -143,7 +143,8 @@ export default function HeroSection() {
         {/* CTA */}
         <div ref={ctaRef} className="opacity-0">
           <MagneticButton
-            className="px-10 py-4 border border-[rgba(201,168,118,0.3)] rounded-none text-[0.7rem] uppercase tracking-[0.3em] text-[#C9A876] hover:bg-[rgba(201,168,118,0.08)] transition-colors duration-500"
+            className="px-10 py-4 border rounded-none text-[0.7rem] uppercase tracking-[0.3em] text-[var(--color-gold)] hover:bg-[var(--color-border)] transition-colors duration-500"
+            style={{ borderColor: 'color-mix(in srgb, var(--color-gold) 30%, transparent)' }}
           >
             Explore Collections
           </MagneticButton>
@@ -152,11 +153,11 @@ export default function HeroSection() {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
-        <span className="text-[0.55rem] uppercase tracking-[0.4em] text-[#6B6560]">
+        <span className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)]">
           Scroll
         </span>
-        <div className="w-[1px] h-8 bg-[rgba(201,168,118,0.2)] relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-[#C9A876] animate-[slideDown_2s_ease-in-out_infinite]" />
+        <div className="w-[1px] h-8 relative overflow-hidden" style={{ backgroundColor: 'color-mix(in srgb, var(--color-gold) 20%, transparent)' }}>
+          <div className="absolute top-0 left-0 w-full h-full bg-[var(--color-gold)] animate-[slideDown_2s_ease-in-out_infinite]" />
         </div>
       </div>
     </section>

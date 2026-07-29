@@ -4,11 +4,14 @@ import "./globals.css";
 
 // Providers
 import LenisProvider from "@/providers/LenisProvider";
+import ThemeProvider from "@/providers/ThemeProvider";
 // UI Components — client components imported directly
 import Navigation from "@/components/ui/Navigation";
 import CartSlider from "@/components/ui/CartSlider";
 import FloatingInstagram from "@/components/ui/FloatingInstagram";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
+import AnnouncementBar from "@/components/ui/AnnouncementBar";
+import PageTransition from "@/components/animations/PageTransition";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -48,7 +51,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0A",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0A0A0A" },
+    { media: "(prefers-color-scheme: light)", color: "#FAF7F2" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -64,17 +70,48 @@ export default function RootLayout({
       className={`${cormorant.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
+      <head />
       <body
-        className="antialiased min-h-screen bg-[#0A0A0A] text-[#F5F2EC] overflow-x-hidden"
+        className="antialiased min-h-screen overflow-x-hidden"
+        style={{
+          backgroundColor: 'var(--color-bg)',
+          color: 'var(--color-text)',
+        }}
         suppressHydrationWarning
       >
-        <LenisProvider>
-          <Navigation />
-          <CartSlider />
-          <FloatingInstagram />
-          <FloatingWhatsApp />
-          <main>{children}</main>
-        </LenisProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('wa-theme');
+                  var theme = stored ? stored : null;
+                  if (theme === 'dark' || theme === 'light') {
+                    document.documentElement.setAttribute('data-theme', theme);
+                  } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                  } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  }
+                } catch(e) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                }
+              })();
+            `,
+          }}
+        />
+        <ThemeProvider>
+          <LenisProvider>
+            <AnnouncementBar />
+            <Navigation />
+            <CartSlider />
+            <FloatingInstagram />
+            <FloatingWhatsApp />
+            <main>
+              <PageTransition>{children}</PageTransition>
+            </main>
+          </LenisProvider>
+        </ThemeProvider>
 
         {/* Film Grain Overlay — pure CSS, zero JS cost */}
         <div className="film-grain" aria-hidden="true" />

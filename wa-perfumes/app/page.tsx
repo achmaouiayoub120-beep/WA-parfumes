@@ -10,6 +10,7 @@ const Preloader = dynamic(() => import('@/components/ui/Preloader'), { ssr: fals
 // Lazy loaded components (below the fold)
 const ScrollStorytelling = dynamic(() => import('@/components/sections/ScrollStorytelling'), { ssr: false });
 const CollectionShowcase = dynamic(() => import('@/components/sections/CollectionShowcase'), { ssr: false });
+const PackDiscoverySection = dynamic(() => import('@/components/sections/PackDiscoverySection'), { ssr: false });
 const MenCollection = dynamic(() => import('@/components/sections/MenCollection'), { ssr: false });
 const WomenCollection = dynamic(() => import('@/components/sections/WomenCollection'), { ssr: false });
 const Footer = dynamic(() => import('@/components/sections/Footer'), { ssr: false });
@@ -32,6 +33,11 @@ export default function HomePage() {
       {/* Collections Showcase — horizontal scroll */}
       <section id="collections">
         <CollectionShowcase />
+      </section>
+
+      {/* Pack Découverte — 5×30ml offer */}
+      <section id="pack-decouverte">
+        <PackDiscoverySection />
       </section>
 
       {/* WA Signature — Men's Collection */}

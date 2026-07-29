@@ -16,7 +16,7 @@ const COLLECTIONS = [
     description: 'Thirteen powerful fragrances for the modern gentleman. Deep woods, rich oud, and magnetic spice.',
     image: '/images/collections/homme-banner.jpg',
     href: '/#signature',
-    accent: '#C9A876',
+    accent: 'var(--color-gold)',
   },
   {
     name: 'WA Elegance',
@@ -24,7 +24,7 @@ const COLLECTIONS = [
     description: 'Nine refined fragrances for the sophisticated woman. Lush florals, warm vanilla, and radiant musk.',
     image: '/images/collections/femme-banner.jpg',
     href: '/#elegance',
-    accent: '#C97B84',
+    accent: 'var(--color-accent-rose)',
   },
 ];
 
@@ -80,8 +80,8 @@ export default function CollectionShowcase() {
       {/* Section Header */}
       <div className="text-center px-6 mb-16">
         <p className="editorial-subtitle mb-4">Our Collections</p>
-        <h2 className="heading-section text-[#F5F2EC]">Two Worlds</h2>
-        <div className="w-16 h-[1px] bg-[#C9A876] mx-auto mt-8 opacity-40" />
+        <h2 className="heading-section text-[var(--color-text)]">Two Worlds</h2>
+        <div className="w-16 h-[1px] bg-[var(--color-gold)] mx-auto mt-8 opacity-40" />
       </div>
 
       {/* Horizontal Scroll Container */}
@@ -102,7 +102,10 @@ export default function CollectionShowcase() {
                   sizes="100vw"
                   quality={80}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent" />
+                <div 
+                  className="absolute inset-0" 
+                  style={{ background: 'linear-gradient(to right, var(--color-bg), color-mix(in srgb, var(--color-bg) 80%, transparent), transparent)' }}
+                />
               </div>
 
               {/* Content */}
@@ -111,7 +114,7 @@ export default function CollectionShowcase() {
                   {col.tagline}
                 </p>
 
-                <h3 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-6xl font-light tracking-[0.06em] text-[#F5F2EC] mb-6">
+                <h3 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-6xl font-light tracking-[0.06em] text-[var(--color-text)] mb-6">
                   {col.name}
                 </h3>
 
@@ -120,7 +123,10 @@ export default function CollectionShowcase() {
                 </p>
 
                 <Link href={col.href}>
-                  <MagneticButton className="px-8 py-3 border border-[rgba(201,168,118,0.25)] text-[0.65rem] uppercase tracking-[0.3em] text-[#C9A876] hover:bg-[rgba(201,168,118,0.06)] transition-colors duration-500">
+                  <MagneticButton 
+                    className="px-8 py-3 border text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-gold)] transition-colors duration-500"
+                    style={{ borderColor: 'color-mix(in srgb, var(--color-gold) 25%, transparent)' }}
+                  >
                     Explore
                   </MagneticButton>
                 </Link>

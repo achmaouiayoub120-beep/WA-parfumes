@@ -72,27 +72,27 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[200] bg-[#0A0A0A] flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[200] bg-[var(--color-bg)] flex flex-col items-center justify-center"
     >
       {/* Brand Title */}
       <div ref={textRef} className="text-center opacity-0">
-        <h1 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl font-light tracking-[0.35em] uppercase text-[#F5F2EC] mb-10">
+        <h1 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl font-light tracking-[0.35em] uppercase text-[var(--color-text)] mb-10">
           WA Perfumes
         </h1>
       </div>
 
       {/* Progress Bar */}
       <div className="w-48 md:w-64 relative">
-        <div className="h-[1px] bg-[rgba(255,255,255,0.08)] w-full" />
+        <div className="h-[1px] bg-[var(--color-border-subtle)] w-full" />
         <div
           ref={progressRef}
-          className="absolute top-0 left-0 h-[1px] bg-[#C9A876] w-full origin-left"
+          className="absolute top-0 left-0 h-[1px] bg-[var(--color-gold)] w-full origin-left"
           style={{ transform: 'scaleX(0)' }}
         />
       </div>
 
       {/* Counter */}
-      <div className="mt-6 text-[0.65rem] tracking-[0.4em] text-[#6B6560] font-[family-name:var(--font-sans)]">
+      <div className="mt-6 text-[0.65rem] tracking-[0.4em] text-[var(--color-text-subtle)] font-[family-name:var(--font-sans)]">
         <span ref={counterRef}>0</span>
         <span>%</span>
       </div>

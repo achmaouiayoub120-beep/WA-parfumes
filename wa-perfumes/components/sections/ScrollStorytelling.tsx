@@ -14,7 +14,7 @@ const WORLDS = [
     description: 'A journey through ancient woods where smoke curls between dark trees and gold dust settles like whispered secrets.',
     notes: ['Oud', 'Cedarwood', 'Smoke'],
     image: '/images/hero/hero-bg.jpg',
-    gradient: 'from-[#1a1412] via-[#0A0A0A] to-[#0d0b09]',
+    gradient: 'linear-gradient(to bottom, #1a1412, var(--color-bg), #0d0b09)',
   },
   {
     num: '02',
@@ -22,7 +22,7 @@ const WORLDS = [
     description: 'Warm sands stretch endlessly under a golden sun, carrying the rich sweetness of amber and sun-baked spice.',
     notes: ['Amber', 'Saffron', 'Vanilla'],
     image: '/images/gallery/gallery-01.jpg',
-    gradient: 'from-[#2a1a08] via-[#0A0A0A] to-[#1a1408]',
+    gradient: 'linear-gradient(to bottom, #2a1a08, var(--color-bg), #1a1408)',
   },
   {
     num: '03',
@@ -30,7 +30,7 @@ const WORLDS = [
     description: 'Floating through cream-soft atmospheres where light filters golden through layers of sweetness and warmth.',
     notes: ['Vanilla', 'Tonka Bean', 'Musk'],
     image: '/images/gallery/gallery-02.jpg',
-    gradient: 'from-[#1a1816] via-[#0A0A0A] to-[#141210]',
+    gradient: 'linear-gradient(to bottom, #1a1816, var(--color-bg), #141210)',
   },
 ];
 
@@ -123,10 +123,10 @@ export default function ScrollStorytelling() {
       {/* Section Header */}
       <div className="py-20 px-6 text-center">
         <p className="editorial-subtitle mb-4">The Olfactory Journey</p>
-        <h2 className="heading-section text-[#F5F2EC]">
+        <h2 className="heading-section text-[var(--color-text)]">
           Three Worlds
         </h2>
-        <div className="w-16 h-[1px] bg-[#C9A876] mx-auto mt-8 opacity-40" />
+        <div className="w-16 h-[1px] bg-[var(--color-gold)] mx-auto mt-8 opacity-40" />
       </div>
 
       {/* Worlds */}
@@ -146,7 +146,7 @@ export default function ScrollStorytelling() {
               sizes="100vw"
               quality={75}
             />
-            <div className={`absolute inset-0 bg-gradient-to-b ${world.gradient}`} />
+            <div className="absolute inset-0" style={{ background: world.gradient }} />
           </div>
 
           {/* Content */}
@@ -155,7 +155,7 @@ export default function ScrollStorytelling() {
               World {world.num}
             </span>
 
-            <h3 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-6xl lg:text-7xl font-light tracking-[0.06em] text-[#F5F2EC] mb-6">
+            <h3 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-6xl lg:text-7xl font-light tracking-[0.06em] text-[var(--color-text)] mb-6">
               {world.name}
             </h3>
 
@@ -168,7 +168,8 @@ export default function ScrollStorytelling() {
               {world.notes.map((note) => (
                 <span
                   key={note}
-                  className="world-note px-4 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] border border-[rgba(201,168,118,0.2)] text-[#C9A876] rounded-full"
+                  className="world-note px-4 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] border text-[var(--color-gold)] rounded-full"
+                  style={{ borderColor: 'color-mix(in srgb, var(--color-gold) 20%, transparent)' }}
                 >
                   {note}
                 </span>

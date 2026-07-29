@@ -41,7 +41,7 @@ export default function FloatingWhatsApp() {
   return (
     <a
       ref={buttonRef}
-      href="https://wa.me/message/JKNKD5ZOFPR2A1"
+      href="https://wa.me/212707525317?text=Bonjour%2C%20je%20souhaite%20avoir%20plus%20d'informations%20sur%20WA%20Perfumes."
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 left-6 md:bottom-8 md:left-10 z-[90] flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-[rgba(37,211,102,0.15)] backdrop-blur-md border border-[rgba(37,211,102,0.4)] shadow-[0_0_20px_rgba(37,211,102,0.3)] text-[#25D366] hover:bg-[#25D366] hover:text-white hover:scale-110 hover:shadow-[0_0_30px_rgba(37,211,102,0.6)] transition-all duration-500 group"
@@ -62,13 +62,13 @@ export default function FloatingWhatsApp() {
       {/* Tooltip */}
       <div 
         ref={tooltipRef}
-        className="absolute left-full ml-4 px-4 py-2 bg-[rgba(10,10,10,0.85)] backdrop-blur-md border border-[#25D366]/30 rounded-lg whitespace-nowrap text-sm font-medium text-[#F5F2EC] opacity-0 pointer-events-none shadow-xl flex flex-col"
+        className="absolute left-full ml-4 px-4 py-2 bg-[var(--color-bg-overlay)] backdrop-blur-md border border-[#25D366]/30 rounded-lg whitespace-nowrap text-sm font-medium text-[var(--color-text)] opacity-0 pointer-events-none shadow-xl flex flex-col"
       >
         <span className="text-[#25D366] font-semibold text-xs tracking-wider uppercase mb-0.5">Besoin d'aide ?</span>
         <span>Discutez avec nous</span>
         
         {/* Triangle pointer */}
-        <div className="absolute left-0 top-1/2 -translate-x-1.5 -translate-y-1/2 w-3 h-3 border-l border-b border-[#25D366]/30 bg-[rgba(10,10,10,0.85)] rotate-45"></div>
+        <div className="absolute left-0 top-1/2 -translate-x-1.5 -translate-y-1/2 w-3 h-3 border-l border-b border-[#25D366]/30 bg-[var(--color-bg-overlay)] rotate-45"></div>
       </div>
 
       {/* Official WhatsApp Icon SVG */}
