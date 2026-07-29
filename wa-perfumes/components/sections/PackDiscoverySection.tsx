@@ -134,8 +134,8 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
   const allProducts = useMemo(() => [...(MEN_PRODUCTS || []), ...(WOMEN_PRODUCTS || [])], []);
   
   const filteredProducts = useMemo(() => {
-    if (filter === 'WA Signature') return allProducts.filter(p => p.collection === 'signature' || p.collection === 'WA Signature');
-    if (filter === 'WA Elegance') return allProducts.filter(p => p.collection === 'elegance' || p.collection === 'WA Elegance');
+    if (filter === 'WA Signature') return allProducts.filter(p => p.collection === 'signature');
+    if (filter === 'WA Elegance') return allProducts.filter(p => p.collection === 'elegance');
     return allProducts;
   }, [allProducts, filter]);
 
