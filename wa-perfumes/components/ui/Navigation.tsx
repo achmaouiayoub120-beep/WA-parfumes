@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { gsap } from 'gsap';
@@ -8,22 +8,34 @@ import { useTheme } from 'next-themes';
 import { useUIStore } from '@/store/useUIStore';
 import { useCartStore } from '@/store/useCartStore';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import { MEN_PRODUCTS } from '@/data/products/men';
+import { WOMEN_PRODUCTS } from '@/data/products/women';
+import { FRAGRANCE_FAMILIES } from '@/data/products/categories';
 
 const NAV_LINKS = [
   { label: 'Collections', href: '/#collections' },
-  { label: 'WA Signature', href: '/#signature' },
-  { label: 'WA Elegance', href: '/#elegance' },
+  { label: 'W&A Homme', href: '/#homme', megaMenu: 'homme' as const },
+  { label: 'W&A Femme', href: '/#femme', megaMenu: 'femme' as const },
   { label: 'Pack Découverte', href: '/#pack-decouverte' },
   { label: 'Our Story', href: '/#story' },
 ];
 
+// Helper: get unique fragrance families for a collection
+function getFamilies(products: typeof MEN_PRODUCTS) {
+  const ids = new Set(products.map(p => p.fragranceFamily));
+  return FRAGRANCE_FAMILIES.filter(f => ids.has(f.id));
+}
+
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeMega, setActiveMega] = useState<'homme' | 'femme' | null>(null);
   const [mounted, setMounted] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuLinksRef = useRef<HTMLDivElement>(null);
+  const megaMenuRef = useRef<HTMLDivElement>(null);
+  const megaTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { resolvedTheme } = useTheme();
   
   const openCart = useUIStore((s) => s.openCart);
@@ -66,6 +78,34 @@ export default function Navigation() {
     }
   }, [menuOpen]);
 
+  const handleMegaEnter = useCallback((type: 'homme' | 'femme') => {
+    if (megaTimeoutRef.current) clearTimeout(megaTimeoutRef.current);
+    setActiveMega(type);
+  }, []);
+
+  const handleMegaLeave = useCallback(() => {
+    megaTimeoutRef.current = setTimeout(() => {
+      setActiveMega(null);
+    }, 200);
+  }, []);
+
+  const handleMegaPanelEnter = useCallback(() => {
+    if (megaTimeoutRef.current) clearTimeout(megaTimeoutRef.current);
+  }, []);
+
+  // Mega menu data
+  const megaData = activeMega === 'homme'
+    ? { products: MEN_PRODUCTS, label: 'W&A Homme', href: '/#homme', accent: 'var(--color-gold)' }
+    : activeMega === 'femme'
+    ? { products: WOMEN_PRODUCTS, label: 'W&A Femme', href: '/#femme', accent: 'var(--color-accent-rose)' }
+    : null;
+
+  const featuredProducts = megaData ? megaData.products.filter(p => p.isBestseller || p.isNew).slice(0, 3) : [];
+  if (featuredProducts.length === 0 && megaData) {
+    featuredProducts.push(...megaData.products.slice(0, 3));
+  }
+  const families = megaData ? getFamilies(megaData.products) : [];
+
   return (
     <>
       {/* Fixed Header */}
@@ -100,18 +140,28 @@ export default function Navigation() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-10">
             {NAV_LINKS.map((link) => (
-              <Link
+              <div
                 key={link.href}
-                href={link.href}
-                className="text-[0.7rem] uppercase tracking-[0.25em] transition-colors duration-300 font-[family-name:var(--font-sans)]"
-                style={{
-                  color: 'var(--color-text-muted)',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-gold)')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text-muted)')}
+                className="relative"
+                onMouseEnter={() => link.megaMenu && handleMegaEnter(link.megaMenu)}
+                onMouseLeave={() => link.megaMenu && handleMegaLeave()}
               >
-                {link.label}
-              </Link>
+                <Link
+                  href={link.href}
+                  className="text-[0.7rem] uppercase tracking-[0.25em] transition-colors duration-300 font-[family-name:var(--font-sans)]"
+                  style={{
+                    color: activeMega === link.megaMenu ? 'var(--color-gold)' : 'var(--color-text-muted)',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-gold)')}
+                  onMouseLeave={(e) => {
+                    if (activeMega !== link.megaMenu) {
+                      e.currentTarget.style.color = 'var(--color-text-muted)';
+                    }
+                  }}
+                >
+                  {link.label}
+                </Link>
+              </div>
             ))}
           </nav>
 
@@ -170,6 +220,123 @@ export default function Navigation() {
         </div>
       </header>
 
+      {/* ═══════════════ GLASSMORPHISM MEGA-MENU ═══════════════ */}
+      {activeMega && megaData && (
+        <div
+          ref={megaMenuRef}
+          className="fixed left-0 right-0 z-[99] hidden lg:block"
+          style={{ top: scrolled ? '64px' : '96px' }}
+          onMouseEnter={handleMegaPanelEnter}
+          onMouseLeave={handleMegaLeave}
+        >
+          <div
+            className="mx-auto max-w-[1440px] px-6 md:px-10"
+          >
+            <div
+              className="rounded-b-2xl p-8 transition-all duration-300"
+              style={{
+                background: 'color-mix(in srgb, var(--color-bg) 75%, transparent)',
+                backdropFilter: 'blur(24px) saturate(1.8)',
+                WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
+                border: '1px solid color-mix(in srgb, var(--color-border) 40%, transparent)',
+                borderTop: 'none',
+                boxShadow: '0 20px 60px -10px rgba(0,0,0,0.15)',
+              }}
+            >
+              <div className="grid grid-cols-12 gap-8">
+                {/* Left — Categories & Families */}
+                <div className="col-span-3">
+                  <p className="text-[0.5rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)] mb-5">
+                    Familles Olfactives
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    {families.map((family) => (
+                      <Link
+                        key={family.id}
+                        href={`/#${activeMega}`}
+                        className="flex items-center gap-3 py-2 px-3 rounded-lg transition-colors duration-200 hover:bg-[var(--color-bg-elevated)]"
+                      >
+                        <span
+                          className="w-2 h-2 rounded-full flex-shrink-0"
+                          style={{ backgroundColor: family.color }}
+                        />
+                        <span className="text-[0.7rem] text-[var(--color-text-muted)] tracking-wide">
+                          {family.nameFr}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-[var(--color-border-faint)]">
+                    <Link
+                      href={megaData.href}
+                      className="text-[0.6rem] uppercase tracking-[0.25em] transition-colors duration-300 hover:text-[var(--color-gold)]"
+                      style={{ color: megaData.accent }}
+                    >
+                      Voir toute la collection →
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right — Featured Products */}
+                <div className="col-span-9">
+                  <p className="text-[0.5rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)] mb-5">
+                    Nos Coups de Cœur
+                  </p>
+                  <div className="grid grid-cols-3 gap-6">
+                    {featuredProducts.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/product/${product.id}`}
+                        className="group flex flex-col"
+                        onClick={() => setActiveMega(null)}
+                      >
+                        <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-3 bg-[var(--color-bg-elevated)]">
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            sizes="200px"
+                          />
+                          {/* Hover overlay */}
+                          <div
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            style={{
+                              background: `linear-gradient(to top, color-mix(in srgb, ${megaData.accent} 15%, transparent), transparent 60%)`,
+                            }}
+                          />
+                          {product.isBestseller && (
+                            <span
+                              className="absolute top-2 right-2 text-[0.45rem] uppercase tracking-[0.2em] px-2 py-1 rounded-sm backdrop-blur-sm"
+                              style={{
+                                color: megaData.accent,
+                                background: 'color-mix(in srgb, var(--color-bg) 60%, transparent)',
+                                border: `1px solid color-mix(in srgb, ${megaData.accent} 30%, transparent)`,
+                              }}
+                            >
+                              Best-seller
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[0.65rem] text-[var(--color-text)] tracking-wide group-hover:text-[var(--color-gold)] transition-colors duration-300">
+                          {product.name}
+                        </p>
+                        <p className="text-[0.55rem] text-[var(--color-text-subtle)] italic mt-0.5">
+                          Inspiré par {product.inspiredBy}
+                        </p>
+                        <p className="text-[0.6rem] mt-1.5 tracking-wider" style={{ color: megaData.accent }}>
+                          {product.price} DH
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Fullscreen Menu Overlay */}
       <div
         ref={menuRef}
@@ -187,7 +354,7 @@ export default function Navigation() {
             </div>
 
             {[
-              { label: 'Home', href: '/' },
+              { label: 'Accueil', href: '/' },
               ...NAV_LINKS,
               { label: 'Scent Finder', href: '/finder' },
             ].map((link) => (
@@ -212,7 +379,7 @@ export default function Navigation() {
               className="text-[0.65rem] uppercase tracking-[0.4em]"
               style={{ color: 'var(--color-text-subtle)' }}
             >
-              Leave Your Signature
+              Laissez Votre Signature
             </p>
           </div>
         </div>

@@ -107,7 +107,7 @@ ProductCard.displayName = 'ProductCard';
 
 export default function PackDiscoverySection({ variant = 'section' }: { variant?: 'section' | 'fullscreen' }) {
   const { selectedProducts, toggleProduct, getWhatsAppLink } = usePackSelection();
-  const [filter, setFilter] = useState<'Tous' | 'WA Signature' | 'WA Elegance'>('Tous');
+  const [filter, setFilter] = useState<'Tous' | 'W&A Homme' | 'W&A Femme'>('Tous');
   
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -135,8 +135,8 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
   const allProducts = useMemo(() => [...(MEN_PRODUCTS || []), ...(WOMEN_PRODUCTS || [])], []);
   
   const filteredProducts = useMemo(() => {
-    if (filter === 'WA Signature') return allProducts.filter(p => p.collection === 'signature');
-    if (filter === 'WA Elegance') return allProducts.filter(p => p.collection === 'elegance');
+    if (filter === 'W&A Homme') return allProducts.filter(p => p.collection === 'homme');
+    if (filter === 'W&A Femme') return allProducts.filter(p => p.collection === 'femme');
     return allProducts;
   }, [allProducts, filter]);
 
@@ -158,7 +158,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
         
         {/* Tabs */}
         <div className="flex justify-center gap-6 md:gap-12 mb-12 animate-fade-up border-b border-[var(--color-border-subtle)]">
-          {['Tous', 'WA Signature', 'WA Elegance'].map(tab => (
+          {['Tous', 'W&A Homme', 'W&A Femme'].map(tab => (
             <button
               key={tab}
               onClick={() => setFilter(tab as any)}

@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!product) return { title: 'Product Not Found' };
 
   return {
-    title: `${product.name} — ${product.collection === 'signature' ? 'WA Signature' : 'WA Elegance'}`,
+    title: `${product.name} — ${product.collection === 'homme' ? 'W&A Homme' : 'W&A Femme'}`,
     description: product.description,
   };
 }

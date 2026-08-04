@@ -20,15 +20,15 @@ export interface Collection {
 
 export const COLLECTIONS: Collection[] = [
   {
-    id: 'signature',
-    name: 'WA Signature',
+    id: 'homme',
+    name: 'W&A Homme',
     slug: 'homme',
     tagline: 'Dark & Bold',
     taglineFr: 'Sombre & Audacieux',
     description:
-      'The WA Signature collection embodies the essence of modern masculinity. Each fragrance is a bold statement — crafted with rare woods, intense spices, and smoky accords that command attention and leave an indelible mark.',
+      'The W&A Homme collection embodies the essence of modern masculinity. Each fragrance is a bold statement — crafted with rare woods, intense spices, and smoky accords that command attention and leave an indelible mark.',
     descriptionFr:
-      'La collection WA Signature incarne l\'essence de la masculinité moderne. Chaque fragrance est une déclaration audacieuse — composée de bois rares, d\'épices intenses et d\'accords fumés qui imposent le respect.',
+      'La collection W&A Homme incarne l\'essence de la masculinité moderne. Chaque fragrance est une déclaration audacieuse — composée de bois rares, d\'épices intenses et d\'accords fumés qui imposent le respect.',
     gender: 'homme',
     bannerImage: '/images/collections/homme-banner.jpg',
     accentColor: '#D4AF37',
@@ -37,15 +37,15 @@ export const COLLECTIONS: Collection[] = [
     productCount: 13,
   },
   {
-    id: 'elegance',
-    name: 'WA Elegance',
+    id: 'femme',
+    name: 'W&A Femme',
     slug: 'femme',
     tagline: 'Soft & Elegant',
     taglineFr: 'Douce & Élégante',
     description:
-      'The WA Elegance collection celebrates the art of feminine allure. From delicate florals to intoxicating gourmands, each creation is a whisper of sophistication — timeless, refined, and irresistibly captivating.',
+      'The W&A Femme collection celebrates the art of feminine allure. From delicate florals to intoxicating gourmands, each creation is a whisper of sophistication — timeless, refined, and irresistibly captivating.',
     descriptionFr:
-      'La collection WA Elegance célèbre l\'art de l\'allure féminine. Des floraux délicats aux gourmands enivrants, chaque création est un murmure de sophistication — intemporelle, raffinée et irrésistiblement captivante.',
+      'La collection W&A Femme célèbre l\'art de l\'allure féminine. Des floraux délicats aux gourmands enivrants, chaque création est un murmure de sophistication — intemporelle, raffinée et irrésistiblement captivante.',
     gender: 'femme',
     bannerImage: '/images/collections/femme-banner.jpg',
     accentColor: '#C97B84',

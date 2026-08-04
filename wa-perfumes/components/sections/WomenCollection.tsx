@@ -61,9 +61,9 @@ export default function WomenCollection() {
         {/* Header */}
         <div className="mb-16 text-right">
           <p className="editorial-subtitle mb-4" style={{ color: 'var(--color-accent-rose)' }}>
-            Femme Collection
+            Collection Femme
           </p>
-          <h2 className="heading-section text-[var(--color-text)]">WA Elegance</h2>
+          <h2 className="heading-section text-[var(--color-text)]">W&A Femme</h2>
           <p className="body-large mt-4 max-w-xl ml-auto">
             Nine refined fragrances for the sophisticated woman. Lush florals, warm vanilla, and radiant musk.
           </p>
@@ -83,7 +83,7 @@ export default function WomenCollection() {
                 index % 5 === 0 ? 'md:mt-12' : index % 5 === 2 ? 'md:mt-8' : ''
               }`}
             >
-              <ProductCard product={{ ...product, collection: 'elegance' as const }} />
+              <ProductCard product={{ ...product, collection: 'femme' as const }} />
             </div>
           ))}
         </div>

@@ -9,7 +9,7 @@ interface Product {
   name: string;
   price: number;
   image: string;
-  collection: 'signature' | 'elegance';
+  collection: 'homme' | 'femme';
   inspirationNote?: string;
   topNotes?: string[];
   [key: string]: unknown;
@@ -53,19 +53,19 @@ export default function ProductCard({ product }: { product: Product }) {
           <span
             className="text-[0.55rem] uppercase tracking-[0.25em] px-2.5 py-1 backdrop-blur-sm rounded-sm"
             style={{
-              color: product.collection === 'signature' ? 'var(--color-gold)' : 'var(--color-accent-rose)',
+              color: product.collection === 'homme' ? 'var(--color-gold)' : 'var(--color-accent-rose)',
               background:
-                product.collection === 'signature'
+                product.collection === 'homme'
                   ? 'var(--color-gold-muted)'
                   : 'var(--color-accent-rose-muted)',
               border: `1px solid ${
-                product.collection === 'signature'
+                product.collection === 'homme'
                   ? 'var(--color-gold-border)'
                   : 'var(--color-accent-rose-border)'
               }`,
             }}
           >
-            {product.collection === 'signature' ? 'Signature' : 'Elegance'}
+            {product.collection === 'homme' ? 'Homme' : 'Femme'}
           </span>
         </div>
 

@@ -47,8 +47,8 @@ export default function MenCollection() {
 
       {/* Header */}
       <div className="mb-16">
-        <p className="editorial-subtitle mb-4">Homme Collection</p>
-        <h2 className="heading-section text-[var(--color-text)]">WA Signature</h2>
+        <p className="editorial-subtitle mb-4">Collection Homme</p>
+        <h2 className="heading-section text-[var(--color-text)]">W&A Homme</h2>
         <p className="body-large mt-4 max-w-xl">
           Thirteen powerful fragrances crafted for the modern gentleman. Bold, deep, unforgettable.
         </p>
@@ -65,7 +65,7 @@ export default function MenCollection() {
               index % 5 === 1 ? 'md:mt-12' : index % 5 === 3 ? 'md:mt-8' : ''
             }`}
           >
-            <ProductCard product={{ ...product, collection: 'signature' as const }} />
+            <ProductCard product={{ ...product, collection: 'homme' as const }} />
           </div>
         ))}
       </div>

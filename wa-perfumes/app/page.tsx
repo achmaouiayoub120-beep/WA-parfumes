@@ -45,16 +45,16 @@ export default function HomePage() {
         </section>
       </SectionWipe>
 
-      {/* WA Signature — Men's Collection */}
+      {/* W&A Homme — Men's Collection */}
       <SectionWipe color="#2A1A08">
-        <section id="signature">
+        <section id="homme">
           <MenCollection />
         </section>
       </SectionWipe>
 
-      {/* WA Elegance — Women's Collection */}
+      {/* W&A Femme — Women's Collection */}
       <SectionWipe color="#3D2024">
-        <section id="elegance">
+        <section id="femme">
           <WomenCollection />
         </section>
       </SectionWipe>
