@@ -37,7 +37,7 @@ export function IntensityGauge({
   const clampedValue = Math.max(0, Math.min(value, maxValue));
 
   return (
-    <div className={`flex items-center justify-between gap-4 ${className}`}>
+    <div className={`flex items-center justify-between w-full gap-4 ${className}`}>
       <span className="text-[0.6rem] tracking-[0.3em] uppercase text-[var(--color-text-subtle)] font-medium select-none">
         {label}
       </span>

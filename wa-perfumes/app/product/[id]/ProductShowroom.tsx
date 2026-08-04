@@ -110,57 +110,55 @@ export default function ProductShowroom({ product }: { product: Product }) {
           </div>
 
           {/* ══════════════ RIGHT — SCROLLABLE CONTENT ══════════════ */}
-          <div ref={infoRef} className="flex flex-col py-4 lg:py-0">
+          <div ref={infoRef} className="flex flex-col pt-32 lg:pt-40 px-6 md:px-12 lg:px-16 pb-20 gap-10">
 
-            {/* ── Number ── */}
-            <p className="reveal-item text-[0.55rem] uppercase tracking-[0.4em] mb-4" style={{ color: accent }}>
-              Parfum N°{product.number}
-            </p>
+            <div className="flex flex-col gap-4">
+              {/* ── Number ── */}
+              <p className="reveal-item text-[0.55rem] uppercase tracking-[0.4em]" style={{ color: accent }}>
+                Parfum N°{product.number}
+              </p>
 
-            {/* ── Name ── */}
-            <h1 className="reveal-item font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-[3.5rem] font-light tracking-[0.03em] text-[var(--color-text)] leading-tight mb-2">
-              {product.name}
-            </h1>
+              {/* ── Name ── */}
+              <h1 className="reveal-item font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-[3.5rem] font-light tracking-[0.03em] text-[var(--color-text)] leading-tight">
+                {product.name}
+              </h1>
 
-            {/* ── Inspiration ── */}
-            <p className="reveal-item text-sm text-[var(--color-text-subtle)] italic mb-8">
-              Profil olfactif inspiré par {product.inspiredBy}
-            </p>
+              {/* ── Inspiration ── */}
+              <p className="reveal-item text-sm text-[var(--color-text-subtle)] italic">
+                Profil olfactif inspiré par {product.inspiredBy}
+              </p>
 
-            {/* ── Price & Volume ── */}
-            <div className="reveal-item flex items-baseline gap-3 mb-10">
-              <span className="font-[family-name:var(--font-cormorant)] text-3xl font-light" style={{ color: accent }}>
-                {product.price} DH
-              </span>
-              <span className="text-[0.6rem] text-[var(--color-text-subtle)] uppercase tracking-[0.2em]">
-                | {product.volume}
-              </span>
+              {/* ── Price & Volume ── */}
+              <div className="reveal-item flex items-baseline gap-3">
+                <span className="font-[family-name:var(--font-cormorant)] text-3xl font-light" style={{ color: accent }}>
+                  {product.price} DH
+                </span>
+                <span className="text-[0.6rem] text-[var(--color-text-subtle)] uppercase tracking-[0.2em]">
+                  | {product.volume}
+                </span>
+              </div>
             </div>
 
             {/* ── Description ── */}
-            <p className="reveal-item text-[0.85rem] leading-relaxed text-[var(--color-text-muted)] mb-12 max-w-lg">
+            <p className="reveal-item text-[0.85rem] leading-relaxed text-[var(--color-text-muted)] max-w-lg">
               {product.description}
             </p>
 
             {/* ── Add to Cart Button ── */}
-            <div className="reveal-item mb-14">
+            <div className="reveal-item">
               <button
                 onClick={handleAddToCart}
-                className="w-full sm:w-auto px-14 py-4 text-[0.65rem] uppercase tracking-[0.3em] font-medium transition-all duration-500 hover:opacity-90"
-                style={{
-                  backgroundColor: accent,
-                  color: 'var(--color-bg)',
-                }}
+                className="w-full bg-black text-white py-5 uppercase tracking-widest text-[0.75rem] font-medium transition-all duration-500 hover:bg-neutral-900"
               >
                 Ajouter au Panier
               </button>
             </div>
 
             {/* ── Divider ── */}
-            <div className="reveal-item w-full h-px mb-12" style={{ backgroundColor: `color-mix(in srgb, ${accent} 20%, transparent)` }} />
+            <div className="reveal-item w-full h-px" style={{ backgroundColor: `color-mix(in srgb, ${accent} 20%, transparent)` }} />
 
             {/* ── OLFACTORY TIMELINE ── */}
-            <div className="reveal-item mb-14">
+            <div className="reveal-item">
               <h3 className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)] mb-8">
                 Pyramide Olfactive
               </h3>
@@ -173,7 +171,7 @@ export default function ProductShowroom({ product }: { product: Product }) {
             </div>
 
             {/* ── INTENSITY GAUGES ── */}
-            <div className="reveal-item mb-14">
+            <div className="reveal-item">
               <h3 className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)] mb-6">
                 Performance
               </h3>
@@ -185,7 +183,7 @@ export default function ProductShowroom({ product }: { product: Product }) {
             </div>
 
             {/* ── Product Details Grid ── */}
-            <div className="reveal-item grid grid-cols-2 gap-x-8 gap-y-5 mb-14 max-w-sm">
+            <div className="reveal-item grid grid-cols-2 gap-x-8 gap-y-5 max-w-sm">
               <div>
                 <span className="text-[0.5rem] text-[var(--color-text-subtle)] uppercase tracking-[0.3em] block mb-1">Famille</span>
                 <span className="text-sm text-[var(--color-text)] capitalize">{product.fragranceFamily}</span>
@@ -205,10 +203,10 @@ export default function ProductShowroom({ product }: { product: Product }) {
             </div>
 
             {/* ── Divider ── */}
-            <div className="reveal-item w-full h-px mb-10" style={{ backgroundColor: `color-mix(in srgb, ${accent} 15%, transparent)` }} />
+            <div className="reveal-item w-full h-px" style={{ backgroundColor: `color-mix(in srgb, ${accent} 15%, transparent)` }} />
 
             {/* ── ACCORDIONS ── */}
-            <div className="reveal-item mb-14">
+            <div className="reveal-item">
               <ProductAccordions />
             </div>
 
