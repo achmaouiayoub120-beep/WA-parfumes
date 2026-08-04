@@ -14,6 +14,7 @@ export default function HeroSection() {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const smokeRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -75,9 +76,19 @@ export default function HeroSection() {
         1.8
       );
 
+      // Check reduced motion
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reducedMotion) return;
+
+      // Calibrate parallax for small screens (prevent floating issues on <900px height)
+      const isSmallScreen = window.innerHeight < 900;
+      const bgY = isSmallScreen ? 10 : 20;
+      const smokeY = isSmallScreen ? 5 : 10;
+      const titleY = isSmallScreen ? -15 : -30;
+
       // Parallax on scroll
       gsap.to(imageRef.current, {
-        yPercent: 20,
+        yPercent: bgY,
         scale: 1.05,
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -87,8 +98,30 @@ export default function HeroSection() {
         },
       });
 
+      gsap.to(smokeRef.current, {
+        yPercent: smokeY,
+        opacity: 0.6,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      });
+
       gsap.to(titleRef.current, {
-        yPercent: -30,
+        yPercent: titleY,
+        opacity: 0,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: '60% top',
+          scrub: 1,
+        },
+      });
+
+      gsap.to(subtitleRef.current, {
+        yPercent: titleY / 2,
         opacity: 0,
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -118,7 +151,20 @@ export default function HeroSection() {
           priority
           quality={85}
         />
-        {/* Dark overlay for text readability */}
+      </div>
+
+      {/* Smoke Layer with Parallax */}
+      <div ref={smokeRef} className="absolute inset-0 opacity-0 mix-blend-screen pointer-events-none">
+        <Image
+          src="/images/hero/hero-smoke.png"
+          alt="Smoke effect"
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority
+          quality={70}
+        />
+        {/* Dark overlay for text readability, moved above smoke so text is clear */}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, color-mix(in srgb, var(--color-bg) 70%, transparent), color-mix(in srgb, var(--color-bg) 40%, transparent), var(--color-bg))' }} />
       </div>
 

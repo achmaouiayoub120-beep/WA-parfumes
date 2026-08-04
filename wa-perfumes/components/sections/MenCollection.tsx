@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MEN_PRODUCTS } from '@/data/products/men';
 import ProductCard from '@/components/ui/ProductCard';
+import OlfactoryPyramid from '@/components/ui/OlfactoryPyramid';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,6 +53,8 @@ export default function MenCollection() {
           Thirteen powerful fragrances crafted for the modern gentleman. Bold, deep, unforgettable.
         </p>
       </div>
+
+      <OlfactoryPyramid top="Bergamote, Poivre Noir, Cardamome" heart="Bois d'Agar, Vétiver, Cèdre" base="Ambre, Musc Cuiré, Fève Tonka" />
 
       {/* Asymmetric Product Grid */}
       <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

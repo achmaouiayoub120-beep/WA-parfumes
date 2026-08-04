@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
 import ProductCard from '@/components/ui/ProductCard';
+import OlfactoryPyramid from '@/components/ui/OlfactoryPyramid';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,6 +68,8 @@ export default function WomenCollection() {
             Nine refined fragrances for the sophisticated woman. Lush florals, warm vanilla, and radiant musk.
           </p>
         </div>
+
+        <OlfactoryPyramid top="Fleur d'Oranger, Pêche, Mandarine" heart="Rose de Mai, Jasmin, Tubéreuse" base="Vanille de Madagascar, Patchouli Blanc, Musc" />
 
         {/* Asymmetric Product Grid - opposite stagger from men */}
         <div

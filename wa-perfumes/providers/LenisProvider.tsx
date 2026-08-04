@@ -8,34 +8,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<Lenis | null>(null);
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      smoothWheel: true,
-    });
-
-    lenisRef.current = lenis;
-
-    // Sync Lenis scroll events with GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-
-    // Bind Lenis RAF to GSAP ticker for a single unified frame loop
-    const updateTicker = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      gsap.ticker.remove(updateTicker);
-      lenis.destroy();
-      lenisRef.current = null;
-    };
-  }, []);
-
+  // Lenis disabled entirely to remove any scroll or mouse wheel effects
   return <>{children}</>;
 }

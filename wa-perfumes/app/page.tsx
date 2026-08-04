@@ -14,6 +14,7 @@ const PackDiscoverySection = dynamic(() => import('@/components/sections/PackDis
 const MenCollection = dynamic(() => import('@/components/sections/MenCollection'), { ssr: false });
 const WomenCollection = dynamic(() => import('@/components/sections/WomenCollection'), { ssr: false });
 const Footer = dynamic(() => import('@/components/sections/Footer'), { ssr: false });
+import SectionWipe from '@/components/animations/SectionWipe';
 
 export default function HomePage() {
   const [preloaderDone, setPreloaderDone] = useState(false);
@@ -31,24 +32,32 @@ export default function HomePage() {
       </section>
 
       {/* Collections Showcase — horizontal scroll */}
-      <section id="collections">
-        <CollectionShowcase />
-      </section>
+      <SectionWipe color="var(--color-bg-elevated)">
+        <section id="collections">
+          <CollectionShowcase />
+        </section>
+      </SectionWipe>
 
       {/* Pack Découverte — 5×30ml offer */}
-      <section id="pack-decouverte">
-        <PackDiscoverySection />
-      </section>
+      <SectionWipe color="#1A1612">
+        <section id="pack-decouverte">
+          <PackDiscoverySection />
+        </section>
+      </SectionWipe>
 
       {/* WA Signature — Men's Collection */}
-      <section id="signature">
-        <MenCollection />
-      </section>
+      <SectionWipe color="#2A1A08">
+        <section id="signature">
+          <MenCollection />
+        </section>
+      </SectionWipe>
 
       {/* WA Elegance — Women's Collection */}
-      <section id="elegance">
-        <WomenCollection />
-      </section>
+      <SectionWipe color="#3D2024">
+        <section id="elegance">
+          <WomenCollection />
+        </section>
+      </SectionWipe>
 
       {/* Footer */}
       <Footer />

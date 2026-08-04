@@ -9,6 +9,7 @@ import { MEN_PRODUCTS } from '@/data/products/men';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
 import type { Product } from '@/data/products/men';
 import MagneticButton from '@/components/ui/MagneticButton';
+import DiscoveryBox from '@/components/ui/DiscoveryBox';
 
 // Shared hook for pack selection
 export function usePackSelection() {
@@ -175,55 +176,68 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
           ))}
         </div>
 
-        {/* Grid */}
-        <motion.div 
-          layout
-          className={`grid gap-6 animate-fade-up mb-24
-          ${variant === 'fullscreen' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-8'}
-        `}>
-          <AnimatePresence>
-            {filteredProducts.map(product => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                isSelected={selectedProducts.some(p => p.id === product.id)}
-                isDisabled={selectedProducts.length >= 5}
-                onToggle={toggleProduct}
-                large={variant === 'fullscreen'}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Sticky Footer */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-[var(--color-bg-glass)] backdrop-blur-md border-t border-[var(--color-border-subtle)] p-4 shadow-2xl">
-          <div className="container mx-auto max-w-5xl flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="w-full md:w-1/2">
-              <div className="flex justify-between text-sm mb-2 text-[var(--color-text)] font-[family-name:var(--font-sans)]">
-                <span>{selectedProducts.length}/5 parfums sélectionnés</span>
-                {selectedProducts.length === 5 && <span className="text-[var(--color-gold)] font-medium">Coffret complet !</span>}
-              </div>
-              <div className="h-2 w-full bg-[var(--color-bg-elevated)] border border-[var(--color-border-subtle)] rounded-full overflow-hidden">
-                <motion.div 
-                  className="h-full bg-[var(--color-gold)]"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${(selectedProducts.length / 5) * 100}%` }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
+        {/* Two-column layout: Grid + Sidebar */}
+        <div className="flex flex-col lg:flex-row gap-8 animate-fade-up">
+          {/* Product Grid */}
+          <motion.div 
+            layout
+            className={`flex-1 grid gap-6
+            ${variant === 'fullscreen' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-3 lg:gap-8'}
+          `}>
+            <AnimatePresence>
+              {filteredProducts.map(product => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  isSelected={selectedProducts.some(p => p.id === product.id)}
+                  isDisabled={selectedProducts.length >= 5}
+                  onToggle={toggleProduct}
+                  large={variant === 'fullscreen'}
                 />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Sticky Sidebar — Desktop */}
+          <div className="hidden lg:block w-72 flex-shrink-0">
+            <div className="sticky top-28">
+              <DiscoveryBox selectedProducts={selectedProducts} />
+              
+              <div className="mt-6">
+                {selectedProducts.length === 5 ? (
+                  <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
+                    <MagneticButton className="w-full bg-[var(--color-gold)] text-[var(--color-bg)] px-6 py-3 rounded-full font-medium tracking-wide text-sm">
+                      Commander — 199 DH
+                    </MagneticButton>
+                  </a>
+                ) : (
+                  <button disabled className="w-full bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)] border border-[var(--color-border)] px-6 py-3 rounded-full font-medium cursor-not-allowed text-sm">
+                    Encore {5 - selectedProducts.length} parfum(s)
+                  </button>
+                )}
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Bottom Drawer — Mobile only */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--color-bg-glass)] backdrop-blur-md border-t border-[var(--color-border-subtle)] p-4 shadow-2xl">
+          <div className="container mx-auto max-w-5xl flex items-center justify-between gap-4">
+            <div className="flex-1">
+              <DiscoveryBox selectedProducts={selectedProducts} />
+            </div>
             
-            <div className="w-full md:w-auto flex-shrink-0">
+            <div className="flex-shrink-0">
               {selectedProducts.length === 5 ? (
                 <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
-                  <MagneticButton className="w-full md:w-auto bg-[var(--color-gold)] text-[var(--color-bg)] px-8 py-3 rounded-full font-medium tracking-wide">
-                    Commander via WhatsApp — 199 DH
+                  <MagneticButton className="bg-[var(--color-gold)] text-[var(--color-bg)] px-6 py-3 rounded-full font-medium tracking-wide text-xs">
+                    199 DH
                   </MagneticButton>
                 </a>
               ) : (
-                <button disabled className="w-full md:w-auto bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)] border border-[var(--color-border)] px-8 py-3 rounded-full font-medium cursor-not-allowed">
-                  Sélectionnez encore {5 - selectedProducts.length} parfum(s)
-                </button>
+                <span className="text-xs text-[var(--color-text-muted)]">
+                  {5 - selectedProducts.length} restant(s)
+                </span>
               )}
             </div>
           </div>

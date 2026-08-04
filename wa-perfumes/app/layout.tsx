@@ -8,10 +8,10 @@ import ThemeProvider from "@/providers/ThemeProvider";
 // UI Components — client components imported directly
 import Navigation from "@/components/ui/Navigation";
 import CartSlider from "@/components/ui/CartSlider";
-import FloatingInstagram from "@/components/ui/FloatingInstagram";
-import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
+import DraggableFab from "@/components/ui/DraggableFab";
 import AnnouncementBar from "@/components/ui/AnnouncementBar";
 import PageTransition from "@/components/animations/PageTransition";
+import ClientEffects from "@/components/effects/ClientEffects";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -100,18 +100,19 @@ export default function RootLayout({
             `,
           }}
         />
+        <ClientEffects />
         <ThemeProvider>
           <LenisProvider>
             <AnnouncementBar />
             <Navigation />
             <CartSlider />
-            <FloatingInstagram />
-            <FloatingWhatsApp />
+            <DraggableFab />
             <main>
               <PageTransition>{children}</PageTransition>
             </main>
           </LenisProvider>
         </ThemeProvider>
+
 
         {/* Film Grain Overlay — pure CSS, zero JS cost */}
         <div className="film-grain" aria-hidden="true" />

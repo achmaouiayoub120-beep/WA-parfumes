@@ -41,6 +41,8 @@
   --color-terracotta-muted: rgba(184, 115, 51, 0.1);
 
   --color-card-shadow: none;
+  --color-card-shadow-hover: 0 8px 30px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3), 0 0 1px rgba(201,168,118,0.1);
+  --color-premium-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
   --color-grain-opacity: 0.03;
 
   /* Hero overlays */

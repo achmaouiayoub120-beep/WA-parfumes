@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,50 +16,32 @@ interface Product {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-  const [spotX, setSpotX] = useState(50);
-  const [spotY, setSpotY] = useState(50);
   const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - left) / width;
-    const y = (e.clientY - top) / height;
-
-    setRotateX((0.5 - y) * 8);
-    setRotateY((x - 0.5) * 8);
-    setSpotX(x * 100);
-    setSpotY(y * 100);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-    setIsHovered(false);
-  };
 
   return (
     <Link href={`/product/${product.id}`} className="block group">
       <div
-        ref={cardRef}
         className="relative overflow-hidden bg-[var(--color-bg-card)] border border-[var(--color-border-faint)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
-          transform: `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-          transformStyle: 'preserve-3d',
           boxShadow: 'var(--color-card-shadow)',
         }}
-        onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Gold spotlight on hover */}
+        {/* Gold spotlight on hover (soft base glow) */}
         <div
-          className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-screen"
           style={{
-            background: `radial-gradient(circle at ${spotX}% ${spotY}%, var(--color-gold-bg-hover) 0%, transparent 60%)`,
+            background: `radial-gradient(circle at 50% 50%, var(--color-gold-bg-hover) 0%, transparent 70%)`,
+          }}
+        />
+
+        {/* Sliding linear highlight simulating glass reflection */}
+        <div
+          className="absolute inset-0 z-10 opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none mix-blend-overlay"
+          style={{
+            background: `linear-gradient(105deg, transparent 20%, var(--color-gold) 50%, transparent 80%)`,
+            transform: `translateX(0)`,
           }}
         />
 
@@ -93,10 +75,13 @@ export default function ProductCard({ product }: { product: Product }) {
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+            className="object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             quality={80}
           />
+
+          {/* Inner pulsing gold glow on the bottle image */}
+          <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(201,168,118,0)] group-hover:shadow-[inset_0_0_20px_rgba(201,168,118,0.15)] transition-shadow duration-700 pointer-events-none" />
 
           {/* Bottom gradient */}
           <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-[var(--color-bg-card)] to-transparent" />
@@ -108,10 +93,15 @@ export default function ProductCard({ product }: { product: Product }) {
                 isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              {product.topNotes.slice(0, 3).map((note) => (
+              {product.topNotes.slice(0, 3).map((note, idx) => (
                 <span
                   key={note}
-                  className="text-[0.55rem] uppercase tracking-[0.2em] px-2 py-1 bg-[var(--color-bg-overlay-medium)] backdrop-blur-sm text-[var(--color-gold)] border border-[var(--color-gold-border)] rounded-sm"
+                  className="text-[0.55rem] uppercase tracking-[0.2em] px-2 py-1 bg-[var(--color-bg-overlay-medium)] backdrop-blur-sm text-[var(--color-gold)] border border-[var(--color-gold-border)] rounded-sm transition-all duration-500"
+                  style={{
+                    opacity: isHovered ? 1 : 0,
+                    transform: isHovered ? 'translateY(0) scale(1)' : 'translateY(8px) scale(0.95)',
+                    transitionDelay: isHovered ? `${idx * 100}ms` : '0ms'
+                  }}
                 >
                   {note}
                 </span>
