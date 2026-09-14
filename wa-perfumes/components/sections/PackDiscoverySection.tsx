@@ -10,6 +10,7 @@ import { WOMEN_PRODUCTS } from '@/data/products/women';
 import type { Product } from '@/data/products/men';
 import MagneticButton from '@/components/ui/MagneticButton';
 import DiscoveryBox from '@/components/ui/DiscoveryBox';
+import { useUIStore } from '@/store/useUIStore';
 
 // Shared hook for pack selection
 export function usePackSelection() {
@@ -29,13 +30,17 @@ export function usePackSelection() {
     });
   }, []);
 
-  const getWhatsAppLink = useCallback(() => {
-    const baseUrl = 'https://wa.me/212707525317';
-    const message = `Bonjour, je souhaite commander le Pack Découverte 5×30ml (199 DH) avec les parfums suivants :\n${selectedProducts.map((p, i) => `${i + 1}. ${p.name}`).join('\n')}`;
-    return `${baseUrl}?text=${encodeURIComponent(message)}`;
+  const openWhatsAppPack = useCallback(() => {
+    const itemsListText = `• 1x Coffret Découverte 5 Parfums (30ml)\n${selectedProducts.map((p) => `   - ${p.name}`).join('\n')}`;
+    
+    useUIStore.getState().openWhatsApp({
+      type: 'pack',
+      itemsText: itemsListText,
+      totalText: '199 DH'
+    });
   }, [selectedProducts]);
 
-  return { selectedProducts, toggleProduct, getWhatsAppLink };
+  return { selectedProducts, toggleProduct, openWhatsAppPack };
 }
 
 const ProductCard = memo(({ 
@@ -106,7 +111,7 @@ const ProductCard = memo(({
 ProductCard.displayName = 'ProductCard';
 
 export default function PackDiscoverySection({ variant = 'section' }: { variant?: 'section' | 'fullscreen' }) {
-  const { selectedProducts, toggleProduct, getWhatsAppLink } = usePackSelection();
+  const { selectedProducts, toggleProduct, openWhatsAppPack } = usePackSelection();
   const [filter, setFilter] = useState<'Tous' | 'W&A Homme' | 'W&A Femme'>('Tous');
   
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -205,11 +210,11 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
               
               <div className="mt-6">
                 {selectedProducts.length === 5 ? (
-                  <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
+                  <button onClick={openWhatsAppPack} className="w-full">
                     <MagneticButton className="w-full bg-[var(--color-gold)] text-[var(--color-bg)] px-6 py-3 rounded-full font-medium tracking-wide text-sm">
                       Commander — 199 DH
                     </MagneticButton>
-                  </a>
+                  </button>
                 ) : (
                   <button disabled className="w-full bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)] border border-[var(--color-border)] px-6 py-3 rounded-full font-medium cursor-not-allowed text-sm">
                     Encore {5 - selectedProducts.length} parfum(s)
@@ -229,11 +234,11 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
             
             <div className="flex-shrink-0">
               {selectedProducts.length === 5 ? (
-                <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
+                <button onClick={openWhatsAppPack}>
                   <MagneticButton className="bg-[var(--color-gold)] text-[var(--color-bg)] px-6 py-3 rounded-full font-medium tracking-wide text-xs">
                     199 DH
                   </MagneticButton>
-                </a>
+                </button>
               ) : (
                 <span className="text-xs text-[var(--color-text-muted)]">
                   {5 - selectedProducts.length} restant(s)

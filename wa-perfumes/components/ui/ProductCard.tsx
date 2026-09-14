@@ -49,9 +49,9 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="absolute inset-0 z-10 border border-transparent group-hover:border-[var(--color-gold-border)] transition-colors duration-500 pointer-events-none" />
 
         {/* Collection Badge */}
-        <div className="absolute top-4 left-4 z-20">
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20">
           <span
-            className="text-[0.55rem] uppercase tracking-[0.25em] px-2.5 py-1 backdrop-blur-sm rounded-sm"
+            className="text-[0.45rem] sm:text-[0.55rem] uppercase tracking-[0.25em] px-2 py-0.5 sm:px-2.5 sm:py-1 backdrop-blur-sm rounded-sm"
             style={{
               color: product.collection === 'homme' ? 'var(--color-gold)' : 'var(--color-accent-rose)',
               background:
@@ -76,7 +76,7 @@ export default function ProductCard({ product }: { product: Product }) {
             alt={product.name}
             fill
             className="object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
             quality={80}
           />
 
@@ -89,14 +89,14 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* Notes on hover */}
           {product.topNotes && product.topNotes.length > 0 && (
             <div
-              className={`absolute bottom-4 left-4 right-4 z-20 flex gap-2 flex-wrap transition-all duration-500 ${
+              className={`absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-20 flex gap-1.5 flex-wrap transition-all duration-500 ${
                 isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
               {product.topNotes.slice(0, 3).map((note, idx) => (
                 <span
                   key={note}
-                  className="text-[0.55rem] uppercase tracking-[0.2em] px-2 py-1 bg-[var(--color-bg-overlay-medium)] backdrop-blur-sm text-[var(--color-gold)] border border-[var(--color-gold-border)] rounded-sm transition-all duration-500"
+                  className="text-[0.45rem] sm:text-[0.55rem] uppercase tracking-[0.2em] px-1.5 py-0.5 sm:px-2 sm:py-1 bg-[var(--color-bg-overlay-medium)] backdrop-blur-sm text-[var(--color-gold)] border border-[var(--color-gold-border)] rounded-sm transition-all duration-500"
                   style={{
                     opacity: isHovered ? 1 : 0,
                     transform: isHovered ? 'translateY(0) scale(1)' : 'translateY(8px) scale(0.95)',
@@ -111,8 +111,8 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Info */}
-        <div className="p-5">
-          <h3 className="font-[family-name:var(--font-cormorant)] text-lg tracking-[0.04em] text-[var(--color-text)] mb-1 group-hover:text-[var(--color-gold)] transition-colors duration-300">
+        <div className="p-3 sm:p-4 md:p-5">
+          <h3 className="font-[family-name:var(--font-cormorant)] text-base sm:text-lg tracking-[0.04em] text-[var(--color-text)] mb-1 group-hover:text-[var(--color-gold)] transition-colors duration-300">
             {product.name}
           </h3>
 

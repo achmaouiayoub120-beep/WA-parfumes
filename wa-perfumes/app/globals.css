@@ -461,3 +461,27 @@ body {
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   PRO MAX RESOLUTION FIXES
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Mobile Safe Area ── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ── Touch-friendly minimum targets ── */
+@media (pointer: coarse) {
+  button, a, [role="button"], input, select {
+    min-height: 44px;
+  }
+}
+
+/* ── Prevent text overflow on small screens ── */
+.heading-display, .heading-section {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

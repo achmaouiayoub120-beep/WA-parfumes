@@ -102,7 +102,7 @@ export default function CheckoutPage() {
                       <h2 className="font-[family-name:var(--font-cormorant)] text-3xl font-light tracking-[0.04em] text-[var(--color-text)]">Contact Information</h2>
                       <div className="space-y-4">
                         <input type="email" required placeholder="Email Address" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors" />
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <input type="text" required placeholder="First Name" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors" />
                           <input type="text" required placeholder="Last Name" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors" />
                         </div>
@@ -116,7 +116,7 @@ export default function CheckoutPage() {
                       <div className="space-y-4">
                         <input type="text" required placeholder="Address" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors" />
                         <input type="text" placeholder="Apartment, suite, etc. (optional)" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors" />
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <input type="text" required placeholder="City" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors" />
                           <input type="text" required placeholder="Postal Code" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors" />
                         </div>
@@ -132,7 +132,7 @@ export default function CheckoutPage() {
                           <span className="flex items-center gap-2"><CreditCard className="w-5 h-5 text-[var(--color-gold)]" /> Credit Card</span>
                         </div>
                         <input type="text" required placeholder="Card Number" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors font-mono" />
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <input type="text" required placeholder="MM/YY" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors font-mono" />
                           <input type="text" required placeholder="CVC" className="w-full bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded-none p-4 text-[var(--color-text)] focus:border-[var(--color-input-focus)] focus:outline-none transition-colors font-mono" />
                         </div>
@@ -172,7 +172,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* Right Column: Order Summary */}
-        <div className="hidden lg:block border-l border-[var(--color-border-subtle)] pl-16">
+        <div className="border-t lg:border-t-0 lg:border-l border-[var(--color-border-subtle)] pt-12 lg:pt-0 lg:pl-16">
           <div className="sticky top-32">
             <h3 className="font-[family-name:var(--font-cormorant)] text-3xl font-light tracking-[0.04em] text-[var(--color-text)] mb-8">Order Summary</h3>
             
@@ -207,7 +207,7 @@ export default function CheckoutPage() {
                 <span className="text-[var(--color-gold)]">{getCartTotal()} DH</span>
               </div>
               
-              <div className="mt-8 flex items-center justify-center gap-2 text-[var(--color-text-subtle)] text-xs">
+              <div className="mt-8 flex items-center justify-center gap-2 text-[var(--color-text-subtle)] text-xs pb-12 lg:pb-0">
                 <ShieldCheck className="w-4 h-4 text-[var(--color-gold)]" /> Secure SSL Encrypted Checkout
               </div>
             </div>

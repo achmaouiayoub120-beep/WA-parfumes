@@ -189,7 +189,7 @@ export default function HeroSection() {
         {/* CTA */}
         <div ref={ctaRef} className="opacity-0">
           <MagneticButton
-            className="px-10 py-4 border rounded-none text-[0.7rem] uppercase tracking-[0.3em] text-[var(--color-gold)] hover:bg-[var(--color-border)] transition-colors duration-500"
+            className="px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 border rounded-none text-[0.7rem] uppercase tracking-[0.3em] text-[var(--color-gold)] hover:bg-[var(--color-border)] transition-colors duration-500"
             style={{ borderColor: 'color-mix(in srgb, var(--color-gold) 30%, transparent)' }}
           >
             Explore Collections
@@ -198,7 +198,7 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
+      <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
         <span className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)]">
           Scroll
         </span>

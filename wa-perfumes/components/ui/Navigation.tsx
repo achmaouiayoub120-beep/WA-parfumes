@@ -113,8 +113,8 @@ export default function Navigation() {
         ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
           scrolled
-            ? 'py-3 backdrop-blur-xl'
-            : 'py-6 bg-transparent'
+            ? 'py-3 sm:py-4 backdrop-blur-xl'
+            : 'py-4 sm:py-5 md:py-6 bg-transparent'
         }`}
         style={scrolled ? {
           backgroundColor: 'var(--color-bg-overlay)',
@@ -129,7 +129,7 @@ export default function Navigation() {
               alt="WA Perfumes"
               width={200}
               height={100}
-              className={`transition-all duration-500 object-contain ${scrolled ? 'w-32 h-16' : 'w-48 h-24'}`}
+              className={`transition-all duration-500 object-contain ${scrolled ? 'w-24 h-12 sm:w-28 sm:h-14 md:w-32 md:h-16' : 'w-28 h-14 sm:w-32 sm:h-16 md:w-40 md:h-20 lg:w-48 lg:h-24'}`}
               style={mounted && resolvedTheme === 'light' ? {
                 filter: 'brightness(0.15) sepia(1) saturate(0.5) hue-rotate(10deg)',
               } : undefined}
@@ -166,7 +166,7 @@ export default function Navigation() {
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-4 relative z-[101]">
+          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 relative z-[101]">
             {/* Theme Toggle */}
             <ThemeToggle />
 

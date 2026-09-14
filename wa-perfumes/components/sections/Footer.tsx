@@ -97,10 +97,31 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-[var(--color-border-faint)] py-6">
+      <div className="border-t border-[var(--color-border-faint)] py-6 flex flex-col items-center justify-center gap-4 relative overflow-hidden">
+        {/* Subtle glow effect for the signature */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-8 bg-[var(--color-gold)] opacity-5 blur-[30px] pointer-events-none" />
+        
         <p className="text-center text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">
           © {new Date().getFullYear()} WA Perfumes. All rights reserved.
         </p>
+        
+        {/* Creative Signature */}
+        <a 
+          href="#"
+          className="group flex items-center justify-center gap-3 opacity-60 hover:opacity-100 transition-opacity duration-700"
+        >
+          <span className="w-4 h-[1px] bg-gradient-to-r from-transparent to-[var(--color-gold-muted)] group-hover:w-8 transition-all duration-700" />
+          <span className="text-[0.55rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">
+            Crafted with <span className="text-[var(--color-gold)]">✦</span> by{' '}
+            <span 
+              className="font-[family-name:var(--font-cormorant)] text-[0.75rem] italic tracking-widest text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-gold)] ml-1"
+              style={{ textShadow: '0 0 10px rgba(201,168,118,0)' }}
+            >
+              ayoubachtec
+            </span>
+          </span>
+          <span className="w-4 h-[1px] bg-gradient-to-l from-transparent to-[var(--color-gold-muted)] group-hover:w-8 transition-all duration-700" />
+        </a>
       </div>
     </footer>
   );

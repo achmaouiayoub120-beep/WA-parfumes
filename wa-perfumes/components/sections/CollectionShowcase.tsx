@@ -36,40 +36,68 @@ export default function CollectionShowcase() {
     const ctx = gsap.context(() => {
       if (!scrollRef.current || !containerRef.current) return;
 
-      const panels = gsap.utils.toArray<HTMLElement>('.collection-panel');
-      
-      gsap.to(panels, {
-        xPercent: -100 * (panels.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 1,
-          end: () => `+=${containerRef.current!.offsetWidth}`,
-          anticipatePin: 1,
-        },
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
+        const panels = gsap.utils.toArray<HTMLElement>('.collection-panel');
+        
+        gsap.to(panels, {
+          xPercent: -100 * (panels.length - 1),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            pin: true,
+            scrub: 1,
+            end: () => `+=${containerRef.current!.offsetWidth}`,
+            anticipatePin: 1,
+          },
+        });
+
+        // Animate content within each panel
+        panels.forEach((panel) => {
+          const content = panel.querySelector('.panel-content');
+          gsap.fromTo(
+            content,
+            { opacity: 0, x: 60 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: panel,
+                start: 'left 80%',
+                end: 'left 30%',
+                scrub: 0.8,
+              },
+            }
+          );
+        });
       });
 
-      // Animate content within each panel
-      panels.forEach((panel) => {
-        const content = panel.querySelector('.panel-content');
-        gsap.fromTo(
-          content,
-          { opacity: 0, x: 60 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: panel,
-              start: 'left 80%',
-              end: 'left 30%',
-              scrub: 0.8,
-            },
-          }
-        );
+      // Mobile fade-in animation
+      mm.add("(max-width: 1023px)", () => {
+        const panels = gsap.utils.toArray<HTMLElement>('.collection-panel');
+        panels.forEach((panel) => {
+          const content = panel.querySelector('.panel-content');
+          gsap.fromTo(
+            content,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: panel,
+                start: 'top 70%',
+                once: true,
+              },
+            }
+          );
+        });
       });
+
     }, containerRef);
 
     return () => ctx.revert();
@@ -84,13 +112,13 @@ export default function CollectionShowcase() {
         <div className="w-16 h-[1px] bg-[var(--color-gold)] mx-auto mt-8 opacity-40" />
       </div>
 
-      {/* Horizontal Scroll Container */}
+      {/* Container */}
       <div ref={containerRef} className="overflow-hidden">
-        <div ref={scrollRef} className="flex" style={{ width: `${COLLECTIONS.length * 100}vw` }}>
+        <div ref={scrollRef} className="flex flex-col lg:flex-row lg:w-[200vw]">
           {COLLECTIONS.map((col) => (
             <div
               key={col.name}
-              className="collection-panel w-screen h-[80vh] relative flex items-center shrink-0"
+              className="collection-panel w-full lg:w-screen h-[70vh] lg:h-[80vh] relative flex items-center shrink-0"
             >
               {/* Background Image */}
               <div className="absolute inset-0">

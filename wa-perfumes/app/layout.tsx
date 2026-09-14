@@ -8,6 +8,7 @@ import ThemeProvider from "@/providers/ThemeProvider";
 // UI Components — client components imported directly
 import Navigation from "@/components/ui/Navigation";
 import CartSlider from "@/components/ui/CartSlider";
+import WhatsAppDrawer from "@/components/ui/WhatsAppDrawer";
 import DraggableFab from "@/components/ui/DraggableFab";
 import AnnouncementBar from "@/components/ui/AnnouncementBar";
 import PageTransition from "@/components/animations/PageTransition";
@@ -106,6 +107,7 @@ export default function RootLayout({
             <AnnouncementBar />
             <Navigation />
             <CartSlider />
+            <WhatsAppDrawer />
             <DraggableFab />
             <main>
               <PageTransition>{children}</PageTransition>
