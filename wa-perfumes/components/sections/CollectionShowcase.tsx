@@ -1,110 +1,55 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '@/components/ui/MagneticButton';
-
-gsap.registerPlugin(ScrollTrigger);
+import { motion } from 'framer-motion';
 
 const COLLECTIONS = [
   {
     name: 'WA Signature',
     tagline: 'Dark & Bold',
-    description: 'Thirteen powerful fragrances for the modern gentleman. Deep woods, rich oud, and magnetic spice.',
+    description: 'Treize parfums puissants pour le gentleman moderne. Bois profonds, oud riche et épices magnétiques.',
     image: '/images/collections/homme-banner.jpg',
-    href: '/#signature',
+    href: '/#homme',
     accent: 'var(--color-gold)',
   },
   {
     name: 'WA Elegance',
     tagline: 'Soft & Elegant',
-    description: 'Nine refined fragrances for the sophisticated woman. Lush florals, warm vanilla, and radiant musk.',
+    description: 'Neuf parfums raffinés pour la femme sophistiquée. Fleurs luxuriantes, vanille chaude et musc éclatant.',
     image: '/images/collections/femme-banner.jpg',
-    href: '/#elegance',
+    href: '/#femme',
     accent: 'var(--color-accent-rose)',
   },
 ];
 
 export default function CollectionShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (!scrollRef.current || !containerRef.current) return;
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    const scrollLeft = containerRef.current.scrollLeft;
+    const width = containerRef.current.clientWidth;
+    const newIndex = Math.round(scrollLeft / width);
+    if (newIndex !== activeIndex) {
+      setActiveIndex(newIndex);
+    }
+  };
 
-      const mm = gsap.matchMedia();
-
-      mm.add("(min-width: 1024px)", () => {
-        const panels = gsap.utils.toArray<HTMLElement>('.collection-panel');
-        
-        gsap.to(panels, {
-          xPercent: -100 * (panels.length - 1),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            pin: true,
-            scrub: 1,
-            end: () => `+=${containerRef.current!.offsetWidth}`,
-            anticipatePin: 1,
-          },
-        });
-
-        // Animate content within each panel
-        panels.forEach((panel) => {
-          const content = panel.querySelector('.panel-content');
-          gsap.fromTo(
-            content,
-            { opacity: 0, x: 60 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 1,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: panel,
-                start: 'left 80%',
-                end: 'left 30%',
-                scrub: 0.8,
-              },
-            }
-          );
-        });
-      });
-
-      // Mobile fade-in animation
-      mm.add("(max-width: 1023px)", () => {
-        const panels = gsap.utils.toArray<HTMLElement>('.collection-panel');
-        panels.forEach((panel) => {
-          const content = panel.querySelector('.panel-content');
-          gsap.fromTo(
-            content,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 1,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: panel,
-                start: 'top 70%',
-                once: true,
-              },
-            }
-          );
-        });
-      });
-
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  const scrollTo = (index: number) => {
+    if (!containerRef.current) return;
+    const width = containerRef.current.clientWidth;
+    containerRef.current.scrollTo({
+      left: width * index,
+      behavior: 'smooth',
+    });
+  };
 
   return (
-    <div className="py-20">
+    <div className="py-20 bg-[var(--color-bg)]">
       {/* Section Header */}
       <div className="text-center px-6 mb-16">
         <p className="editorial-subtitle mb-4">Our Collections</p>
@@ -112,57 +57,143 @@ export default function CollectionShowcase() {
         <div className="w-16 h-[1px] bg-[var(--color-gold)] mx-auto mt-8 opacity-40" />
       </div>
 
-      {/* Container */}
-      <div ref={containerRef} className="overflow-hidden">
-        <div ref={scrollRef} className="flex flex-col lg:flex-row lg:w-[200vw]">
-          {COLLECTIONS.map((col) => (
+      {/* Slider Wrapper */}
+      <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6">
+        {/* Scroll Container */}
+        <div 
+          ref={containerRef}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-6 pb-8"
+          onScroll={handleScroll}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {COLLECTIONS.map((col, idx) => (
             <div
               key={col.name}
-              className="collection-panel w-full lg:w-screen h-[70vh] lg:h-[80vh] relative flex items-center shrink-0"
+              className="w-full shrink-0 snap-center relative flex flex-col md:flex-row items-center bg-[var(--color-bg-elevated)] border border-[var(--color-border-subtle)]"
             >
-              {/* Background Image */}
-              <div className="absolute inset-0">
+              {/* Image Side */}
+              <div className="w-full md:w-1/2 h-[50vh] md:h-[65vh] relative overflow-hidden group">
                 <Image
                   src={col.image}
                   alt={col.name}
                   fill
-                  className="object-cover"
-                  sizes="100vw"
-                  quality={80}
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={90}
                 />
-                <div 
-                  className="absolute inset-0" 
-                  style={{ background: 'linear-gradient(to right, var(--color-bg), color-mix(in srgb, var(--color-bg) 80%, transparent), transparent)' }}
-                />
+                <div className="absolute inset-0 bg-black/20" />
               </div>
 
-              {/* Content */}
-              <div className="panel-content relative z-10 px-10 md:px-20 max-w-xl">
-                <p className="text-[0.65rem] uppercase tracking-[0.35em] mb-4" style={{ color: col.accent }}>
+              {/* Content Side */}
+              <div className="w-full md:w-1/2 p-10 md:p-16 lg:p-24 flex flex-col justify-center relative">
+                {/* Decorative background number */}
+                <span className="absolute top-8 right-8 text-8xl font-[family-name:var(--font-cormorant)] text-[var(--color-text)] opacity-[0.03] select-none pointer-events-none">
+                  0{idx + 1}
+                </span>
+
+                <motion.p 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="text-[0.65rem] uppercase tracking-[0.35em] mb-4" 
+                  style={{ color: col.accent }}
+                >
                   {col.tagline}
-                </p>
+                </motion.p>
 
-                <h3 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-6xl font-light tracking-[0.06em] text-[var(--color-text)] mb-6">
+                <motion.h3 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.06em] text-[var(--color-text)] mb-6"
+                >
                   {col.name}
-                </h3>
+                </motion.h3>
 
-                <p className="body-large mb-10">
+                <motion.p 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="body-large mb-10 text-[var(--color-text-muted)] leading-relaxed max-w-md"
+                >
                   {col.description}
-                </p>
+                </motion.p>
 
-                <Link href={col.href}>
-                  <MagneticButton 
-                    className="px-8 py-3 border text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-gold)] transition-colors duration-500"
-                    style={{ borderColor: 'color-mix(in srgb, var(--color-gold) 25%, transparent)' }}
-                  >
-                    Explore
-                  </MagneticButton>
-                </Link>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                >
+                  <Link href={col.href}>
+                    <MagneticButton 
+                      className="px-8 py-3 border text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-text)] hover:text-[var(--color-bg)] hover:bg-[var(--color-text)] transition-all duration-500 rounded-full"
+                      style={{ borderColor: 'color-mix(in srgb, var(--color-border) 40%, transparent)' }}
+                    >
+                      Découvrir la collection
+                    </MagneticButton>
+                  </Link>
+                </motion.div>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Navigation Controls */}
+        <div className="flex items-center justify-center gap-8 mt-4">
+          <button 
+            onClick={() => scrollTo(Math.max(0, activeIndex - 1))}
+            className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-gold)] text-[var(--color-text-muted)] hover:text-[var(--color-gold)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
+            disabled={activeIndex === 0}
+            aria-label="Previous slide"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          
+          {/* Pagination Dots */}
+          <div className="flex gap-3">
+            {COLLECTIONS.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => scrollTo(idx)}
+                className="group p-2"
+                aria-label={`Go to slide ${idx + 1}`}
+              >
+                <div 
+                  className={`h-[2px] transition-all duration-500 ${
+                    activeIndex === idx 
+                      ? 'w-8 bg-[var(--color-gold)]' 
+                      : 'w-4 bg-[var(--color-border)] group-hover:bg-[var(--color-text-muted)]'
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+
+          <button 
+            onClick={() => scrollTo(Math.min(COLLECTIONS.length - 1, activeIndex + 1))}
+            className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-gold)] text-[var(--color-text-muted)] hover:text-[var(--color-gold)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
+            disabled={activeIndex === COLLECTIONS.length - 1}
+            aria-label="Next slide"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
       </div>
+      
+      {/* CSS to hide scrollbar for webkit browsers since Tailwind doesn't have a built-in cross-browser class without plugins */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .scrollbar-none::-webkit-scrollbar {
+          display: none;
+        }
+      `}} />
     </div>
   );
 }

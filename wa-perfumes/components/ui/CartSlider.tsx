@@ -10,6 +10,7 @@ import { useCartStore } from '@/store/useCartStore';
 export default function CartSlider() {
   const isOpen = useUIStore((s) => s.isCartOpen);
   const closeCart = useUIStore((s) => s.closeCart);
+  const openWhatsApp = useUIStore((s) => s.openWhatsApp);
   const items = useCartStore((s) => s.items);
   const removeItem = useCartStore((s) => s.removeItem);
   const updateQuantity = useCartStore((s) => s.updateQuantity);
@@ -59,7 +60,7 @@ export default function CartSlider() {
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-6 border-b border-[var(--color-border-faint)]">
               <h2 className="font-[family-name:var(--font-cormorant)] text-xl tracking-[0.1em] text-[var(--color-text)]">
-                Your Collection
+                Votre Sélection
               </h2>
               <button
                 onClick={closeCart}
@@ -78,20 +79,20 @@ export default function CartSlider() {
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <p className="font-[family-name:var(--font-cormorant)] text-lg text-[var(--color-text-muted)] mb-6">
-                    Your collection awaits
+                    Votre sélection vous attend
                   </p>
                   <Link
                     href="/#collections"
                     onClick={closeCart}
                     className="text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-gold)] border border-[var(--color-gold-border-hover)] px-6 py-3 hover:bg-[var(--color-gold-bg-subtle)] transition-colors duration-300"
                   >
-                    Browse Fragrances
+                    Explorer les Collections
                   </Link>
                 </div>
               ) : (
                 <div className="space-y-0">
                   {items.map((item, i) => (
-                    <div key={item.id}>
+                    <div key={`${item.id}-${item.selectedVolume}`}>
                       <div className="flex gap-4 py-5">
                         {/* Product Image */}
                         <div className="relative w-20 h-24 bg-[var(--color-bg-card)] shrink-0 overflow-hidden">
@@ -109,14 +110,17 @@ export default function CartSlider() {
                           <h3 className="font-[family-name:var(--font-cormorant)] text-sm tracking-[0.04em] text-[var(--color-text)] mb-1 truncate">
                             {item.name}
                           </h3>
+                          <p className="text-[0.65rem] text-[var(--color-text-muted)] uppercase tracking-wider mb-1">
+                            {item.selectedVolume}
+                          </p>
                           <p className="text-sm sm:text-xs text-[var(--color-gold)] mb-3">
-                            {item.price} DH
+                            {item.selectedPrice} DH
                           </p>
 
                           {/* Quantity Controls */}
                           <div className="flex items-center gap-3">
                             <button
-                              onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                              onClick={() => updateQuantity(item.id, item.selectedVolume, Math.max(1, item.quantity - 1))}
                               className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center border border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:border-[var(--color-gold-border-hover)] hover:text-[var(--color-gold)] transition-colors duration-300 text-xs"
                             >
                               −
@@ -125,7 +129,7 @@ export default function CartSlider() {
                               {item.quantity}
                             </span>
                             <button
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              onClick={() => updateQuantity(item.id, item.selectedVolume, item.quantity + 1)}
                               className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center border border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:border-[var(--color-gold-border-hover)] hover:text-[var(--color-gold)] transition-colors duration-300 text-xs"
                             >
                               +
@@ -135,7 +139,7 @@ export default function CartSlider() {
 
                         {/* Remove */}
                         <button
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => removeItem(item.id, item.selectedVolume)}
                           className="self-start text-[var(--color-text-subtle)] hover:text-[var(--color-text)] transition-colors duration-300 p-2 -m-2"
                           aria-label={`Remove ${item.name}`}
                         >
@@ -161,7 +165,7 @@ export default function CartSlider() {
               <div className="border-t border-[var(--color-gold-bg-hover)] px-6 py-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[0.7rem] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-                    Subtotal
+                    Sous-total
                   </span>
                   <span className="font-[family-name:var(--font-cormorant)] text-lg text-[var(--color-gold)]">
                     {getCartTotal()} DH
@@ -172,7 +176,7 @@ export default function CartSlider() {
                   <button
                     onClick={() => {
                       closeCart();
-                      useUIStore.getState().openWhatsApp();
+                      openWhatsApp();
                     }}
                     className="w-full py-4 bg-[#25D366] text-white text-center text-[0.7rem] uppercase tracking-[0.2em] font-medium hover:bg-[#22c55e] transition-colors duration-300 flex items-center justify-center gap-2"
                   >
@@ -181,14 +185,6 @@ export default function CartSlider() {
                     </svg>
                     Commander via WhatsApp
                   </button>
-                  
-                  <Link
-                    href="/checkout"
-                    onClick={closeCart}
-                    className="block w-full py-4 border border-[var(--color-gold-border)] text-[var(--color-text)] text-center text-[0.7rem] uppercase tracking-[0.2em] font-medium hover:bg-[var(--color-gold-bg-subtle)] hover:border-[var(--color-gold)] hover:text-[var(--color-gold)] transition-colors duration-300"
-                  >
-                    Passer à la caisse
-                  </Link>
                 </div>
               </div>
             )}

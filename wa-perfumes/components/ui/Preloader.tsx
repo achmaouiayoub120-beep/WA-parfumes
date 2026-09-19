@@ -12,7 +12,7 @@ import { gsap } from 'gsap';
  * - Total duration: ~1.8s (first visit), 0s (return visit)
  * - Respects prefers-reduced-motion
  */
-export default function Preloader({ onComplete }: { onComplete?: () => void }) {
+export default function Preloader({ onComplete }: { onComplete?: () => void } = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
@@ -48,7 +48,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
     // If returning visitor, complete immediately
     if (shouldSkip) {
       setComplete(true);
-      onComplete?.();
+      if (onComplete) onComplete();
       return;
     }
 
@@ -59,7 +59,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
       // Instant completion for reduced motion
       setTimeout(() => {
         setComplete(true);
-        onComplete?.();
+        if (onComplete) onComplete();
       }, 100);
       return;
     }
@@ -88,7 +88,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
             delay: 0.2,
             onComplete: () => {
               setComplete(true);
-              onComplete?.();
+              if (onComplete) onComplete();
             },
           });
         },

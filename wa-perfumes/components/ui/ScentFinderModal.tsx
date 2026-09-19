@@ -77,7 +77,8 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
   const handleAddToCart = () => {
     const recommendedProduct = getRecommendation();
     if (recommendedProduct) {
-      addItem(recommendedProduct);
+      const defaultVol = recommendedProduct.volumes ? recommendedProduct.volumes[0] : { size: recommendedProduct.volume, price: recommendedProduct.price };
+      addItem(recommendedProduct, defaultVol.size, defaultVol.price);
       onClose();
       // Small delay to allow modal to close before opening cart
       setTimeout(() => openCart(), 300);

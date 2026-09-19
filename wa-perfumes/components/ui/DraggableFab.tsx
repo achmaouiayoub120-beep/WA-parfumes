@@ -110,7 +110,7 @@ export default function DraggableFab() {
 
               {/* Instagram Option */}
               <motion.a
-                href="https://www.instagram.com/waperfumes.ma"
+                href="https://www.instagram.com/w_a_perfume/"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, x: -5 }}

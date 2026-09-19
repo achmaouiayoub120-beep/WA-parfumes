@@ -18,30 +18,30 @@ type Question = {
 const QUESTIONS: Question[] = [
   {
     id: 'gender',
-    question: "Who are you shopping for?",
+    question: "Pour qui cherchez-vous ?",
     options: [
-      { label: "For Him (WA Signature)", value: "men" },
-      { label: "For Her (WA Elegance)", value: "women" }
+      { label: "Pour Lui (WA Signature)", value: "men" },
+      { label: "Pour Elle (WA Elegance)", value: "women" }
     ]
   },
   {
     id: 'mood',
-    question: "What mood defines you?",
+    question: "Quelle ambiance vous définit ?",
     options: [
-      { label: "Bold & Mysterious", value: "bold" },
-      { label: "Fresh & Energetic", value: "fresh" },
-      { label: "Warm & Sensual", value: "warm" },
-      { label: "Elegant & Sophisticated", value: "elegant" }
+      { label: "Audacieux & Mystérieux", value: "bold" },
+      { label: "Frais & Énergique", value: "fresh" },
+      { label: "Chaud & Sensuel", value: "warm" },
+      { label: "Élégant & Raffiné", value: "elegant" }
     ]
   },
   {
     id: 'note',
-    question: "Which scent profile draws you in?",
+    question: "Quel profil olfactif vous attire ?",
     options: [
-      { label: "Oud & Leather", value: "wood" },
-      { label: "Citrus & Bergamot", value: "citrus" },
-      { label: "Vanilla & Amber", value: "sweet" },
-      { label: "Rose & Jasmine", value: "floral" }
+      { label: "Oud & Cuir", value: "wood" },
+      { label: "Agrumes & Bergamote", value: "citrus" },
+      { label: "Vanille & Ambre", value: "sweet" },
+      { label: "Rose & Jasmin", value: "floral" }
     ]
   }
 ];
@@ -106,7 +106,7 @@ export default function PerfumeFinder() {
               className="flex flex-col items-center text-center"
             >
               <span className="text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-gold)] mb-6">
-                Step {currentStep + 1} of {QUESTIONS.length}
+                Étape {currentStep + 1} sur {QUESTIONS.length}
               </span>
               
               <h1 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.04em] text-[var(--color-text)] mb-12">
@@ -144,10 +144,10 @@ export default function PerfumeFinder() {
             >
               <div className="w-16 h-16 border-t-[1px] border-b-[1px] border-[var(--color-gold)] rounded-full animate-spin mb-8" />
               <h2 className="font-[family-name:var(--font-cormorant)] text-3xl font-light tracking-[0.04em] text-[var(--color-gold)] animate-pulse">
-                Analyzing your aura...
+                Analyse de votre profil...
               </h2>
               <p className="text-[var(--color-text-subtle)] font-[family-name:var(--font-sans)] mt-4 uppercase tracking-[0.25em] text-[0.65rem]">
-                Curating your signature scent
+                Création de votre parfum signature
               </p>
             </motion.div>
           )}
@@ -174,7 +174,7 @@ export default function PerfumeFinder() {
               
               <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left">
                 <span className="text-[var(--color-gold)] text-[0.65rem] tracking-[0.3em] uppercase mb-4 block">
-                  Your Signature Match
+                  Votre Parfum Signature
                 </span>
                 
                 <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl text-[var(--color-text)] mb-4 font-light">
@@ -182,13 +182,13 @@ export default function PerfumeFinder() {
                 </h2>
                 
                 <p className="body-large mb-8 text-[var(--color-text)]">
-                  Based on your preferences, we selected this {recommendation.fragranceFamily} masterpiece. {recommendation.description}
+                  D'après vos préférences, nous avons sélectionné ce chef-d'œuvre {recommendation.fragranceFamily}. {recommendation.description}
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
                   <Link href={`/product/${recommendation.id}`}>
                     <MagneticButton className="px-8 py-3 bg-[var(--color-cta-bg)] text-[var(--color-cta-text)] text-[0.7rem] uppercase tracking-[0.3em] hover:bg-[var(--color-cta-hover)] transition-colors duration-500 rounded-none border-none">
-                      Discover Fragrance
+                      Découvrir ce Parfum
                     </MagneticButton>
                   </Link>
                   
@@ -200,7 +200,7 @@ export default function PerfumeFinder() {
                     }}
                     className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] text-[0.65rem] uppercase tracking-[0.25em] transition-colors py-3 px-4"
                   >
-                    Retake Quiz
+                    Recommencer
                   </button>
                 </div>
               </div>

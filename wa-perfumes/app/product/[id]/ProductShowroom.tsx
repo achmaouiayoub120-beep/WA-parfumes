@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { useCartStore } from '@/store/useCartStore';
 import { useUIStore } from '@/store/useUIStore';
-import OlfactoryTimeline from '@/components/ui/OlfactoryTimeline';
+import EditorialOlfactory from '@/components/ui/EditorialOlfactory';
 import { ProductMetrics } from '@/components/ui/IntensityGauge';
 import { ProductAccordions } from '@/components/ui/ProductAccordion';
 import LayeringSection from '@/components/ui/LayeringSection';
@@ -46,8 +46,12 @@ export default function ProductShowroom({ product }: { product: Product }) {
     return () => ctx.revert();
   }, []);
 
+  const [selectedVolumeIdx, setSelectedVolumeIdx] = useState(0);
+  const currentVolume = product.volumes ? product.volumes[selectedVolumeIdx] : { size: product.volume, price: product.price };
+
   const handleAddToCart = () => {
-    addItem(product);
+    // Si volumes existe on l'utilise, sinon fallback sur volume/price originaux (sécurité)
+    addItem(product, currentVolume.size, currentVolume.price);
     openCart();
   };
 
@@ -127,42 +131,63 @@ export default function ProductShowroom({ product }: { product: Product }) {
               <p className="reveal-item text-sm text-[var(--color-text-subtle)] italic">
                 Profil olfactif inspiré par {product.inspiredBy}
               </p>
+              
+              {/* ── Description ── */}
+              <p className="reveal-item text-[0.85rem] leading-relaxed text-[var(--color-text-muted)] max-w-lg mt-2">
+                {product.description}
+              </p>
 
-              {/* ── Price & Volume ── */}
-              <div className="reveal-item flex items-baseline gap-3">
-                <span className="font-[family-name:var(--font-cormorant)] text-3xl font-light" style={{ color: accent }}>
-                  {product.price} DH
-                </span>
-                <span className="text-[0.6rem] text-[var(--color-text-subtle)] uppercase tracking-[0.2em]">
-                  | {product.volume}
-                </span>
+              {/* ── Price & Volume Selector ── */}
+              <div className="reveal-item mt-6 space-y-4">
+                <p className="text-[0.55rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">
+                  Sélectionnez la contenance
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {(product.volumes || [{ size: product.volume, price: product.price }]).map((vol, idx) => {
+                    const isSelected = selectedVolumeIdx === idx;
+                    return (
+                      <button
+                        key={vol.size}
+                        onClick={() => setSelectedVolumeIdx(idx)}
+                        className={`flex items-center gap-3 px-5 py-3 border transition-all duration-300 ${
+                          isSelected 
+                            ? 'border-[var(--color-gold)] bg-[var(--color-gold-bg-subtle)]' 
+                            : 'border-[var(--color-border)] hover:border-[var(--color-gold-border-hover)]'
+                        }`}
+                      >
+                        <span className={`text-[0.65rem] uppercase tracking-[0.2em] ${isSelected ? 'text-[var(--color-gold)]' : 'text-[var(--color-text)]'}`}>
+                          {vol.size}
+                        </span>
+                        <span className="text-[var(--color-text-subtle)] opacity-40">|</span>
+                        <span className={`font-[family-name:var(--font-cormorant)] text-lg ${isSelected ? 'text-[var(--color-gold)]' : 'text-[var(--color-text-muted)]'}`}>
+                          {vol.price} DH
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
-            {/* ── Description ── */}
-            <p className="reveal-item text-[0.85rem] leading-relaxed text-[var(--color-text-muted)] max-w-lg">
-              {product.description}
-            </p>
-
             {/* ── Add to Cart Button ── */}
-            <div className="reveal-item">
+            <div className="reveal-item mt-2">
               <button
                 onClick={handleAddToCart}
-                className="w-full bg-black text-white py-5 uppercase tracking-widest text-[0.75rem] font-medium transition-all duration-500 hover:bg-neutral-900"
+                className="w-full sm:w-auto px-12 bg-[#1A1A1A] text-white py-5 uppercase tracking-widest text-[0.7rem] font-medium transition-all duration-500 hover:bg-[#0A0A0A] border border-[#333]"
               >
-                Ajouter au Panier
+                Ajouter au Panier — {currentVolume.price} DH
               </button>
             </div>
 
             {/* ── Divider ── */}
-            <div className="reveal-item w-full h-px" style={{ backgroundColor: `color-mix(in srgb, ${accent} 20%, transparent)` }} />
+            <div className="reveal-item w-full h-px mt-4" style={{ backgroundColor: `color-mix(in srgb, ${accent} 20%, transparent)` }} />
 
             {/* ── OLFACTORY TIMELINE ── */}
             <div className="reveal-item">
-              <h3 className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)] mb-8">
-                Pyramide Olfactive
+              <h3 className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)] mb-4">
+                Architecture du Parfum
               </h3>
-              <OlfactoryTimeline
+              <EditorialOlfactory
                 topNotes={product.topNotes || []}
                 heartNotes={product.heartNotes || []}
                 baseNotes={product.baseNotes || []}

@@ -175,7 +175,7 @@ export default function HeroSection() {
       <div className="relative z-20 text-center px-6 max-w-5xl mx-auto">
         {/* Eyebrow */}
         <p className="editorial-subtitle mb-8 opacity-0" ref={subtitleRef}>
-          Ultra-Premium Luxury Fragrances
+          Parfums de Luxe Ultra-Premium
         </p>
 
         {/* Main Title */}
@@ -192,7 +192,7 @@ export default function HeroSection() {
             className="px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 border rounded-none text-[0.7rem] uppercase tracking-[0.3em] text-[var(--color-gold)] hover:bg-[var(--color-border)] transition-colors duration-500"
             style={{ borderColor: 'color-mix(in srgb, var(--color-gold) 30%, transparent)' }}
           >
-            Explore Collections
+            Explorer les Collections
           </MagneticButton>
         </div>
       </div>
@@ -200,7 +200,7 @@ export default function HeroSection() {
       {/* Scroll Indicator */}
       <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
         <span className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)]">
-          Scroll
+          Défiler
         </span>
         <div className="w-[1px] h-8 relative overflow-hidden" style={{ backgroundColor: 'color-mix(in srgb, var(--color-gold) 20%, transparent)' }}>
           <div className="absolute top-0 left-0 w-full h-full bg-[var(--color-gold)] animate-[slideDown_2s_ease-in-out_infinite]" />

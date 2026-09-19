@@ -57,7 +57,8 @@ export default function LayeringSection({ currentProduct }: LayeringSectionProps
   if (!recommendedProduct) return null;
 
   const handleAddToCart = () => {
-    addItem(recommendedProduct);
+    const defaultVol = recommendedProduct.volumes ? recommendedProduct.volumes[0] : { size: recommendedProduct.volume, price: recommendedProduct.price };
+    addItem(recommendedProduct, defaultVol.size, defaultVol.price);
     openCart();
   };
 

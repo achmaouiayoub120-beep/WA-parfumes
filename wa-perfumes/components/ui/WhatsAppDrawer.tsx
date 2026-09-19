@@ -34,6 +34,7 @@ export default function WhatsAppDrawer() {
   const [phone, setPhone] = useState('');
   const [ville, setVille] = useState('Casablanca');
   const [autreVille, setAutreVille] = useState('');
+  const [address, setAddress] = useState('');
   const [quantite, setQuantite] = useState(1);
 
   useEffect(() => {
@@ -85,6 +86,7 @@ ${itemsList}
 • Nom complet : ${nom}
 • Téléphone : ${phone}
 • Ville : ${villeFinale}
+• Adresse : ${address.trim()}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Dans l'attente de votre confirmation concernant la disponibilité et le délai de livraison.`;
 
@@ -416,6 +418,33 @@ Dans l'attente de votre confirmation concernant la disponibilité et le délai d
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                {/* Adresse détaillée */}
+                <div>
+                  <label
+                    htmlFor="wa-address"
+                    className="text-[0.6rem] uppercase tracking-[0.25em] font-medium block mb-1.5"
+                    style={{ color: 'var(--color-text-muted)' }}
+                  >
+                    Adresse détaillée *
+                  </label>
+                  <textarea
+                    id="wa-address"
+                    required
+                    rows={3}
+                    placeholder="ex: Quartier, Rue, Résidence, Numéro de porte..."
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="w-full p-3.5 min-h-[44px] rounded-none text-sm transition-colors duration-300 outline-none resize-y"
+                    style={{
+                      backgroundColor: 'var(--color-input-bg)',
+                      border: '1px solid var(--color-input-border)',
+                      color: 'var(--color-text)',
+                    }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = 'var(--color-input-focus)')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'var(--color-input-border)')}
+                  />
+                </div>
 
                 {/* Quantité (when cart is empty and no context) */}
                 {items.length === 0 && !whatsappContext && (

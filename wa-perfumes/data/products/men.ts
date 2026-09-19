@@ -1,5 +1,5 @@
 // ============================================================================
-// WA PERFUMES â€” Men's Collection (WA Signature)
+// WA PERFUMES — Men's Collection (WA Signature)
 // ============================================================================
 // 13 luxury fragrances inspired by iconic masculine scents.
 // IMPORTANT: WA Perfumes sells fragrances INSPIRED BY these iconic scents.
@@ -21,6 +21,7 @@ export interface Product {
   originalPrice?: number;
   currency: string;
   volume: string;
+  volumes: { size: string; price: number }[];
   image: string;
   imageAlt?: string;
   topNotes: string[];
@@ -42,7 +43,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-01',
     slug: 'wa-signature-01',
-    name: 'WA Signature 01',
+    name: 'WA Ambre Intense',
     number: '01',
     collection: 'homme',
     gender: 'homme',
@@ -52,6 +53,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-01.jpg',
     topNotes: ['pepper', 'mint', 'mandarin'],
     heartNotes: ['lavender', 'cinnamon', 'praline'],
@@ -69,7 +71,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-02',
     slug: 'wa-signature-02',
-    name: 'WA Signature 02',
+    name: 'WA Élixir Lavande',
     number: '02',
     collection: 'homme',
     gender: 'homme',
@@ -79,6 +81,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-02.jpg',
     topNotes: ['lavender', 'mint'],
     heartNotes: ['honey', 'tonka', 'rose'],
@@ -96,16 +99,17 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-03',
     slug: 'wa-signature-03',
-    name: 'WA Signature 03',
+    name: 'WA Épice Noire',
     number: '03',
     collection: 'homme',
     gender: 'homme',
     inspiredBy: 'Spicebomb Extreme',
     description:
-      'An explosive cocktail of fiery spices and dark tobacco. Black pepper detonates against cinnamon and saffron, settling into a smoky base of leather and oud. This is not a fragrance â€” it\'s a statement of dominance.',
+      'An explosive cocktail of fiery spices and dark tobacco. Black pepper detonates against cinnamon and saffron, settling into a smoky base of leather and oud. This is not a fragrance — it\'s a statement of dominance.',
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-03.jpg',
     topNotes: ['pepper', 'ginger', 'bergamot'],
     heartNotes: ['cinnamon', 'saffron', 'cardamom'],
@@ -123,7 +127,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-04',
     slug: 'wa-signature-04',
-    name: 'WA Signature 04',
+    name: 'WA Jardin Tropique',
     number: '04',
     collection: 'homme',
     gender: 'homme',
@@ -133,6 +137,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-04.jpg',
     topNotes: ['bergamot', 'coconut', 'green-apple'],
     heartNotes: ['ylang-ylang', 'fig-leaf', 'cardamom'],
@@ -150,7 +155,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-05',
     slug: 'wa-signature-05',
-    name: 'WA Signature 05',
+    name: 'WA Nuit Cèdre',
     number: '05',
     collection: 'homme',
     gender: 'homme',
@@ -160,6 +165,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-05.jpg',
     topNotes: ['cardamom', 'bergamot', 'lavender'],
     heartNotes: ['cedar', 'iris', 'rose'],
@@ -176,7 +182,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-06',
     slug: 'wa-signature-06',
-    name: 'WA Signature 06',
+    name: 'WA Cristal Ambré',
     number: '06',
     collection: 'homme',
     gender: 'homme',
@@ -186,6 +192,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-06.jpg',
     topNotes: ['saffron', 'bergamot'],
     heartNotes: ['jasmine', 'amber', 'cedar'],
@@ -203,7 +210,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-07',
     slug: 'wa-signature-07',
-    name: 'WA Signature 07',
+    name: 'WA Iris Noir',
     number: '07',
     collection: 'homme',
     gender: 'homme',
@@ -213,6 +220,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-07.jpg',
     topNotes: ['lavender', 'pear', 'bergamot'],
     heartNotes: ['iris', 'rose', 'cinnamon'],
@@ -229,7 +237,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-08',
     slug: 'wa-signature-08',
-    name: 'WA Signature 08',
+    name: 'WA Caramel Absolu',
     number: '08',
     collection: 'homme',
     gender: 'homme',
@@ -239,6 +247,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-08.jpg',
     topNotes: ['cardamom', 'ginger', 'lemon'],
     heartNotes: ['caramel', 'cinnamon', 'lavender'],
@@ -256,7 +265,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-09',
     slug: 'wa-signature-09',
-    name: 'WA Signature 09',
+    name: 'WA Azur Méditerranée',
     number: '09',
     collection: 'homme',
     gender: 'homme',
@@ -266,6 +275,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-09.jpg',
     topNotes: ['grapefruit', 'mandarin', 'mint'],
     heartNotes: ['marine', 'rosemary', 'pepper'],
@@ -282,7 +292,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-10',
     slug: 'wa-signature-10',
-    name: 'WA Signature 10',
+    name: 'WA Miel Cuir',
     number: '10',
     collection: 'homme',
     gender: 'homme',
@@ -292,6 +302,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-10.jpg',
     topNotes: ['blood-orange', 'mandarin', 'pepper'],
     heartNotes: ['caramel', 'cinnamon', 'clove'],
@@ -309,7 +320,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-11',
     slug: 'wa-signature-11',
-    name: 'WA Signature 11',
+    name: 'WA Or Liquide',
     number: '11',
     collection: 'homme',
     gender: 'homme',
@@ -319,6 +330,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-11.jpg',
     topNotes: ['mint', 'grapefruit', 'pepper'],
     heartNotes: ['honey', 'lavender', 'rose'],
@@ -335,7 +347,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-12',
     slug: 'wa-signature-12',
-    name: 'WA Signature 12',
+    name: 'WA Cédrat Boisé',
     number: '12',
     collection: 'homme',
     gender: 'homme',
@@ -345,6 +357,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-12.jpg',
     topNotes: ['bergamot', 'orange-blossom', 'cardamom'],
     heartNotes: ['jasmine', 'rose', 'iris'],
@@ -361,7 +374,7 @@ export const MEN_PRODUCTS: Product[] = [
   {
     id: 'wa-sig-13',
     slug: 'wa-signature-13',
-    name: 'WA Signature 13',
+    name: 'WA Bois Raffiné',
     number: '13',
     collection: 'homme',
     gender: 'homme',
@@ -371,6 +384,7 @@ export const MEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/signature/wa-signature-13.jpg',
     topNotes: ['apple', 'cinnamon', 'cardamom'],
     heartNotes: ['cedar', 'patchouli', 'clove'],

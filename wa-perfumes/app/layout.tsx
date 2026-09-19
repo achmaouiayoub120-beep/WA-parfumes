@@ -12,7 +12,6 @@ import WhatsAppDrawer from "@/components/ui/WhatsAppDrawer";
 import DraggableFab from "@/components/ui/DraggableFab";
 import AnnouncementBar from "@/components/ui/AnnouncementBar";
 import PageTransition from "@/components/animations/PageTransition";
-import ClientEffects from "@/components/effects/ClientEffects";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -30,23 +29,22 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "WA Perfumes | Ultra-Premium Luxury Fragrances",
+    default: "WA Perfumes | Parfums de Luxe Inspirés",
     template: "%s | WA Perfumes",
   },
   description:
-    "Experience the essence of excellence. WA Perfumes offers ultra-premium luxury fragrances — WA Signature for men, WA Elegance for women. Leave Your Signature.",
+    "Découvrez l'essence de l'excellence. WA Perfumes propose des parfums de luxe ultra-premium — WA Signature pour homme, WA Elegance pour femme. Laissez Votre Signature.",
   keywords: [
-    "luxury perfume",
-    "premium fragrances",
-    "WA Perfumes",
-    "designer scents",
-    "Morocco",
     "parfum de luxe",
+    "parfums premium",
+    "WA Perfumes",
+    "parfums inspirés",
+    "Maroc",
   ],
-  metadataBase: new URL("https://wa-parfun.vercel.app"),
+  metadataBase: new URL("https://waperfumes.ma"),
   openGraph: {
-    title: "WA Perfumes | Leave Your Signature",
-    description: "Ultra-premium luxury fragrances inspired by the world's most iconic scents.",
+    title: "WA Perfumes | Laissez Votre Signature",
+    description: "Parfums de luxe ultra-premium inspirés par les fragrances les plus iconiques au monde.",
     type: "website",
   },
 };
@@ -67,7 +65,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${cormorant.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
@@ -101,7 +99,6 @@ export default function RootLayout({
             `,
           }}
         />
-        <ClientEffects />
         <ThemeProvider>
           <LenisProvider>
             <AnnouncementBar />
@@ -114,10 +111,6 @@ export default function RootLayout({
             </main>
           </LenisProvider>
         </ThemeProvider>
-
-
-        {/* Film Grain Overlay — pure CSS, zero JS cost */}
-        <div className="film-grain" aria-hidden="true" />
       </body>
     </html>
   );

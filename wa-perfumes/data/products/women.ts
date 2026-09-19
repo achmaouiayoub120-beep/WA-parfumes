@@ -1,5 +1,5 @@
 // ============================================================================
-// WA PERFUMES â€” Women's Collection (WA Elegance)
+// WA PERFUMES — Women's Collection (WA Elegance)
 // ============================================================================
 // 9 luxury fragrances inspired by iconic feminine scents.
 // IMPORTANT: WA Perfumes sells fragrances INSPIRED BY these iconic scents.
@@ -12,7 +12,7 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-01',
     slug: 'wa-elegance-01',
-    name: 'WA Elegance 01',
+    name: 'WA Baies Velours',
     number: '01',
     collection: 'femme',
     gender: 'femme',
@@ -22,6 +22,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-01.jpg',
     topNotes: ['blackcurrant', 'raspberry', 'lemon'],
     heartNotes: ['jasmine', 'rose', 'ylang-ylang'],
@@ -39,7 +40,7 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-02',
     slug: 'wa-elegance-02',
-    name: 'WA Elegance 02',
+    name: 'WA Riviera Soleil',
     number: '02',
     collection: 'femme',
     gender: 'femme',
@@ -49,6 +50,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-02.jpg',
     topNotes: ['lemon', 'green-apple', 'mandarin'],
     heartNotes: ['jasmine', 'rose', 'peony'],
@@ -65,7 +67,7 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-03',
     slug: 'wa-elegance-03',
-    name: 'WA Elegance 03',
+    name: 'WA Vanille Dorée',
     number: '03',
     collection: 'femme',
     gender: 'femme',
@@ -75,6 +77,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-03.jpg',
     topNotes: ['vanilla', 'bergamot'],
     heartNotes: ['tonka', 'honey', 'jasmine'],
@@ -92,7 +95,7 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-04',
     slug: 'wa-elegance-04',
-    name: 'WA Elegance 04',
+    name: 'WA Écarlate Absolu',
     number: '04',
     collection: 'femme',
     gender: 'femme',
@@ -102,6 +105,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-04.jpg',
     topNotes: ['ginger', 'saffron', 'bergamot'],
     heartNotes: ['tuberose', 'jasmine', 'iris'],
@@ -119,16 +123,17 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-05',
     slug: 'wa-elegance-05',
-    name: 'WA Elegance 05',
+    name: 'WA Orange Royale',
     number: '05',
     collection: 'femme',
     gender: 'femme',
-    inspiredBy: 'L\'ImpÃ©ratrice',
+    inspiredBy: 'L\'Impératrice',
     description:
       'Regal freshness with a playful heart. Watermelon and kiwi burst open to reveal a bouquet of pink cyclamen and jasmine, settling into a warm base of musk and sandalwood. A fragrance fit for an empress.',
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-05.jpg',
     topNotes: ['grapefruit', 'raspberry', 'lemon'],
     heartNotes: ['jasmine', 'rose', 'peony'],
@@ -145,7 +150,7 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-06',
     slug: 'wa-elegance-06',
-    name: 'WA Elegance 06',
+    name: 'WA Musc Néroli',
     number: '06',
     collection: 'femme',
     gender: 'femme',
@@ -155,6 +160,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-06.jpg',
     topNotes: ['bergamot', 'mandarin', 'pear'],
     heartNotes: ['orange-blossom', 'jasmine', 'iris'],
@@ -172,7 +178,7 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-07',
     slug: 'wa-elegance-07',
-    name: 'WA Elegance 07',
+    name: 'WA Lys Ambré',
     number: '07',
     collection: 'femme',
     gender: 'femme',
@@ -182,6 +188,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-07.jpg',
     topNotes: ['peach', 'lychee', 'bergamot'],
     heartNotes: ['jasmine', 'rose', 'plum'],
@@ -199,7 +206,7 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-08',
     slug: 'wa-elegance-08',
-    name: 'WA Elegance 08',
+    name: 'WA Vanille Santal',
     number: '08',
     collection: 'femme',
     gender: 'femme',
@@ -209,6 +216,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-08.jpg',
     topNotes: ['coconut', 'bergamot', 'mandarin'],
     heartNotes: ['vanilla', 'ylang-ylang', 'jasmine'],
@@ -225,7 +233,7 @@ export const WOMEN_PRODUCTS: Product[] = [
   {
     id: 'wa-ele-09',
     slug: 'wa-elegance-09',
-    name: 'WA Elegance 09',
+    name: 'WA Chypre Ambré',
     number: '09',
     collection: 'femme',
     gender: 'femme',
@@ -235,6 +243,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     price: 50,
     currency: 'DH',
     volume: '30ml',
+    volumes: [{ size: '30ml', price: 50 }, { size: '50ml', price: 85 }, { size: '100ml', price: 130 }],
     image: '/images/perfumes/elegance/wa-elegance-09.jpg',
     topNotes: ['blood-orange', 'bergamot', 'grapefruit'],
     heartNotes: ['rose', 'jasmine', 'peach'],
