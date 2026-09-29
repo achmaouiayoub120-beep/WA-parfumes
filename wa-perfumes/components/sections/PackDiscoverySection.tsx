@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useRef, useMemo, useCallback, memo } from 'react';
 import Image from 'next/image';
@@ -32,7 +32,7 @@ export function usePackSelection() {
   }, []);
 
   const openWhatsAppPack = useCallback(() => {
-    const itemsListText = `• 1x Coffret Découverte 5 Parfums (30ml)\n${selectedProducts.map((p) => `   - ${p.name}`).join('\n')}`;
+    const itemsListText = `â€¢ 1x Coffret DÃ©couverte 5 Parfums (30ml)\n${selectedProducts.map((p) => `   - ${p.name}`).join('\n')}`;
     
     useUIStore.getState().openWhatsApp({
       type: 'pack',
@@ -94,8 +94,8 @@ const ProductCard = memo(({
         <div className="absolute inset-0 bg-[var(--color-bg-card)]/95 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center z-10">
           <p className="text-[var(--color-violet)] text-xs font-semibold mb-3 uppercase tracking-widest">Notes Olfactives</p>
           <div className="space-y-3 text-[var(--color-text)] text-sm">
-            <p><span className="text-[var(--color-text-muted)] text-xs block mb-1">Tête</span> {product.topNotes?.join(', ')}</p>
-            <p><span className="text-[var(--color-text-muted)] text-xs block mb-1">Cœur</span> {product.heartNotes?.join(', ')}</p>
+            <p><span className="text-[var(--color-text-muted)] text-xs block mb-1">TÃªte</span> {product.topNotes?.join(', ')}</p>
+            <p><span className="text-[var(--color-text-muted)] text-xs block mb-1">CÅ“ur</span> {product.heartNotes?.join(', ')}</p>
             <p><span className="text-[var(--color-text-muted)] text-xs block mb-1">Fond</span> {product.baseNotes?.join(', ')}</p>
           </div>
         </div>
@@ -156,7 +156,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
             {/* Symmetrical Subtitle */}
             <div className="flex items-center justify-center gap-4 mb-8 opacity-80">
               <div className="w-12 h-[1px] bg-[var(--color-violet)] opacity-50" />
-              <p className="editorial-subtitle text-[var(--color-violet)]">L'Expérience Découverte</p>
+              <p className="editorial-subtitle text-[var(--color-violet)]">L'ExpÃ©rience DÃ©couverte</p>
               <div className="w-12 h-[1px] bg-[var(--color-violet)] opacity-50" />
             </div>
 
@@ -179,7 +179,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
                   </div>
                   <h4 className="text-xs md:text-sm uppercase tracking-[0.2em] text-[var(--color-text)] mb-3">5 Essences Rares</h4>
                   <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
-                    Sélectionnez vos formats 30ml parmi nos trois collections emblématiques.
+                    SÃ©lectionnez vos formats 30ml parmi nos trois collections emblÃ©matiques.
                   </p>
                 </div>
 
@@ -190,7 +190,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
                   </div>
                   <h4 className="text-xs md:text-sm uppercase tracking-[0.2em] text-[var(--color-text)] mb-3">Rituel Sur-Mesure</h4>
                   <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
-                    Une véritable écriture de soi. Façonnez une identité olfactive unique.
+                    Une vÃ©ritable Ã©criture de soi. FaÃ§onnez une identitÃ© olfactive unique.
                   </p>
                 </div>
 
@@ -199,9 +199,9 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
                   <div className="w-14 h-14 rounded-full border border-[var(--color-border-subtle)] flex items-center justify-center text-[var(--color-violet)] mb-5 group-hover:border-[var(--color-violet)] group-hover:scale-110 transition-all duration-500">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                   </div>
-                  <h4 className="text-xs md:text-sm uppercase tracking-[0.2em] text-[var(--color-text)] mb-3">L&apos;Écrin Absolu</h4>
+                  <h4 className="text-xs md:text-sm uppercase tracking-[0.2em] text-[var(--color-text)] mb-3">L&apos;Ã‰crin Absolu</h4>
                   <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
-                    Un coffret luxueux conçu pour révéler les multiples facettes de votre personnalité.
+                    Un coffret luxueux conÃ§u pour rÃ©vÃ©ler les multiples facettes de votre personnalitÃ©.
                   </p>
                 </div>
 
@@ -210,7 +210,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
               {/* Price Badge */}
               <div className="inline-flex items-center justify-center gap-6 px-10 py-4 border border-[var(--color-accent-violet-border)] bg-[var(--color-accent-violet-muted)] rounded-full hover:border-[var(--color-violet)] transition-colors duration-500 shadow-[0_0_20px_rgba(139,92,246,0.1)]">
                 <span className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl italic tracking-wide text-[var(--color-text)]">
-                  L&apos;Écrin Absolu
+                  L&apos;Ã‰crin Absolu
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-violet)] animate-pulse" />
                 <span className="font-sans text-xs md:text-sm tracking-[0.2em] uppercase text-[var(--color-violet)] font-medium">
@@ -263,18 +263,14 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
             </AnimatePresence>
           </motion.div>
 
-          {/* Sticky Sidebar — Desktop */}
+          {/* Sticky Sidebar â€” Desktop */}
           <div className="hidden lg:block w-72 flex-shrink-0">
             <div className="sticky top-28">
               <DiscoveryBox selectedProducts={selectedProducts} />
               
               <div className="mt-6">
                 {selectedProducts.length === 5 ? (
-                  <button onClick={openWhatsAppPack} className="w-full">
-                    <MagneticButton className="w-full bg-[var(--color-plum)] text-[var(--color-cream)] hover:bg-[var(--color-burgundy)] transition-colors px-6 py-3 rounded-full font-medium tracking-wide text-sm">
-                      Commander — 199 DH
-                    </MagneticButton>
-                  </button>
+                  <MagneticButton onClick={openWhatsAppPack}  className="w-full bg-[var(--color-plum)] text-[var(--color-cream)] hover:bg-[var(--color-burgundy)] transition-colors px-6 py-3 rounded-full font-medium tracking-wide text-sm">Commander â€” 199 DH</MagneticButton>
                 ) : (
                   <button disabled className="w-full bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)] border border-[var(--color-border)] px-6 py-3 rounded-full font-medium cursor-not-allowed text-sm">
                     Encore {5 - selectedProducts.length} parfum(s)
@@ -285,7 +281,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
           </div>
         </div>
 
-        {/* Bottom Drawer — Mobile only */}
+        {/* Bottom Drawer â€” Mobile only */}
         <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--color-bg-glass)] backdrop-blur-md border-t border-[var(--color-border-subtle)] p-4 shadow-2xl">
           <div className="container mx-auto max-w-5xl flex items-center justify-between gap-4">
             <div className="flex-1">
@@ -294,11 +290,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
             
             <div className="flex-shrink-0">
               {selectedProducts.length === 5 ? (
-                <button onClick={openWhatsAppPack}>
-                  <MagneticButton className="bg-[var(--color-plum)] text-[var(--color-cream)] hover:bg-[var(--color-burgundy)] transition-colors px-6 py-3 rounded-full font-medium tracking-wide text-xs">
-                    199 DH
-                  </MagneticButton>
-                </button>
+                <MagneticButton onClick={openWhatsAppPack}  className="bg-[var(--color-plum)] text-[var(--color-cream)] hover:bg-[var(--color-burgundy)] transition-colors px-6 py-3 rounded-full font-medium tracking-wide text-xs">199 DH</MagneticButton>
               ) : (
                 <span className="text-xs text-[var(--color-text-muted)]">
                   {5 - selectedProducts.length} restant(s)
@@ -311,3 +303,4 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
     </section>
   );
 }
+

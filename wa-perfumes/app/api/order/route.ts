@@ -22,8 +22,8 @@ export async function POST(request: Request) {
     const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || process.env.GOOGLE_SHEETS_WEBHOOK_URL;
 
     if (!webhookUrl) {
-      console.warn('GOOGLE_SHEET_WEBHOOK_URL non dǸfini — commande non enregistrǸe dans le Sheet.');
-      return NextResponse.json({ ok: true, sheet: 'skipped' });
+      console.warn('GOOGLE_SHEET_WEBHOOK_URL non dÇ¸fini â€” commande non enregistrÇ¸e dans le Sheet.');
+      return NextResponse.json({ ok: true, success: true, sheet: 'skipped' });
     }
 
     // Prepare data to send to webhook
@@ -68,9 +68,10 @@ export async function POST(request: Request) {
       console.error('Google Sheet inaccessible:', err);
     }
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, success: true });
   } catch (error: any) {
     console.error('Erreur API:', error);
     return NextResponse.json({ success: false, error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
+
