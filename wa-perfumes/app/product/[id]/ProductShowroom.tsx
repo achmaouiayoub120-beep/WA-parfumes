@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
@@ -10,6 +10,7 @@ import EditorialOlfactory from '@/components/ui/EditorialOlfactory';
 import { ProductMetrics } from '@/components/ui/IntensityGauge';
 import { ProductAccordions } from '@/components/ui/ProductAccordion';
 import LayeringSection from '@/components/ui/LayeringSection';
+import SmartOrderForm from '@/components/ui/SmartOrderForm';
 import type { Product } from '@/data/products/men';
 
 export default function ProductShowroom({ product }: { product: Product }) {
@@ -50,10 +51,11 @@ export default function ProductShowroom({ product }: { product: Product }) {
   }, []);
 
   const [selectedVolumeIdx, setSelectedVolumeIdx] = useState(0);
+  const [isOrderFormOpen, setIsOrderFormOpen] = useState(false);
   const currentVolume = product.volumes ? product.volumes[selectedVolumeIdx] : { size: product.volume, price: product.price };
 
   const handleAddToCart = () => {
-    // Si volumes existe on l'utilise, sinon fallback sur volume/price originaux (sécurité)
+    // Si volumes existe on l'utilise, sinon fallback sur volume/price originaux (sÃ©curitÃ©)
     addItem(product, currentVolume.size, currentVolume.price);
     openCart();
   };
@@ -85,10 +87,10 @@ export default function ProductShowroom({ product }: { product: Product }) {
           <span className="text-[var(--color-text-muted)]">{product.name}</span>
         </nav>
 
-        {/* ─── SPLIT-SCREEN LAYOUT ─── */}
+        {/* â”€â”€â”€ SPLIT-SCREEN LAYOUT â”€â”€â”€ */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-16">
 
-          {/* ══════════════ LEFT — STICKY IMAGE ══════════════ */}
+          {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â• LEFT â€” STICKY IMAGE â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
           <div ref={imageRef} className="relative opacity-0 lg:sticky lg:top-28 lg:self-start">
             <div className="relative aspect-[3/4] bg-[var(--color-bg-elevated)] overflow-hidden">
               <Image
@@ -119,34 +121,34 @@ export default function ProductShowroom({ product }: { product: Product }) {
             </div>
           </div>
 
-          {/* ══════════════ RIGHT — SCROLLABLE CONTENT ══════════════ */}
+          {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â• RIGHT â€” SCROLLABLE CONTENT â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
           <div ref={infoRef} className="flex flex-col pt-32 lg:pt-40 px-6 md:px-12 lg:px-16 pb-20 gap-10">
 
             <div className="flex flex-col gap-4">
-              {/* ── Number ── */}
+              {/* â”€â”€ Number â”€â”€ */}
               <p className="reveal-item text-[0.55rem] uppercase tracking-[0.4em]" style={{ color: accent }}>
-                Parfum N°{product.number}
+                Parfum NÂ°{product.number}
               </p>
 
-              {/* ── Name ── */}
+              {/* â”€â”€ Name â”€â”€ */}
               <h1 className="reveal-item font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-[3.5rem] font-light tracking-[0.03em] text-[var(--color-text)] leading-tight">
                 {product.name}
               </h1>
 
-              {/* ── Inspiration ── */}
+              {/* â”€â”€ Inspiration â”€â”€ */}
               <p className="reveal-item text-sm text-[var(--color-text-subtle)] italic">
-                Profil olfactif inspiré par {product.inspiredBy}
+                Profil olfactif inspirÃ© par {product.inspiredBy}
               </p>
               
-              {/* ── Description ── */}
+              {/* â”€â”€ Description â”€â”€ */}
               <p className="reveal-item text-[0.85rem] leading-relaxed text-[var(--color-text-muted)] max-w-lg mt-2">
                 {product.description}
               </p>
 
-              {/* ── Price & Volume Selector ── */}
+              {/* â”€â”€ Price & Volume Selector â”€â”€ */}
               <div className="reveal-item mt-6 space-y-4">
                 <p className="text-[0.55rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">
-                  Sélectionnez la contenance
+                  SÃ©lectionnez la contenance
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {(product.volumes || [{ size: product.volume, price: product.price }]).map((vol, idx) => {
@@ -175,20 +177,26 @@ export default function ProductShowroom({ product }: { product: Product }) {
               </div>
             </div>
 
-            {/* ── Add to Cart Button ── */}
-            <div className="reveal-item mt-2">
+            {/* â”€â”€ Add to Cart Button â”€â”€ */}
+            <div className="reveal-item mt-2 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={handleAddToCart}
-                className="w-full sm:w-auto px-12 bg-[#1A1A1A] text-white py-5 uppercase tracking-widest text-[0.7rem] font-medium transition-all duration-500 hover:bg-[#0A0A0A] border border-[#333]"
+                className="flex-1 px-8 bg-[#1A1A1A] text-white py-5 uppercase tracking-widest text-[0.7rem] font-medium transition-all duration-500 hover:bg-[#0A0A0A] border border-[#333]"
               >
                 Ajouter au Panier — {currentVolume.price} DH
               </button>
+              <button
+                onClick={() => setIsOrderFormOpen(true)}
+                className="flex-1 px-8 bg-[var(--color-gold)] text-black py-5 uppercase tracking-widest text-[0.7rem] font-bold transition-all duration-500 hover:opacity-90"
+              >
+                Commander via WhatsApp
+              </button>
             </div>
 
-            {/* ── Divider ── */}
+            {/* â”€â”€ Divider â”€â”€ */}
             <div className="reveal-item w-full h-px mt-4" style={{ backgroundColor: `color-mix(in srgb, ${accent} 20%, transparent)` }} />
 
-            {/* ── OLFACTORY TIMELINE ── */}
+            {/* â”€â”€ OLFACTORY TIMELINE â”€â”€ */}
             <div className="reveal-item">
               <h3 className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)] mb-4">
                 Architecture du Parfum
@@ -201,7 +209,7 @@ export default function ProductShowroom({ product }: { product: Product }) {
               />
             </div>
 
-            {/* ── INTENSITY GAUGES ── */}
+            {/* â”€â”€ INTENSITY GAUGES â”€â”€ */}
             <div className="reveal-item">
               <h3 className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)] mb-6">
                 Performance
@@ -213,7 +221,7 @@ export default function ProductShowroom({ product }: { product: Product }) {
               />
             </div>
 
-            {/* ── Product Details Grid ── */}
+            {/* â”€â”€ Product Details Grid â”€â”€ */}
             <div className="reveal-item grid grid-cols-2 gap-x-8 gap-y-5 max-w-sm">
               <div>
                 <span className="text-[0.5rem] text-[var(--color-text-subtle)] uppercase tracking-[0.3em] block mb-1">Famille</span>
@@ -233,15 +241,15 @@ export default function ProductShowroom({ product }: { product: Product }) {
               </div>
             </div>
 
-            {/* ── Divider ── */}
+            {/* â”€â”€ Divider â”€â”€ */}
             <div className="reveal-item w-full h-px" style={{ backgroundColor: `color-mix(in srgb, ${accent} 15%, transparent)` }} />
 
-            {/* ── ACCORDIONS ── */}
+            {/* â”€â”€ ACCORDIONS â”€â”€ */}
             <div className="reveal-item">
               <ProductAccordions />
             </div>
 
-            {/* ── LAYERING SECTION ── */}
+            {/* â”€â”€ LAYERING SECTION â”€â”€ */}
             <div className="reveal-item">
               <LayeringSection currentProduct={product} />
             </div>
@@ -249,6 +257,13 @@ export default function ProductShowroom({ product }: { product: Product }) {
           </div>
         </div>
       </div>
+          <SmartOrderForm
+        isOpen={isOrderFormOpen}
+        onClose={() => setIsOrderFormOpen(false)}
+        product={{ name: product.name, price: currentVolume.price, currency: product.currency }}
+      />
     </section>
   );
 }
+
+
