@@ -84,29 +84,47 @@ export default function OlfactoryPyramid({ top, heart, base }: { top: string, he
   }, []);
 
   return (
-    <div ref={containerRef} className="relative max-w-sm mx-auto py-12 flex flex-col items-center gap-8 mb-8">
+    <div ref={containerRef} className="relative py-16 mb-8">
       {/* Background abstract smoke SVG */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
         <svg viewBox="0 0 100 200" className="w-full h-full max-w-[200px]">
-           <path className="pyramid-smoke opacity-30" d="M30,180 Q10,120 50,80 T70,20" fill="none" stroke="var(--color-gold)" strokeWidth="0.5" />
-           <path className="pyramid-smoke opacity-30" d="M70,180 Q90,120 50,80 T30,20" fill="none" stroke="var(--color-gold)" strokeWidth="0.5" />
-           <path className="pyramid-smoke opacity-30" d="M50,180 Q30,130 60,90 T40,20" fill="none" stroke="var(--color-gold)" strokeWidth="0.5" />
+           <path className="pyramid-smoke opacity-30" d="M30,180 Q10,120 50,80 T70,20" fill="none" stroke="var(--color-accent)" strokeWidth="0.5" />
+           <path className="pyramid-smoke opacity-30" d="M70,180 Q90,120 50,80 T30,20" fill="none" stroke="var(--color-accent)" strokeWidth="0.5" />
+           <path className="pyramid-smoke opacity-30" d="M50,180 Q30,130 60,90 T40,20" fill="none" stroke="var(--color-accent)" strokeWidth="0.5" />
         </svg>
       </div>
 
-      <div ref={topRef} className="text-center z-10 w-full">
-        <span className="text-[0.55rem] uppercase tracking-[0.25em] text-[var(--color-text-subtle)] block mb-2">Notes de Tête</span>
-        <div className="pyramid-note-text font-[family-name:var(--font-cormorant)] text-xl text-[var(--color-gold)]">{top}</div>
-      </div>
-      
-      <div ref={heartRef} className="text-center z-10 w-full">
-        <span className="text-[0.55rem] uppercase tracking-[0.25em] text-[var(--color-text-subtle)] block mb-2">Notes de Cœur</span>
-        <div className="pyramid-note-text font-[family-name:var(--font-cormorant)] text-xl text-[var(--color-text)]">{heart}</div>
-      </div>
-      
-      <div ref={baseRef} className="text-center z-10 w-full">
-        <span className="text-[0.55rem] uppercase tracking-[0.25em] text-[var(--color-text-subtle)] block mb-2">Notes de Fond</span>
-        <div className="pyramid-note-text font-[family-name:var(--font-cormorant)] text-xl text-[var(--color-text-muted)]">{base}</div>
+      {/* 3-Column Centered Grid */}
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 max-w-4xl mx-auto text-center">
+        {/* Top Notes */}
+        <div ref={topRef} className="flex flex-col items-center gap-4 px-6 md:border-r md:border-[var(--color-border-subtle)]">
+          <div className="w-8 h-8 rounded-full border border-[var(--color-accent)] flex items-center justify-center opacity-60">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round"><path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18v4M16.24 16.24l2.83 2.83M18 12h4M16.24 7.76l2.83-2.83" /></svg>
+          </div>
+          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">Notes de T&ecirc;te</span>
+          <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-40" />
+          <div className="pyramid-note-text font-[family-name:var(--font-cormorant)] text-lg md:text-xl text-[var(--color-accent)] italic leading-relaxed">{top}</div>
+        </div>
+
+        {/* Heart Notes */}
+        <div ref={heartRef} className="flex flex-col items-center gap-4 px-6 md:border-r md:border-[var(--color-border-subtle)]">
+          <div className="w-8 h-8 rounded-full border border-[var(--color-text-muted)] flex items-center justify-center opacity-60">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" strokeWidth="1.5" strokeLinecap="round"><path d="M12 21C12 21 4 13.5 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12 4 12 4S12.76 3 14.5 3C17.58 3 20 5.42 20 8.5C20 13.5 12 21 12 21Z" /></svg>
+          </div>
+          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">Notes de C&oelig;ur</span>
+          <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-[var(--color-text-muted)] to-transparent opacity-40" />
+          <div className="pyramid-note-text font-[family-name:var(--font-cormorant)] text-lg md:text-xl text-[var(--color-text)] italic leading-relaxed">{heart}</div>
+        </div>
+
+        {/* Base Notes */}
+        <div ref={baseRef} className="flex flex-col items-center gap-4 px-6">
+          <div className="w-8 h-8 rounded-full border border-[var(--color-text-subtle)] flex items-center justify-center opacity-60">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-subtle)" strokeWidth="1.5" strokeLinecap="round"><path d="M12 2C12 2 8 6 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 6 12 2 12 2Z" /><path d="M12 14V22" /></svg>
+          </div>
+          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">Notes de Fond</span>
+          <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-[var(--color-text-subtle)] to-transparent opacity-40" />
+          <div className="pyramid-note-text font-[family-name:var(--font-cormorant)] text-lg md:text-xl text-[var(--color-text-muted)] italic leading-relaxed">{base}</div>
+        </div>
       </div>
     </div>
   );

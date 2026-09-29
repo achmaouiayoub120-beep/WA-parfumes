@@ -20,13 +20,13 @@ export function AccordionItem({ title, children, defaultOpen = false }: Accordio
         className="w-full flex justify-between items-center py-5 text-left group cursor-pointer focus:outline-none"
         aria-expanded={isOpen}
       >
-        <span className="text-[0.7rem] uppercase tracking-[0.2em] font-medium text-[var(--color-text)] group-hover:text-[var(--color-gold)] transition-colors duration-300">
+        <span className="text-[0.7rem] uppercase tracking-[0.2em] font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors duration-300">
           {title}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="w-4 h-4 flex items-center justify-center text-[var(--color-text)] group-hover:text-[var(--color-gold)] transition-colors duration-300"
+          className="w-4 h-4 flex items-center justify-center text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors duration-300"
         >
           <svg
             width="12"
@@ -76,7 +76,7 @@ export function ProductAccordions() {
       </AccordionItem>
 
       <AccordionItem title="Conseils d'Application">
-        <ul className="list-disc list-inside space-y-1.5 marker:text-[var(--color-gold)]">
+        <ul className="list-disc list-inside space-y-1.5 marker:text-[var(--color-accent)]">
           <li>Vaporisez généreusement sur les points de pulsion : poignets, creux du cou et arrière des oreilles.</li>
           <li>Maintenez le flacon à une distance de 15 à 20 cm de la peau pour une diffusion homogène.</li>
           <li>Pour maximiser la tenue, appliquez sur une peau préalablement hydratée avec une crème inodore.</li>

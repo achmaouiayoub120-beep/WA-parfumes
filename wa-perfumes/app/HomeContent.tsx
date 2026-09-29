@@ -4,11 +4,11 @@ import dynamic from 'next/dynamic';
 
 const Preloader = dynamic(() => import('@/components/ui/Preloader'), { ssr: false });
 const HeroSection = dynamic(() => import('@/components/hero/HeroSection'), { ssr: false });
-const ScrollStorytelling = dynamic(() => import('@/components/sections/ScrollStorytelling'), { ssr: false });
 const CollectionShowcase = dynamic(() => import('@/components/sections/CollectionShowcase'), { ssr: false });
 const PackDiscoverySection = dynamic(() => import('@/components/sections/PackDiscoverySection'), { ssr: false });
 const MenCollection = dynamic(() => import('@/components/sections/MenCollection'), { ssr: false });
 const WomenCollection = dynamic(() => import('@/components/sections/WomenCollection'), { ssr: false });
+const UnisexCollection = dynamic(() => import('@/components/sections/UnisexCollection'), { ssr: false });
 const Footer = dynamic(() => import('@/components/sections/Footer'), { ssr: false });
 const SectionWipe = dynamic(() => import('@/components/animations/SectionWipe'), { ssr: false });
 
@@ -17,27 +17,29 @@ export default function HomeContent() {
     <>
       <Preloader />
       <HeroSection />
-      <section id="story">
-        <ScrollStorytelling />
-      </section>
       <SectionWipe color="var(--color-bg-elevated)">
         <section id="collections">
           <CollectionShowcase />
         </section>
       </SectionWipe>
-      <SectionWipe color="#1A1612">
+      <SectionWipe color="#1A1020">
         <section id="pack-decouverte">
           <PackDiscoverySection />
         </section>
       </SectionWipe>
-      <SectionWipe color="#2A1A08">
+      <SectionWipe color="#241323">
         <section id="homme">
           <MenCollection />
         </section>
       </SectionWipe>
-      <SectionWipe color="#3D2024">
+      <SectionWipe color="#3D1530">
         <section id="femme">
           <WomenCollection />
+        </section>
+      </SectionWipe>
+      <SectionWipe color="#1A1025">
+        <section id="unisexe">
+          <UnisexCollection />
         </section>
       </SectionWipe>
       <Footer />

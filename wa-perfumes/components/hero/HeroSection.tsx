@@ -189,21 +189,11 @@ export default function HeroSection() {
         {/* CTA */}
         <div ref={ctaRef} className="opacity-0">
           <MagneticButton
-            className="px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 border rounded-none text-[0.7rem] uppercase tracking-[0.3em] text-[var(--color-gold)] hover:bg-[var(--color-border)] transition-colors duration-500"
-            style={{ borderColor: 'color-mix(in srgb, var(--color-gold) 30%, transparent)' }}
+            className="px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 border rounded-none text-[0.7rem] uppercase tracking-[0.3em] text-[var(--color-cream)] hover:bg-[var(--color-burgundy)] hover:border-[var(--color-burgundy)] transition-all duration-500"
+            style={{ borderColor: 'color-mix(in srgb, var(--color-silver) 35%, transparent)' }}
           >
             Explorer les Collections
           </MagneticButton>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
-        <span className="text-[0.55rem] uppercase tracking-[0.4em] text-[var(--color-text-subtle)]">
-          Défiler
-        </span>
-        <div className="w-[1px] h-8 relative overflow-hidden" style={{ backgroundColor: 'color-mix(in srgb, var(--color-gold) 20%, transparent)' }}>
-          <div className="absolute top-0 left-0 w-full h-full bg-[var(--color-gold)] animate-[slideDown_2s_ease-in-out_infinite]" />
         </div>
       </div>
     </section>

@@ -110,9 +110,9 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
         0.6
       );
 
-      // Fill in the strokes with gold after drawing
+      // Fill in the strokes with cream after drawing
       tl.to(paths, {
-        fill: 'var(--color-gold)',
+        fill: 'var(--color-cream)',
         fillOpacity: 1,
         duration: 0.4,
         ease: 'power2.in',
@@ -135,7 +135,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
       <svg
         ref={svgRef}
         viewBox="0 0 200 80"
-        className="w-40 md:w-52 h-auto mb-6"
+        className="w-56 md:w-80 h-auto mb-8"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -143,7 +143,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
         <path
           className="wa-stroke-path"
           d="M 10 15 L 30 65 L 50 30 L 70 65 L 90 15"
-          stroke="var(--color-gold)"
+          stroke="var(--color-cream)"
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -154,7 +154,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
         <path
           className="wa-stroke-path"
           d="M 5 15 L 15 15 M 85 15 L 95 15"
-          stroke="var(--color-gold)"
+          stroke="var(--color-cream)"
           strokeWidth="1.2"
           strokeLinecap="round"
         />
@@ -163,7 +163,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
         <path
           className="wa-stroke-path"
           d="M 110 65 L 140 15 L 170 65"
-          stroke="var(--color-gold)"
+          stroke="var(--color-cream)"
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -174,7 +174,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
         <path
           className="wa-stroke-path"
           d="M 120 45 L 160 45"
-          stroke="var(--color-gold)"
+          stroke="var(--color-cream)"
           strokeWidth="1.2"
           strokeLinecap="round"
         />
@@ -182,7 +182,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
         <path
           className="wa-stroke-path"
           d="M 105 65 L 115 65 M 165 65 L 175 65"
-          stroke="var(--color-gold)"
+          stroke="var(--color-cream)"
           strokeWidth="1.2"
           strokeLinecap="round"
         />
@@ -193,7 +193,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
           cx="100"
           cy="65"
           r="1.5"
-          stroke="var(--color-gold)"
+          stroke="var(--color-cream)"
           strokeWidth="1"
           fill="none"
           fillOpacity="0"

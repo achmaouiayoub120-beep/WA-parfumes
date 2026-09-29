@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { MEN_PRODUCTS, Product } from '@/data/products/men';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
+import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import { useCartStore } from '@/store/useCartStore';
 import { useUIStore } from '@/store/useUIStore';
 
@@ -27,7 +28,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
   const openCart = useUIStore((state) => state.openCart);
 
   // Combine all products for searching
-  const allProducts = useMemo(() => [...(MEN_PRODUCTS || []), ...(WOMEN_PRODUCTS || [])], []);
+  const allProducts = useMemo(() => [...(MEN_PRODUCTS || []), ...(WOMEN_PRODUCTS || []), ...(UNISEX_PRODUCTS || [])], []);
 
   const handleNext = () => {
     setStep((prev) => prev + 1);
@@ -115,7 +116,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
           <div className="absolute top-6 right-6 z-50">
             <button
               onClick={onClose}
-              className="text-white hover:text-[var(--color-gold)] transition-colors p-2"
+              className="text-white hover:text-[var(--color-violet)] transition-colors p-2"
               aria-label="Fermer"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -148,7 +149,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
                             handleNext();
                           }
                         }}
-                        className="flex-1 py-4 px-6 border border-white/20 rounded-none text-white hover:border-[var(--color-gold)] hover:text-[var(--color-gold)] hover:bg-white/5 transition-all duration-300 font-sans tracking-widest uppercase text-xs"
+                        className="flex-1 py-4 px-6 border border-white/20 rounded-none text-white hover:border-[var(--color-violet)] hover:text-[var(--color-violet)] hover:bg-white/5 transition-all duration-300 font-sans tracking-widest uppercase text-xs"
                       >
                         {choice}
                       </button>
@@ -175,7 +176,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
                           setQ2(choice as Q2);
                           handleNext();
                         }}
-                        className="w-full py-4 px-6 border border-white/20 rounded-none text-white hover:border-[var(--color-gold)] hover:text-[var(--color-gold)] hover:bg-white/5 transition-all duration-300 font-sans tracking-widest uppercase text-xs"
+                        className="w-full py-4 px-6 border border-white/20 rounded-none text-white hover:border-[var(--color-violet)] hover:text-[var(--color-violet)] hover:bg-white/5 transition-all duration-300 font-sans tracking-widest uppercase text-xs"
                       >
                         {choice}
                       </button>
@@ -202,7 +203,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
                           setQ3(choice as Q3);
                           handleNext();
                         }}
-                        className="flex-1 py-4 px-6 border border-white/20 rounded-none text-white hover:border-[var(--color-gold)] hover:text-[var(--color-gold)] hover:bg-white/5 transition-all duration-300 font-sans tracking-widest uppercase text-xs"
+                        className="flex-1 py-4 px-6 border border-white/20 rounded-none text-white hover:border-[var(--color-violet)] hover:text-[var(--color-violet)] hover:bg-white/5 transition-all duration-300 font-sans tracking-widest uppercase text-xs"
                       >
                         {choice}
                       </button>
@@ -219,7 +220,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
                   transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="flex flex-col items-center text-center gap-8"
                 >
-                  <p className="text-[var(--color-gold)] font-sans tracking-[0.2em] uppercase text-xs">
+                  <p className="text-[var(--color-violet)] font-sans tracking-[0.2em] uppercase text-xs">
                     Vos choix nous ont menés à une évidence :
                   </p>
                   
@@ -232,7 +233,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
 
                   <div className="relative w-48 h-64 md:w-64 md:h-80 mt-4 mb-4">
                     {/* Dramatic light behind bottle */}
-                    <div className="absolute inset-0 bg-[var(--color-gold)] blur-[80px] opacity-20 rounded-full" />
+                    <div className="absolute inset-0 bg-[var(--color-violet)] blur-[80px] opacity-20 rounded-full" />
                     <Image 
                       src={recommendedProduct.image} 
                       alt={recommendedProduct.name}
@@ -243,7 +244,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
 
                   <button
                     onClick={handleAddToCart}
-                    className="w-full sm:w-auto px-12 py-5 bg-[var(--color-gold)] text-black font-sans uppercase tracking-widest text-xs font-semibold hover:bg-white transition-colors duration-500"
+                    className="w-full sm:w-auto px-12 py-5 bg-[var(--color-violet)] text-white font-sans uppercase tracking-widest text-xs font-semibold hover:bg-white hover:text-black transition-colors duration-500"
                   >
                     Ajouter au coffret — 50 DH
                   </button>

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { type Product, MEN_PRODUCTS } from '@/data/products/men';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
+import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import { useCartStore } from '@/store/useCartStore';
 import { useUIStore } from '@/store/useUIStore';
 
@@ -21,7 +22,7 @@ export default function LayeringSection({ currentProduct }: LayeringSectionProps
   const recommendedProduct = useMemo(() => {
     if (!currentProduct) return null;
 
-    const allProducts: Product[] = [...MEN_PRODUCTS, ...WOMEN_PRODUCTS];
+    const allProducts: Product[] = [...MEN_PRODUCTS, ...WOMEN_PRODUCTS, ...UNISEX_PRODUCTS];
     const candidates = allProducts.filter((p) => p.id !== currentProduct.id);
 
     if (candidates.length === 0) return null;
@@ -102,7 +103,7 @@ export default function LayeringSection({ currentProduct }: LayeringSectionProps
           <div className="flex flex-col gap-1 min-w-0">
             <Link
               href={`/product/${recommendedProduct.id}`}
-              className="text-base font-medium text-[var(--color-text)] hover:text-[var(--color-gold)] transition-colors duration-200 truncate"
+              className="text-base font-medium text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors duration-200 truncate"
             >
               {recommendedProduct.name}
             </Link>
@@ -111,7 +112,7 @@ export default function LayeringSection({ currentProduct }: LayeringSectionProps
                 Inspiré par {recommendedProduct.inspiredBy}
               </p>
             )}
-            <p className="text-xs font-semibold text-[var(--color-gold)] tracking-wider mt-1">
+            <p className="text-xs font-semibold text-[var(--color-accent)] tracking-wider mt-1">
               {formattedPrice}
             </p>
           </div>
@@ -121,7 +122,7 @@ export default function LayeringSection({ currentProduct }: LayeringSectionProps
         <button
           type="button"
           onClick={handleAddToCart}
-          className="w-full sm:w-auto px-4 py-2.5 text-xs font-medium uppercase tracking-widest border border-[var(--color-gold)] text-[var(--color-gold)] hover:bg-[var(--color-gold)] hover:text-[var(--color-bg)] transition-colors duration-300 rounded-sm whitespace-nowrap"
+          className="w-full sm:w-auto px-4 py-2.5 text-xs font-medium uppercase tracking-widest border border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)] transition-colors duration-300 rounded-sm whitespace-nowrap"
         >
           Ajouter aussi
         </button>

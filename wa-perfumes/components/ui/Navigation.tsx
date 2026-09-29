@@ -12,12 +12,14 @@ import { useCartStore } from '@/store/useCartStore';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import { MEN_PRODUCTS } from '@/data/products/men';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
+import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import { FRAGRANCE_FAMILIES } from '@/data/products/categories';
 
 const NAV_LINKS = [
   { label: 'Collections', href: '/#collections' },
   { label: 'W&A Homme', href: '/#homme', megaMenu: 'homme' as const },
   { label: 'W&A Femme', href: '/#femme', megaMenu: 'femme' as const },
+  { label: 'W&A Unisexe', href: '/#unisexe', megaMenu: 'unisexe' as const },
   { label: 'Pack Découverte', href: '/#pack-decouverte' },
   { label: 'Notre Histoire', href: '/#story' },
 ];
@@ -31,7 +33,7 @@ function getFamilies(products: typeof MEN_PRODUCTS) {
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeMega, setActiveMega] = useState<'homme' | 'femme' | null>(null);
+  const [activeMega, setActiveMega] = useState<'homme' | 'femme' | 'unisexe' | null>(null);
   const [mounted, setMounted] = useState(false);
   const [activeHash, setActiveHash] = useState('');
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
@@ -92,7 +94,7 @@ export default function Navigation() {
     }
   }, [menuOpen]);
 
-  const handleMegaEnter = useCallback((type: 'homme' | 'femme') => {
+  const handleMegaEnter = useCallback((type: 'homme' | 'femme' | 'unisexe') => {
     if (megaTimeoutRef.current) clearTimeout(megaTimeoutRef.current);
     setActiveMega(type);
   }, []);
@@ -109,9 +111,11 @@ export default function Navigation() {
 
   // Mega menu data
   const megaData = activeMega === 'homme'
-    ? { products: MEN_PRODUCTS, label: 'W&A Homme', href: '/#homme', accent: 'var(--color-gold)' }
+    ? { products: MEN_PRODUCTS, label: 'W&A Homme', href: '/#homme', accent: 'var(--color-silver)' }
     : activeMega === 'femme'
     ? { products: WOMEN_PRODUCTS, label: 'W&A Femme', href: '/#femme', accent: 'var(--color-accent-rose)' }
+    : activeMega === 'unisexe'
+    ? { products: UNISEX_PRODUCTS, label: 'W&A Unisexe', href: '/#unisexe', accent: 'var(--color-violet)' }
     : null;
 
   const featuredProducts = megaData ? megaData.products.filter(p => p.isBestseller || p.isNew).slice(0, 3) : [];
@@ -136,9 +140,9 @@ export default function Navigation() {
           <Image
             src="/logo.png"
             alt="WA Perfumes"
-            width={140}
-            height={70}
-            className="object-contain w-auto h-10 sm:h-12 scale-110"
+            width={200}
+            height={100}
+            className="object-contain w-auto h-14 sm:h-16 lg:h-[4.5rem]"
             style={mounted && resolvedTheme === 'light' ? {
               filter: 'brightness(0.15) sepia(1) saturate(0.5) hue-rotate(10deg)',
             } : undefined}
@@ -176,8 +180,8 @@ export default function Navigation() {
                     layoutId="active-pill"
                     className="absolute inset-0 rounded-full"
                     style={{
-                      backgroundColor: 'color-mix(in srgb, var(--color-gold) 10%, transparent)',
-                      border: '1px solid color-mix(in srgb, var(--color-gold) 20%, transparent)',
+                      backgroundColor: 'color-mix(in srgb, var(--color-accent) 10%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)',
                     }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -190,9 +194,9 @@ export default function Navigation() {
                   href={link.href}
                   className="relative z-10 block px-5 py-2.5 rounded-full whitespace-nowrap text-xs uppercase tracking-[0.15em] font-medium transition-colors duration-300 hover:bg-black/5 dark:hover:bg-white/10"
                   style={{
-                    color: activeMega === link.megaMenu || isReallyActive ? 'var(--color-gold)' : 'var(--color-text)',
+                    color: activeMega === link.megaMenu || isReallyActive ? 'var(--color-accent)' : 'var(--color-text)',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-gold)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
                   onMouseLeave={(e) => {
                     if (activeMega !== link.megaMenu && !isReallyActive) {
                       e.currentTarget.style.color = 'var(--color-text)';
@@ -216,7 +220,7 @@ export default function Navigation() {
             onClick={openCart}
             className="relative transition-colors duration-300 hover:text-amber-500/90"
             style={{ color: 'var(--color-text)' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-gold)')}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text)')}
             aria-label="Open cart"
           >
@@ -306,7 +310,7 @@ export default function Navigation() {
                   <div className="mt-6 pt-4 border-t border-[var(--color-border-faint)]">
                     <Link
                       href={megaData.href}
-                      className="text-[0.6rem] uppercase tracking-[0.25em] transition-colors duration-300 hover:text-[var(--color-gold)]"
+                      className="text-[0.6rem] uppercase tracking-[0.25em] transition-colors duration-300 hover:text-[var(--color-accent)]"
                       style={{ color: megaData.accent }}
                     >
                       Voir toute la collection
@@ -355,7 +359,7 @@ export default function Navigation() {
                             </span>
                           )}
                         </div>
-                        <p className="text-[0.65rem] text-[var(--color-text)] tracking-wide group-hover:text-[var(--color-gold)] transition-colors duration-300">
+                        <p className="text-[0.65rem] text-[var(--color-text)] tracking-wide group-hover:text-[var(--color-accent)] transition-colors duration-300">
                           {product.name}
                         </p>
                         <p className="text-[0.55rem] text-[var(--color-text-subtle)] italic mt-0.5">
@@ -401,7 +405,7 @@ export default function Navigation() {
                   onClick={() => setMenuOpen(false)}
                   className="menu-link block font-[family-name:var(--font-cormorant)] text-4xl md:text-6xl lg:text-7xl font-light tracking-[0.08em] transition-colors duration-300 uppercase"
                   style={{ color: 'var(--color-text)' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-gold)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text)')}
                 >
                   {link.label}
@@ -416,7 +420,7 @@ export default function Navigation() {
               href="https://www.instagram.com/w_a_perfume/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.65rem] uppercase tracking-[0.2em] transition-colors hover:text-[var(--color-gold)]"
+              className="text-[0.65rem] uppercase tracking-[0.2em] transition-colors hover:text-[var(--color-accent)]"
               style={{ color: 'var(--color-text)' }}
             >
               Instagram

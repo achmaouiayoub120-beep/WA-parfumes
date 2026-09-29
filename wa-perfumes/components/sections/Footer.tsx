@@ -10,8 +10,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const LINKS = [
   { label: 'Collections', href: '/#collections' },
-  { label: 'WA Signature', href: '/#signature' },
-  { label: 'WA Elegance', href: '/#elegance' },
+  { label: 'W&A Homme', href: '/#homme' },
+  { label: 'W&A Femme', href: '/#femme' },
+  { label: 'W&A Unisexe', href: '/#unisexe' },
   { label: 'Scent Finder', href: '/finder' },
 ];
 
@@ -36,18 +37,18 @@ export default function Footer() {
           <Image
             src="/logo.png"
             alt="WA Perfumes Logo"
-            width={240}
-            height={120}
-            className="object-contain w-48 h-24 md:w-64 md:h-32"
+            width={320}
+            height={160}
+            className="object-contain w-56 h-28 md:w-80 md:h-40"
           />
         </div>
 
         {/* Tagline */}
-        <p className="text-center text-[0.65rem] uppercase tracking-[0.5em] text-[var(--color-gold)] mb-12">
+        <p className="text-center text-[0.65rem] uppercase tracking-[0.5em] text-[var(--color-accent)] mb-12">
           Leave Your Signature
         </p>
 
-        {/* Gold Divider */}
+        {/* Accent Divider */}
         <div className="divider-gold max-w-xs mx-auto mb-12" />
 
         {/* Navigation Links */}
@@ -56,7 +57,7 @@ export default function Footer() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-[0.7rem] uppercase tracking-[0.25em] text-[var(--color-text-subtle)] hover:text-[var(--color-gold)] transition-colors duration-300"
+              className="text-[0.7rem] uppercase tracking-[0.25em] text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors duration-300"
             >
               {link.label}
             </Link>
@@ -70,7 +71,7 @@ export default function Footer() {
             href="https://www.instagram.com/w_a_perfume/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--color-text-subtle)] hover:text-[var(--color-gold)] transition-colors duration-300"
+            className="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors duration-300"
             aria-label="Instagram"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -85,7 +86,7 @@ export default function Footer() {
             href="https://wa.me/message/JKNKD5ZOFPR2A1"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--color-text-subtle)] hover:text-[var(--color-gold)] transition-colors duration-300"
+            className="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors duration-300"
             aria-label="WhatsApp"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -99,7 +100,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-[var(--color-border-faint)] py-6 flex flex-col items-center justify-center gap-4 relative overflow-hidden">
         {/* Subtle glow effect for the signature */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-8 bg-[var(--color-gold)] opacity-5 blur-[30px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-8 bg-[var(--color-accent)] opacity-5 blur-[30px] pointer-events-none" />
         
         <p className="text-center text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">
           © {new Date().getFullYear()} WA Perfumes. All rights reserved.
@@ -110,17 +111,17 @@ export default function Footer() {
           href="#"
           className="group flex items-center justify-center gap-3 opacity-60 hover:opacity-100 transition-opacity duration-700"
         >
-          <span className="w-4 h-[1px] bg-gradient-to-r from-transparent to-[var(--color-gold-muted)] group-hover:w-8 transition-all duration-700" />
+          <span className="w-4 h-[1px] bg-gradient-to-r from-transparent to-[var(--color-accent-muted)] group-hover:w-8 transition-all duration-700" />
           <span className="text-[0.55rem] uppercase tracking-[0.3em] text-[var(--color-text-subtle)]">
-            Crafted with <span className="text-[var(--color-gold)]">✦</span> by{' '}
+            Crafted with <span className="text-[var(--color-accent)]">✦</span> by{' '}
             <span 
-              className="font-[family-name:var(--font-cormorant)] text-[0.75rem] italic tracking-widest text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-gold)] ml-1"
-              style={{ textShadow: '0 0 10px rgba(201,168,118,0)' }}
+              className="font-[family-name:var(--font-cormorant)] text-[0.75rem] italic tracking-widest text-[var(--color-text)] transition-colors duration-500 group-hover:text-[var(--color-accent)] ml-1"
+              style={{ textShadow: '0 0 10px rgba(201,203,211,0)' }}
             >
               ayoubachtec
             </span>
           </span>
-          <span className="w-4 h-[1px] bg-gradient-to-l from-transparent to-[var(--color-gold-muted)] group-hover:w-8 transition-all duration-700" />
+          <span className="w-4 h-[1px] bg-gradient-to-l from-transparent to-[var(--color-accent-muted)] group-hover:w-8 transition-all duration-700" />
         </a>
       </div>
     </footer>

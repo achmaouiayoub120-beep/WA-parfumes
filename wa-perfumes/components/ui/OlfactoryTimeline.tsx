@@ -14,7 +14,7 @@ export function OlfactoryTimeline({
   topNotes,
   heartNotes,
   baseNotes,
-  accentColor = 'var(--color-gold)'
+  accentColor = 'var(--color-accent)'
 }: OlfactoryTimelineProps) {
   const containerVariants = {
     hidden: { opacity: 0 },

@@ -3,13 +3,13 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MEN_PRODUCTS } from '@/data/products/men';
+import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import ProductCard from '@/components/ui/ProductCard';
 import OlfactoryPyramid from '@/components/ui/OlfactoryPyramid';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function MenCollection() {
+export default function UnisexCollection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 
@@ -49,14 +49,14 @@ export default function MenCollection() {
       <div className="flex flex-col items-center text-center mb-20 animate-fade-up">
         {/* Symmetrical Subtitle */}
         <div className="flex items-center justify-center gap-4 mb-8 opacity-80">
-          <div className="w-12 h-[1px] bg-[var(--color-silver)] opacity-50" />
-          <p className="editorial-subtitle text-[var(--color-text-subtle)]">Collection Homme</p>
-          <div className="w-12 h-[1px] bg-[var(--color-silver)] opacity-50" />
+          <div className="w-12 h-[1px] bg-[var(--color-violet)] opacity-50" />
+          <p className="editorial-subtitle text-[var(--color-violet)]">Collection Unisexe</p>
+          <div className="w-12 h-[1px] bg-[var(--color-violet)] opacity-50" />
         </div>
 
         {/* Main Title */}
         <h2 className="heading-display text-[var(--color-text)] mb-8 text-5xl md:text-6xl lg:text-7xl">
-          W&A <span className="italic text-[var(--color-text-muted)] font-light">Homme</span>
+          W&A <span className="italic text-[var(--color-text-muted)] font-light">Unisexe</span>
         </h2>
 
         {/* Text Container */}
@@ -64,24 +64,24 @@ export default function MenCollection() {
           <div className="absolute left-1/2 -top-2 -translate-x-1/2 w-24 h-[1px] bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
           
           <p className="body-large text-[var(--color-text-muted)] leading-relaxed mb-10 pt-6">
-            Thirteen powerful fragrances crafted for the modern gentleman. <strong className="text-[var(--color-text)] font-normal">Bold, deep, unforgettable.</strong>
+            Seven gender-fluid fragrances that transcend boundaries. <strong className="text-[var(--color-text)] font-normal">Universal, bold, limitless.</strong>
           </p>
         </div>
 
         {/* Olfactory Notes */}
-        <OlfactoryPyramid top="Bergamote, Poivre Noir, Cardamome" heart="Bois d'Agar, Vétiver, Cèdre" base="Ambre, Musc Cuiré, Fève Tonka" />
+        <OlfactoryPyramid top="Néroli, Bergamote, Poivre Rose" heart="Santal, Rose, Ambroxan" base="Musc Blanc, Cèdre, Vanille" />
       </div>
 
       {/* Asymmetric Product Grid */}
       <div ref={cardsRef} className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
-        {MEN_PRODUCTS.map((product: any, index: number) => (
+        {UNISEX_PRODUCTS.map((product, index) => (
           <div
             key={product.id}
             className={`product-card-wrapper ${
-              index % 5 === 1 ? 'md:mt-12' : index % 5 === 3 ? 'md:mt-8' : ''
+              index % 5 === 2 ? 'md:mt-12' : index % 5 === 4 ? 'md:mt-8' : ''
             }`}
           >
-            <ProductCard product={{ ...product, collection: 'homme' as const }} />
+            <ProductCard product={{ ...product, collection: 'unisexe' as const }} />
           </div>
         ))}
       </div>

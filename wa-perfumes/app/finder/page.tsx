@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { MEN_PRODUCTS } from '@/data/products/men';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
+import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import Image from 'next/image';
 import Link from 'next/link';
 import MagneticButton from '@/components/ui/MagneticButton';
@@ -21,7 +22,8 @@ const QUESTIONS: Question[] = [
     question: "Pour qui cherchez-vous ?",
     options: [
       { label: "Pour Lui (WA Signature)", value: "men" },
-      { label: "Pour Elle (WA Elegance)", value: "women" }
+      { label: "Pour Elle (WA Elegance)", value: "women" },
+      { label: "Pour Tous (WA Unisexe)", value: "unisex" }
     ]
   },
   {
@@ -70,13 +72,21 @@ export default function PerfumeFinder() {
     
     // Simulate calculation delay for dramatic effect
     setTimeout(() => {
-      const isMen = finalAnswers.gender === 'men';
-      const catalog = isMen ? MEN_PRODUCTS : WOMEN_PRODUCTS;
+      let catalog = UNISEX_PRODUCTS;
+      if (finalAnswers.gender === 'men') {
+        catalog = MEN_PRODUCTS;
+      } else if (finalAnswers.gender === 'women') {
+        catalog = WOMEN_PRODUCTS;
+      } else if (finalAnswers.gender === 'unisex') {
+        catalog = UNISEX_PRODUCTS;
+      } else {
+        catalog = [...MEN_PRODUCTS, ...WOMEN_PRODUCTS, ...UNISEX_PRODUCTS];
+      }
       
       let match = catalog[0];
       
       if (finalAnswers.note === 'wood') {
-        match = catalog.find(p => p.baseNotes.some(n => n.toLowerCase().includes('oud') || n.toLowerCase().includes('wood'))) || catalog[0];
+        match = catalog.find(p => p.baseNotes.some(n => n.toLowerCase().includes('oud') || n.toLowerCase().includes('wood') || n.toLowerCase().includes('cedar'))) || catalog[0];
       } else if (finalAnswers.note === 'citrus') {
         match = catalog.find(p => p.topNotes.some(n => n.toLowerCase().includes('citrus') || n.toLowerCase().includes('bergamot'))) || catalog[0];
       } else if (finalAnswers.note === 'sweet') {
@@ -105,7 +115,7 @@ export default function PerfumeFinder() {
               transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
               className="flex flex-col items-center text-center"
             >
-              <span className="text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-gold)] mb-6">
+              <span className="text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-violet)] mb-6">
                 Étape {currentStep + 1} sur {QUESTIONS.length}
               </span>
               
@@ -113,15 +123,15 @@ export default function PerfumeFinder() {
                 {QUESTIONS[currentStep].question}
               </h1>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-2xl">
+              <div className={`grid grid-cols-1 ${QUESTIONS[currentStep].options.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4 md:gap-6 w-full max-w-2xl`}>
                 {QUESTIONS[currentStep].options.map((option) => (
                   <button
                     key={option.value}
                     onClick={() => handleSelect(QUESTIONS[currentStep].id, option.value)}
                     className={`p-6 border transition-all duration-300 ${
                       answers[QUESTIONS[currentStep].id] === option.value
-                        ? 'border-[var(--color-gold)] bg-[var(--color-gold-muted)]'
-                        : 'border-[var(--color-border-subtle)] hover:border-[var(--color-gold-muted)] bg-transparent'
+                        ? 'border-[var(--color-violet)] bg-[var(--color-accent-violet-muted)]'
+                        : 'border-[var(--color-border-subtle)] hover:border-[var(--color-accent-violet-border)] bg-transparent'
                     }`}
                   >
                     <span className="text-[var(--color-text)] font-[family-name:var(--font-sans)] text-[0.7rem] uppercase tracking-[0.25em]">
@@ -142,8 +152,8 @@ export default function PerfumeFinder() {
               exit={{ opacity: 0 }}
               className="flex flex-col items-center text-center"
             >
-              <div className="w-16 h-16 border-t-[1px] border-b-[1px] border-[var(--color-gold)] rounded-full animate-spin mb-8" />
-              <h2 className="font-[family-name:var(--font-cormorant)] text-3xl font-light tracking-[0.04em] text-[var(--color-gold)] animate-pulse">
+              <div className="w-16 h-16 border-t-[1px] border-b-[1px] border-[var(--color-violet)] rounded-full animate-spin mb-8" />
+              <h2 className="font-[family-name:var(--font-cormorant)] text-3xl font-light tracking-[0.04em] text-[var(--color-violet)] animate-pulse">
                 Analyse de votre profil...
               </h2>
               <p className="text-[var(--color-text-subtle)] font-[family-name:var(--font-sans)] mt-4 uppercase tracking-[0.25em] text-[0.65rem]">
@@ -173,7 +183,7 @@ export default function PerfumeFinder() {
               </div>
               
               <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left">
-                <span className="text-[var(--color-gold)] text-[0.65rem] tracking-[0.3em] uppercase mb-4 block">
+                <span className="text-[var(--color-violet)] text-[0.65rem] tracking-[0.3em] uppercase mb-4 block">
                   Votre Parfum Signature
                 </span>
                 

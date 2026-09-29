@@ -9,7 +9,7 @@ interface Product {
   name: string;
   price: number;
   image: string;
-  collection: 'homme' | 'femme';
+  collection: 'homme' | 'femme' | 'unisexe';
   inspirationNote?: string;
   topNotes?: string[];
   [key: string]: unknown;
@@ -28,11 +28,11 @@ export default function ProductCard({ product }: { product: Product }) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Gold spotlight on hover (soft base glow) */}
+        {/* Silver spotlight on hover (soft base glow) */}
         <div
           className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-screen"
           style={{
-            background: `radial-gradient(circle at 50% 50%, var(--color-gold-bg-hover) 0%, transparent 70%)`,
+            background: `radial-gradient(circle at 50% 50%, var(--color-accent-bg-hover) 0%, transparent 70%)`,
           }}
         />
 
@@ -40,32 +40,45 @@ export default function ProductCard({ product }: { product: Product }) {
         <div
           className="absolute inset-0 z-10 opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none mix-blend-overlay"
           style={{
-            background: `linear-gradient(105deg, transparent 20%, var(--color-gold) 50%, transparent 80%)`,
+            background: `linear-gradient(105deg, transparent 20%, var(--color-accent) 50%, transparent 80%)`,
             transform: `translateX(0)`,
           }}
         />
 
         {/* Hover border glow */}
-        <div className="absolute inset-0 z-10 border border-transparent group-hover:border-[var(--color-gold-border)] transition-colors duration-500 pointer-events-none" />
+        <div className="absolute inset-0 z-10 border border-transparent group-hover:border-[var(--color-accent-border)] transition-colors duration-500 pointer-events-none" />
 
         {/* Collection Badge */}
         <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20">
           <span
             className="text-[0.45rem] sm:text-[0.55rem] uppercase tracking-[0.25em] px-2 py-0.5 sm:px-2.5 sm:py-1 backdrop-blur-sm rounded-sm"
             style={{
-              color: product.collection === 'homme' ? 'var(--color-gold)' : 'var(--color-accent-rose)',
+              color:
+                product.collection === 'homme'
+                  ? 'var(--color-silver)'
+                  : product.collection === 'unisexe'
+                  ? 'var(--color-violet)'
+                  : 'var(--color-accent-rose)',
               background:
                 product.collection === 'homme'
-                  ? 'var(--color-gold-muted)'
+                  ? 'var(--color-accent-muted)'
+                  : product.collection === 'unisexe'
+                  ? 'var(--color-accent-violet-muted)'
                   : 'var(--color-accent-rose-muted)',
               border: `1px solid ${
                 product.collection === 'homme'
-                  ? 'var(--color-gold-border)'
+                  ? 'var(--color-accent-border)'
+                  : product.collection === 'unisexe'
+                  ? 'var(--color-accent-violet-border)'
                   : 'var(--color-accent-rose-border)'
               }`,
             }}
           >
-            {product.collection === 'homme' ? 'Homme' : 'Femme'}
+            {product.collection === 'homme'
+              ? 'Homme'
+              : product.collection === 'unisexe'
+              ? 'Unisexe'
+              : 'Femme'}
           </span>
         </div>
 
@@ -80,8 +93,8 @@ export default function ProductCard({ product }: { product: Product }) {
             quality={80}
           />
 
-          {/* Inner pulsing gold glow on the bottle image */}
-          <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(201,168,118,0)] group-hover:shadow-[inset_0_0_20px_rgba(201,168,118,0.15)] transition-shadow duration-700 pointer-events-none" />
+          {/* Inner pulsing silver glow on the bottle image */}
+          <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(201,203,211,0)] group-hover:shadow-[inset_0_0_20px_rgba(201,203,211,0.15)] transition-shadow duration-700 pointer-events-none" />
 
           {/* Bottom gradient */}
           <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-[var(--color-bg-card)] to-transparent" />
@@ -96,7 +109,7 @@ export default function ProductCard({ product }: { product: Product }) {
               {product.topNotes.slice(0, 3).map((note, idx) => (
                 <span
                   key={note}
-                  className="text-[0.45rem] sm:text-[0.55rem] uppercase tracking-[0.2em] px-1.5 py-0.5 sm:px-2 sm:py-1 bg-[var(--color-bg-overlay-medium)] backdrop-blur-sm text-[var(--color-gold)] border border-[var(--color-gold-border)] rounded-sm transition-all duration-500"
+                  className="text-[0.45rem] sm:text-[0.55rem] uppercase tracking-[0.2em] px-1.5 py-0.5 sm:px-2 sm:py-1 bg-[var(--color-bg-overlay-medium)] backdrop-blur-sm text-[var(--color-accent)] border border-[var(--color-accent-border)] rounded-sm transition-all duration-500"
                   style={{
                     opacity: isHovered ? 1 : 0,
                     transform: isHovered ? 'translateY(0) scale(1)' : 'translateY(8px) scale(0.95)',
@@ -112,7 +125,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Info */}
         <div className="p-3 sm:p-4 md:p-5">
-          <h3 className="font-[family-name:var(--font-cormorant)] text-base sm:text-lg tracking-[0.04em] text-[var(--color-text)] mb-1 group-hover:text-[var(--color-gold)] transition-colors duration-300">
+          <h3 className="font-[family-name:var(--font-cormorant)] text-base sm:text-lg tracking-[0.04em] text-[var(--color-text)] mb-1 group-hover:text-[var(--color-accent)] transition-colors duration-300">
             {product.name}
           </h3>
 
@@ -122,7 +135,7 @@ export default function ProductCard({ product }: { product: Product }) {
             </p>
           )}
 
-          <p className="text-sm text-[var(--color-gold)] font-[family-name:var(--font-sans)] tracking-wider">
+          <p className="text-sm text-[var(--color-accent)] font-[family-name:var(--font-sans)] tracking-wider">
             {product.price} DH
           </p>
         </div>

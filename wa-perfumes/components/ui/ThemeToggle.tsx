@@ -31,7 +31,7 @@ export default function ThemeToggle() {
       className="relative w-9 h-9 flex items-center justify-center rounded-full border transition-all duration-500 group"
       style={{
         borderColor: 'var(--color-border)',
-        background: 'var(--color-gold-bg-subtle)',
+        background: 'var(--color-accent-bg-subtle)',
       }}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Light Mode' : 'Dark Mode'}
@@ -39,7 +39,7 @@ export default function ThemeToggle() {
       {/* Hover glow */}
       <div
         className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: 'var(--color-gold-bg-hover)' }}
+        style={{ background: 'var(--color-accent-bg-hover)' }}
       />
 
       <AnimatePresence mode="wait" initial={false}>
@@ -56,7 +56,7 @@ export default function ThemeToggle() {
             strokeLinecap="round"
             strokeLinejoin="round"
             className="relative z-10"
-            style={{ color: 'var(--color-gold)' }}
+            style={{ color: 'var(--color-accent)' }}
             initial={{ scale: 0, rotate: -90, opacity: 0 }}
             animate={{ scale: 1, rotate: 0, opacity: 1 }}
             exit={{ scale: 0, rotate: 90, opacity: 0 }}
@@ -85,7 +85,7 @@ export default function ThemeToggle() {
             strokeLinecap="round"
             strokeLinejoin="round"
             className="relative z-10"
-            style={{ color: 'var(--color-gold)' }}
+            style={{ color: 'var(--color-accent)' }}
             initial={{ scale: 0, rotate: 90, opacity: 0 }}
             animate={{ scale: 1, rotate: 0, opacity: 1 }}
             exit={{ scale: 0, rotate: -90, opacity: 0 }}

@@ -30,7 +30,7 @@ export default function DiscoveryBox({
         </h3>
         <motion.span
           key={selectedProducts.length}
-          initial={{ scale: 1.3, color: 'var(--color-gold)' }}
+          initial={{ scale: 1.3, color: 'var(--color-violet)' }}
           animate={{ scale: 1, color: 'var(--color-text-muted)' }}
           className="text-xs uppercase tracking-[0.2em]"
         >
@@ -40,16 +40,16 @@ export default function DiscoveryBox({
 
       {/* Visual Box — top-down view */}
       <div 
-        className="relative border border-[var(--color-gold-border)] bg-[var(--color-bg-card)] rounded-lg p-4 overflow-hidden"
+        className="relative border border-[var(--color-accent-violet-border)] bg-[var(--color-bg-card)] rounded-lg p-4 overflow-hidden"
         style={{
-          boxShadow: '0 4px 30px rgba(201, 168, 118, 0.08), inset 0 1px 0 rgba(201, 168, 118, 0.1)',
+          boxShadow: '0 4px 30px rgba(139, 92, 246, 0.08), inset 0 1px 0 rgba(139, 92, 246, 0.1)',
         }}
       >
-        {/* Gold corner accents */}
-        <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-[var(--color-gold)] opacity-30 rounded-tl-lg" />
-        <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-[var(--color-gold)] opacity-30 rounded-tr-lg" />
-        <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-[var(--color-gold)] opacity-30 rounded-bl-lg" />
-        <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-[var(--color-gold)] opacity-30 rounded-br-lg" />
+        {/* Violet corner accents */}
+        <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-[var(--color-violet)] opacity-30 rounded-tl-lg" />
+        <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-[var(--color-violet)] opacity-30 rounded-tr-lg" />
+        <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-[var(--color-violet)] opacity-30 rounded-bl-lg" />
+        <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-[var(--color-violet)] opacity-30 rounded-br-lg" />
 
         {/* Slots Grid — 2-3 layout for 5 items */}
         <div className="grid grid-cols-5 gap-2">
@@ -61,7 +61,7 @@ export default function DiscoveryBox({
                 className="relative aspect-square rounded-md overflow-hidden border"
                 style={{
                   borderColor: product 
-                    ? 'var(--color-gold-border)' 
+                    ? 'var(--color-accent-violet-border)' 
                     : 'color-mix(in srgb, var(--color-border-subtle) 50%, transparent)',
                   backgroundColor: product
                     ? 'var(--color-bg-elevated)'
@@ -83,8 +83,8 @@ export default function DiscoveryBox({
                       className="object-cover"
                       sizes="60px"
                     />
-                    {/* Gold shimmer overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[rgba(201,168,118,0.1)] to-transparent" />
+                    {/* Violet shimmer overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[rgba(139,92,246,0.1)] to-transparent" />
                   </motion.div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
@@ -105,7 +105,7 @@ export default function DiscoveryBox({
             animate={{ opacity: 1, y: 0 }}
             className="mt-3 text-center"
           >
-            <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-gold)]">
+            <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[var(--color-violet)]">
               ✦ Coffret complet ✦
             </span>
           </motion.div>
@@ -123,7 +123,7 @@ export default function DiscoveryBox({
           animate={{ scale: 1 }}
           className="font-[family-name:var(--font-cormorant)] text-xl"
           style={{
-            color: selectedProducts.length === maxProducts ? 'var(--color-gold)' : 'var(--color-text-muted)',
+            color: selectedProducts.length === maxProducts ? 'var(--color-violet)' : 'var(--color-text-muted)',
           }}
         >
           199 DH

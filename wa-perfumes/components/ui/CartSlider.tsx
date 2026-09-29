@@ -55,7 +55,7 @@ export default function CartSlider() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed top-0 right-0 bottom-0 z-[151] w-full max-w-md bg-[var(--color-bg-elevated)] backdrop-blur-xl border-l border-[var(--color-gold-bg-hover)] flex flex-col"
+            className="fixed top-0 right-0 bottom-0 z-[151] w-full max-w-md bg-[var(--color-bg-elevated)] backdrop-blur-xl border-l border-[var(--color-accent-bg-hover)] flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-6 border-b border-[var(--color-border-faint)]">
@@ -84,7 +84,7 @@ export default function CartSlider() {
                   <Link
                     href="/#collections"
                     onClick={closeCart}
-                    className="text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-gold)] border border-[var(--color-gold-border-hover)] px-6 py-3 hover:bg-[var(--color-gold-bg-subtle)] transition-colors duration-300"
+                    className="text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-accent)] border border-[var(--color-accent-border-hover)] px-6 py-3 hover:bg-[var(--color-accent-bg-subtle)] transition-colors duration-300"
                   >
                     Explorer les Collections
                   </Link>
@@ -113,7 +113,7 @@ export default function CartSlider() {
                           <p className="text-[0.65rem] text-[var(--color-text-muted)] uppercase tracking-wider mb-1">
                             {item.selectedVolume}
                           </p>
-                          <p className="text-sm sm:text-xs text-[var(--color-gold)] mb-3">
+                          <p className="text-sm sm:text-xs text-[var(--color-accent)] mb-3">
                             {item.selectedPrice} DH
                           </p>
 
@@ -121,7 +121,7 @@ export default function CartSlider() {
                           <div className="flex items-center gap-3">
                             <button
                               onClick={() => updateQuantity(item.id, item.selectedVolume, Math.max(1, item.quantity - 1))}
-                              className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center border border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:border-[var(--color-gold-border-hover)] hover:text-[var(--color-gold)] transition-colors duration-300 text-xs"
+                              className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center border border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:border-[var(--color-accent-border-hover)] hover:text-[var(--color-accent)] transition-colors duration-300 text-xs"
                             >
                               −
                             </button>
@@ -130,7 +130,7 @@ export default function CartSlider() {
                             </span>
                             <button
                               onClick={() => updateQuantity(item.id, item.selectedVolume, item.quantity + 1)}
-                              className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center border border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:border-[var(--color-gold-border-hover)] hover:text-[var(--color-gold)] transition-colors duration-300 text-xs"
+                              className="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center border border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:border-[var(--color-accent-border-hover)] hover:text-[var(--color-accent)] transition-colors duration-300 text-xs"
                             >
                               +
                             </button>
@@ -150,9 +150,9 @@ export default function CartSlider() {
                         </button>
                       </div>
 
-                      {/* Gold Divider */}
+                      {/* Accent Divider */}
                       {i < items.length - 1 && (
-                        <div className="h-[1px] bg-[var(--color-gold-bg-subtle)]" />
+                        <div className="h-[1px] bg-[var(--color-accent-bg-subtle)]" />
                       )}
                     </div>
                   ))}
@@ -162,12 +162,12 @@ export default function CartSlider() {
 
             {/* Footer — Subtotal & Checkout */}
             {items.length > 0 && (
-              <div className="border-t border-[var(--color-gold-bg-hover)] px-6 py-6 space-y-4">
+              <div className="border-t border-[var(--color-accent-bg-hover)] px-6 py-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[0.7rem] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
                     Sous-total
                   </span>
-                  <span className="font-[family-name:var(--font-cormorant)] text-lg text-[var(--color-gold)]">
+                  <span className="font-[family-name:var(--font-cormorant)] text-lg text-[var(--color-accent)]">
                     {getCartTotal()} DH
                   </span>
                 </div>

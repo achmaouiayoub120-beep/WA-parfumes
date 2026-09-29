@@ -66,7 +66,7 @@ export default function DraggableFab() {
           onClick={() => {
             if (!isDragging) setIsOpen(!isOpen);
           }}
-          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[var(--color-bg-card)] border border-[var(--color-gold-border)] shadow-xl flex items-center justify-center text-[var(--color-gold)] transition-colors duration-300 hover:border-[var(--color-gold)] hover:bg-[var(--color-gold-bg-hover)] relative z-20"
+          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[var(--color-bg-card)] border border-[var(--color-accent-border)] shadow-xl flex items-center justify-center text-[var(--color-accent)] transition-colors duration-300 hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-bg-hover)] relative z-20"
           aria-label="Menu Contact"
         >
           {/* Morphing Icon (Hamburger / Close) */}
@@ -131,7 +131,7 @@ export default function DraggableFab() {
                 }}
                 whileHover={{ scale: 1.1, x: -5 }}
                 whileTap={{ scale: 0.9 }}
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#111] flex items-center justify-center text-[var(--color-gold)] relative"
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#111] flex items-center justify-center text-[var(--color-accent)] relative"
                 title="Trouvez votre Signature Olfactive"
               >
                 {/* Infinite pulse shadow */}
@@ -139,9 +139,9 @@ export default function DraggableFab() {
                   className="absolute inset-0 rounded-full"
                   animate={{ 
                     boxShadow: [
-                      '0px 0px 0px 0px rgba(212,175,55,0)',
-                      '0px 0px 15px 4px rgba(212,175,55,0.4)',
-                      '0px 0px 0px 0px rgba(212,175,55,0)'
+                      '0px 0px 0px 0px rgba(201,203,211,0)',
+                      '0px 0px 15px 4px rgba(201,203,211,0.4)',
+                      '0px 0px 0px 0px rgba(201,203,211,0)'
                     ] 
                   }}
                   transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}

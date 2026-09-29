@@ -6,7 +6,7 @@ import { useEffect, useRef, useCallback } from 'react';
  * EasterEgg — Konami Code listener
  * 
  * Sequence: ↑ ↑ ↓ ↓ ← → ← → B A
- * Triggers: Gold particle explosion (Canvas 2D, not WebGL)
+ * Triggers: Accent particle burst (Canvas 2D, not WebGL)
  * Duration: ~3s then auto-cleanup
  */
 const KONAMI = [
@@ -49,9 +49,9 @@ export default function EasterEgg() {
 
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
-    const goldColors = [
-      '#C9A876', '#D4B896', '#B8944A', '#E8D5B7', '#A07D3A',
-      '#F5E6CC', '#8B6914', '#FFD700', '#DAA520', '#B8860B'
+    const accentColors = [
+      '#C9CBD3', '#8B5CF6', '#C66A91', '#EFC7B8', '#641B3A',
+      '#F6EFE8', '#E2E3E8', '#9A9CA5', '#A78BFA', '#DB7093'
     ];
 
     for (let i = 0; i < 150; i++) {
@@ -64,7 +64,7 @@ export default function EasterEgg() {
         vy: Math.sin(angle) * speed - 2, // slight upward bias
         size: 2 + Math.random() * 6,
         alpha: 1,
-        color: goldColors[Math.floor(Math.random() * goldColors.length)],
+        color: accentColors[Math.floor(Math.random() * accentColors.length)],
         rotation: Math.random() * Math.PI * 2,
         rotSpeed: (Math.random() - 0.5) * 0.15,
       });

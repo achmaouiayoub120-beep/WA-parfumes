@@ -31,7 +31,7 @@ export function IntensityGauge({
   label,
   value,
   maxValue = 5,
-  accentColor = 'var(--color-gold)',
+  accentColor = 'var(--color-accent)',
   className = '',
 }: IntensityGaugeProps) {
   const clampedValue = Math.max(0, Math.min(value, maxValue));

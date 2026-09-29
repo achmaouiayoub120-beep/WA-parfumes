@@ -13,8 +13,8 @@ export interface Product {
   slug: string;
   name: string;
   number: string;
-  collection: 'homme' | 'femme';
-  gender: 'homme' | 'femme';
+  collection: 'homme' | 'femme' | 'unisexe';
+  gender: 'homme' | 'femme' | 'unisexe';
   inspiredBy: string;
   description: string;
   price: number;

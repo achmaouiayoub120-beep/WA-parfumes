@@ -19,9 +19,12 @@ export default function ProductShowroom({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
   const openCart = useUIStore((s) => s.openCart);
 
-  const isHomme = product.collection === 'homme';
-  const accent = isHomme ? 'var(--color-gold)' : 'var(--color-accent-rose)';
-  const accentMuted = isHomme ? 'var(--color-gold-bg-hover)' : 'var(--color-accent-rose-muted)';
+  const accent = product.collection === 'homme' ? 'var(--color-silver)' 
+    : product.collection === 'unisexe' ? 'var(--color-violet)' 
+    : 'var(--color-accent-rose)';
+  const accentMuted = product.collection === 'homme' ? 'var(--color-accent-bg-hover)' 
+    : product.collection === 'unisexe' ? 'var(--color-accent-violet-muted)' 
+    : 'var(--color-accent-rose-muted)';
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -68,12 +71,15 @@ export default function ProductShowroom({ product }: { product: Product }) {
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 pt-28 pb-16">
         {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2 text-[0.6rem] uppercase tracking-[0.25em]">
-          <Link href="/" className="text-[var(--color-text-subtle)] hover:text-[var(--color-gold)] transition-colors">
+          <Link href="/" className="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors">
             Accueil
           </Link>
           <span className="text-[var(--color-text-subtle)] opacity-40">/</span>
-          <Link href={`/#${isHomme ? 'homme' : 'femme'}`} className="text-[var(--color-text-subtle)] hover:text-[var(--color-gold)] transition-colors">
-            {isHomme ? 'W&A Homme' : 'W&A Femme'}
+          <Link
+            href={`/#${product.collection === 'homme' ? 'homme' : product.collection === 'unisexe' ? 'unisexe' : 'femme'}`}
+            className="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors"
+          >
+            {product.collection === 'homme' ? 'W&A Homme' : product.collection === 'unisexe' ? 'W&A Unisexe' : 'W&A Femme'}
           </Link>
           <span className="text-[var(--color-text-subtle)] opacity-40">/</span>
           <span className="text-[var(--color-text-muted)]">{product.name}</span>
@@ -108,7 +114,7 @@ export default function ProductShowroom({ product }: { product: Product }) {
                   border: `1px solid color-mix(in srgb, ${accent} 20%, transparent)`,
                 }}
               >
-                {isHomme ? 'W&A Homme' : 'W&A Femme'}
+                {product.collection === 'homme' ? 'W&A Homme' : product.collection === 'unisexe' ? 'W&A Unisexe' : 'W&A Femme'}
               </span>
             </div>
           </div>
@@ -151,15 +157,15 @@ export default function ProductShowroom({ product }: { product: Product }) {
                         onClick={() => setSelectedVolumeIdx(idx)}
                         className={`flex items-center gap-3 px-5 py-3 border transition-all duration-300 ${
                           isSelected 
-                            ? 'border-[var(--color-gold)] bg-[var(--color-gold-bg-subtle)]' 
-                            : 'border-[var(--color-border)] hover:border-[var(--color-gold-border-hover)]'
+                            ? 'border-[var(--color-accent)] bg-[var(--color-accent-bg-subtle)]' 
+                            : 'border-[var(--color-border)] hover:border-[var(--color-accent-border-hover)]'
                         }`}
                       >
-                        <span className={`text-[0.65rem] uppercase tracking-[0.2em] ${isSelected ? 'text-[var(--color-gold)]' : 'text-[var(--color-text)]'}`}>
+                        <span className={`text-[0.65rem] uppercase tracking-[0.2em] ${isSelected ? 'text-[var(--color-accent)]' : 'text-[var(--color-text)]'}`}>
                           {vol.size}
                         </span>
                         <span className="text-[var(--color-text-subtle)] opacity-40">|</span>
-                        <span className={`font-[family-name:var(--font-cormorant)] text-lg ${isSelected ? 'text-[var(--color-gold)]' : 'text-[var(--color-text-muted)]'}`}>
+                        <span className={`font-[family-name:var(--font-cormorant)] text-lg ${isSelected ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-muted)]'}`}>
                           {vol.price} DH
                         </span>
                       </button>

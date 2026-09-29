@@ -125,7 +125,7 @@ export default function ScrollStorytelling() {
         <h2 className="heading-section text-[var(--color-text)]">
           Three Worlds
         </h2>
-        <div className="w-16 h-[1px] bg-[var(--color-gold)] mx-auto mt-8 opacity-40" />
+        <div className="w-16 h-[1px] bg-[var(--color-accent)] mx-auto mt-8 opacity-40" />
       </div>
 
       {/* Pinned viewport — stays fixed while worlds cycle */}
@@ -133,10 +133,10 @@ export default function ScrollStorytelling() {
         {/* Progress Indicator — left side */}
         <div className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-4">
           {/* Progress bar track */}
-          <div className="relative w-[2px] h-32 bg-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] rounded-full overflow-hidden">
+          <div className="relative w-[2px] h-32 bg-[color-mix(in_srgb,var(--color-accent)_15%,transparent)] rounded-full overflow-hidden">
             <div
               ref={progressRef}
-              className="absolute top-0 left-0 w-full bg-[var(--color-gold)] rounded-full transition-none"
+              className="absolute top-0 left-0 w-full bg-[var(--color-violet)] rounded-full transition-none"
               style={{ height: '0%' }}
             />
           </div>
@@ -148,7 +148,7 @@ export default function ScrollStorytelling() {
                 key={world.num}
                 className="font-[family-name:var(--font-cormorant)] text-sm transition-all duration-500"
                 style={{
-                  color: i === activeIndex ? 'var(--color-gold)' : 'var(--color-text-subtle)',
+                  color: i === activeIndex ? 'var(--color-violet)' : 'var(--color-text-subtle)',
                   opacity: i === activeIndex ? 1 : 0.4,
                   transform: i === activeIndex ? 'scale(1.1)' : 'scale(1)',
                 }}
@@ -198,8 +198,8 @@ export default function ScrollStorytelling() {
                 {world.notes.map((note) => (
                   <span
                     key={note}
-                    className="world-note px-4 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] border text-[var(--color-gold)] rounded-full"
-                    style={{ borderColor: 'color-mix(in srgb, var(--color-gold) 20%, transparent)' }}
+                    className="world-note px-4 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] border text-[var(--color-accent)] rounded-full"
+                    style={{ borderColor: 'color-mix(in srgb, var(--color-accent) 20%, transparent)' }}
                   >
                     {note}
                   </span>

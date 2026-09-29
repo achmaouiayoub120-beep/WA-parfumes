@@ -32,7 +32,7 @@ export default function AnnouncementBar() {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-[101] overflow-hidden"
           style={{
-            backgroundColor: 'var(--color-gold-bg-subtle)',
+            backgroundColor: 'var(--color-accent-bg-subtle)',
             borderBottom: '1px solid var(--color-border)',
           }}
         >
@@ -43,7 +43,7 @@ export default function AnnouncementBar() {
             >
               <span
                 className="text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.2em] md:tracking-[0.3em] font-[family-name:var(--font-sans)]"
-                style={{ color: 'var(--color-gold)' }}
+                style={{ color: 'var(--color-accent)' }}
               >
                 Nouveau
               </span>
@@ -56,7 +56,7 @@ export default function AnnouncementBar() {
                 style={{ color: 'var(--color-text-muted)' }}
               >
                 Pack Découverte 5×30ml —{' '}
-                <span style={{ color: 'var(--color-gold)' }} className="font-medium">
+                <span style={{ color: 'var(--color-accent)' }} className="font-medium">
                   199 DH
                 </span>
               </span>
@@ -68,7 +68,7 @@ export default function AnnouncementBar() {
                 stroke="currentColor"
                 strokeWidth="1.5"
                 className="transition-transform duration-300 group-hover:translate-x-1"
-                style={{ color: 'var(--color-gold)' }}
+                style={{ color: 'var(--color-accent)' }}
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>

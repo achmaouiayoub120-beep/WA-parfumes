@@ -13,7 +13,7 @@ const COLLECTIONS = [
     description: 'Treize parfums puissants pour le gentleman moderne. Bois profonds, oud riche et épices magnétiques.',
     image: '/images/collections/homme-banner.jpg',
     href: '/#homme',
-    accent: 'var(--color-gold)',
+    accent: 'var(--color-silver)',
   },
   {
     name: 'WA Elegance',
@@ -22,6 +22,14 @@ const COLLECTIONS = [
     image: '/images/collections/femme-banner.jpg',
     href: '/#femme',
     accent: 'var(--color-accent-rose)',
+  },
+  {
+    name: 'WA Unisexe',
+    tagline: "L'Essence Universelle",
+    description: "Une collection conçue pour être partagée. Des accords raffinés qui s'adaptent à votre peau pour créer une signature olfactive unique, au-delà des genres.",
+    image: '/images/collections/unisexe-banner.png',
+    href: '/#unisexe',
+    accent: 'var(--color-violet)',
   },
 ];
 
@@ -53,8 +61,8 @@ export default function CollectionShowcase() {
       {/* Section Header */}
       <div className="text-center px-6 mb-16">
         <p className="editorial-subtitle mb-4">Our Collections</p>
-        <h2 className="heading-section text-[var(--color-text)]">Two Worlds</h2>
-        <div className="w-16 h-[1px] bg-[var(--color-gold)] mx-auto mt-8 opacity-40" />
+        <h2 className="heading-section text-[var(--color-text)]">Three Worlds</h2>
+        <div className="w-16 h-[1px] bg-[var(--color-accent)] mx-auto mt-8 opacity-40" />
       </div>
 
       {/* Slider Wrapper */}
@@ -146,7 +154,7 @@ export default function CollectionShowcase() {
         <div className="flex items-center justify-center gap-8 mt-4">
           <button 
             onClick={() => scrollTo(Math.max(0, activeIndex - 1))}
-            className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-gold)] text-[var(--color-text-muted)] hover:text-[var(--color-gold)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
+            className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
             disabled={activeIndex === 0}
             aria-label="Previous slide"
           >
@@ -167,7 +175,7 @@ export default function CollectionShowcase() {
                 <div 
                   className={`h-[2px] transition-all duration-500 ${
                     activeIndex === idx 
-                      ? 'w-8 bg-[var(--color-gold)]' 
+                      ? 'w-8 bg-[var(--color-accent)]' 
                       : 'w-4 bg-[var(--color-border)] group-hover:bg-[var(--color-text-muted)]'
                   }`}
                 />
@@ -177,7 +185,7 @@ export default function CollectionShowcase() {
 
           <button 
             onClick={() => scrollTo(Math.min(COLLECTIONS.length - 1, activeIndex + 1))}
-            className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-gold)] text-[var(--color-text-muted)] hover:text-[var(--color-gold)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
+            className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
             disabled={activeIndex === COLLECTIONS.length - 1}
             aria-label="Next slide"
           >
