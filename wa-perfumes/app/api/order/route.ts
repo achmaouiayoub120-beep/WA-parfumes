@@ -58,20 +58,26 @@ export async function POST(request: Request) {
       };
     }
 
+        let orderId = 'WA-XXXXX';
     try {
-      await fetch(webhookUrl, {
+      const gRes = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),
       });
+      const sheetResult = await gRes.json();
+      if (sheetResult && sheetResult.orderId) {
+        orderId = sheetResult.orderId;
+      }
     } catch (err) {
       console.error('Google Sheet inaccessible:', err);
     }
 
-    return NextResponse.json({ ok: true, success: true });
+    return NextResponse.json({ ok: true, success: true, orderData, orderId });
   } catch (error: any) {
     console.error('Erreur API:', error);
     return NextResponse.json({ success: false, error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
+
 
