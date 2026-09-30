@@ -1,36 +1,36 @@
 function doPost(e) {
-  // Configurer un verrou pour éviter les conflits si plusieurs commandes arrivent en même temps
   const lock = LockService.getScriptLock();
-  lock.waitLock(10000); // Attend jusqu'à 10 secondes
-
+  
   try {
-    // 1. Ouvrir le tableur par ID exact pour vérifier que le contexte Web App n'échoue pas
-    // L'ID provient de l'URL du tableur: https://docs.google.com/spreadsheets/d/1uXfTlz_yXKUaNPHi2PWSLH4tRVFJRi_GYJvv1MDnlYU/edit
-    const spreadsheetId = "1uXfTlz_yXKUaNPHi2PWSLH4tRVFJRi_GYJvv1MDnlYU";
+    // Wait for up to 10 seconds for other processes to finish.
+    lock.waitLock(10000); 
+
+    // 1. Ouvrir le tableur par ID exact (doit correspondre parfaitement Ã  l'URL)
+    const spreadsheetId = "1uXfTlz-yXKUaNPHi2PWSLH4tRVFJRi_GYJvv1MDnIYU";
     let spreadsheet;
     try {
       spreadsheet = SpreadsheetApp.openById(spreadsheetId);
     } catch (err) {
       return ContentService.createTextOutput(JSON.stringify({ 
         success: false, 
-        error: "Impossible d'ouvrir le Spreadsheet via ID. Vérifiez l'ID: " + err.toString() 
+        error: "Impossible d'ouvrir le Spreadsheet via ID. VÃ©rifiez que l'ID est correct et que le script a l'autorisation d'y accÃ©der: " + err.toString() 
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 2. Ouvrir l'onglet "Commandes"
+    // 2. Ouvrir l'onglet exact "Commandes"
     const sheet = spreadsheet.getSheetByName("Commandes");
     if (!sheet) {
       return ContentService.createTextOutput(JSON.stringify({ 
         success: false, 
-        error: "L'onglet 'Commandes' est introuvable dans le spreadsheet." 
+        error: "L'onglet 'Commandes' est introuvable." 
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 3. Parser les données envoyées
+    // 3. Parser les donnÃ©es envoyÃ©es
     if (!e || !e.postData || !e.postData.contents) {
        return ContentService.createTextOutput(JSON.stringify({ 
         success: false, 
-        error: "Aucune donnée reçue (e.postData.contents est vide)." 
+        error: "Aucune donnÃ©e reÃ§ue (e.postData.contents est vide)." 
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
@@ -44,7 +44,7 @@ function doPost(e) {
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 4. Générer un Order ID unique et propre
+    // 4. GÃ©nÃ©rer un Order ID unique et propre
     const lastRow = sheet.getLastRow();
     let orderNumber = 1;
 
@@ -55,7 +55,7 @@ function doPost(e) {
         const num = parseInt(lastOrderId.toString().replace("WA-", ""), 10);
         if (!isNaN(num)) {
           orderNumber = num + 1;
-          break; // Trouvé
+          break; // TrouvÃ© le plus rÃ©cent
         }
       }
     }
@@ -66,25 +66,29 @@ function doPost(e) {
     const date = new Date();
     const formattedDate = Utilities.formatDate(date, Session.getScriptTimeZone(), "dd/MM/yyyy HH:mm:ss");
 
-    // 6. Ajouter la ligne
-    sheet.appendRow([
-      formattedDate,                  // A: Date
-      orderId,                        // B: Order ID
-      data.fullName || "",            // C: Nom
-      data.phone || "",               // D: Téléphone
-      data.city || "",                // E: Ville
-      data.address || "",             // F: Adresse
-      data.productName || "",         // G: Produit
-      data.quantity || "",            // H: Quantité
-      data.unitPrice || "",           // I: Prix Unitaire
-      data.total || "",               // J: Prix Total
-      "Nouvelle",                     // K: Statut
-      false,                          // L: Livraison confirmée
-      ""                              // M: Date de livraison
-    ]);
-
-    // Relâcher le verrou
-    if (lock) lock.releaseLock();
+    // 6. Ajouter la ligne dans Google Sheets
+    try {
+      sheet.appendRow([
+        formattedDate,                  // A: Date
+        orderId,                        // B: Order ID
+        data.fullName || "",            // C: Nom
+        data.phone || "",               // D: TÃ©lÃ©phone
+        data.city || "",                // E: Ville
+        data.address || "",             // F: Adresse
+        data.productName || "",         // G: Produit
+        data.quantity || "",            // H: QuantitÃ©
+        data.unitPrice || "",           // I: Prix Unitaire
+        data.total || "",               // J: Prix Total
+        "Nouvelle",                     // K: Statut
+        false,                          // L: Livraison confirmÃ©e
+        ""                              // M: Date de livraison
+      ]);
+    } catch (err) {
+       return ContentService.createTextOutput(JSON.stringify({ 
+        success: false, 
+        error: "Ã‰chec lors de l'Ã©criture dans Google Sheets (appendRow): " + err.toString() 
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
 
     return ContentService.createTextOutput(JSON.stringify({ 
       success: true, 
@@ -92,10 +96,14 @@ function doPost(e) {
     })).setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {
-    if (typeof lock !== 'undefined' && lock) lock.releaseLock();
     return ContentService.createTextOutput(JSON.stringify({ 
       success: false, 
-      error: error.toString() 
+      error: "Erreur globale d'exÃ©cution: " + error.toString() 
     })).setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    // Garantir que le verrou est toujours relÃ¢chÃ©, mÃªme en cas d'erreur
+    if (lock) {
+      lock.releaseLock();
+    }
   }
 }
