@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -13,10 +13,10 @@ const VILLES_MAROC = [
   'Marrakech',
   'Tanger',
   'Agadir',
-  'Fès',
-  'Meknès',
+  'FÃ¨s',
+  'MeknÃ¨s',
   'Oujda',
-  'Tétouan',
+  'TÃ©touan',
   'El Jadida',
   'Kenitra',
   'Autre',
@@ -62,17 +62,17 @@ export default function WhatsAppDrawer() {
     
     // Front-end Validation
     setError(null);
-    if (nom.length < 2) return setError('Le nom doit contenir au moins 2 caractères.');
+    if (nom.length < 2) return setError('Le nom doit contenir au moins 2 caractÃ¨res.');
     const cleanPhone = phone.replace(/\s+/g, '');
-    if (!/^(06|07)\d{8}$/.test(cleanPhone)) return setError('Le numéro de téléphone doit être un format marocain valide (06 ou 07 + 8 chiffres).');
-    if (address.length < 5) return setError('L\'adresse détaillée est requise.');
+    if (!/^(06|07)\d{8}$/.test(cleanPhone)) return setError('Le numÃ©ro de tÃ©lÃ©phone doit Ãªtre un format marocain valide (06 ou 07 + 8 chiffres).');
+    if (address.length < 5) return setError('L\'adresse dÃ©taillÃ©e est requise.');
     const villeFinale = ville === 'Autre' ? autreVille : ville;
-    if (ville === 'Autre' && autreVille.length < 2) return setError('Veuillez préciser votre ville.');
+    if (ville === 'Autre' && autreVille.length < 2) return setError('Veuillez prÃ©ciser votre ville.');
 
     setIsLoading(true);
 
     try {
-      // Préparation du payload
+      // PrÃ©paration du payload
       let cartItemsPayload: any[] = [];
       let totalEstime = 0;
 
@@ -80,7 +80,7 @@ export default function WhatsAppDrawer() {
         // Mock pack item for API validation
         cartItemsPayload = [{
           id: 'pack-decouverte',
-          name: 'Coffret Découverte',
+          name: 'Coffret DÃ©couverte',
           quantity: 1,
           selectedVolume: 'Pack',
           selectedPrice: parseInt(whatsappContext.totalText.replace(/\D/g, '') || '0')
@@ -90,12 +90,12 @@ export default function WhatsAppDrawer() {
         cartItemsPayload = items;
         totalEstime = getCartTotal();
       } else {
-        setError('Votre sélection est vide.');
+        setError('Votre sÃ©lection est vide.');
         setIsLoading(false);
         return;
       }
 
-      // 1. Envoi à l'API (qui contactera Google Sheets)
+      // 1. Envoi Ã  l'API (qui contactera Google Sheets)
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -111,7 +111,7 @@ export default function WhatsAppDrawer() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.error || 'Erreur lors de la création de la commande');
+        throw new Error(data.error || 'Erreur lors de la crÃ©ation de la commande');
       }
 
       // 2. Construction du message WhatsApp
@@ -123,17 +123,17 @@ export default function WhatsAppDrawer() {
 
 Je souhaite confirmer ma commande :
 
-🧴 Produit : ${oData.productName}
-🔢 Quantité : ${oData.quantity}
-💰 Prix unitaire : ${oData.unitPrice} DH
-💵 Total : ${oData.total} DH
+ðŸ§´ Produit : ${oData.productName}
+ðŸ”¢ QuantitÃ© : ${oData.quantity}
+ðŸ’° Prix unitaire : ${oData.unitPrice} DH
+ðŸ’µ Total : ${oData.total} DH
 
-👤 Nom : ${nom}
-📞 Téléphone : ${cleanPhone}
-📍 Ville : ${villeFinale}
-🏠 Adresse : ${address.trim()}
+ðŸ‘¤ Nom : ${nom}
+ðŸ“ž TÃ©lÃ©phone : ${cleanPhone}
+ðŸ“ Ville : ${villeFinale}
+ðŸ  Adresse : ${address.trim()}
 
-🧾 N° commande : ${orderId}
+ðŸ§¾ NÂ° commande : ${orderId}
 
 Merci.`;
 
@@ -144,7 +144,7 @@ Merci.`;
       clearCart();
       closeWhatsApp();
       
-      // Réinitialiser le formulaire
+      // RÃ©initialiser le formulaire
       setNom('');
       setPhone('');
       setVille('Casablanca');
@@ -153,7 +153,7 @@ Merci.`;
       
     } catch (err: any) {
       console.error(err);
-      setError("Impossible d'enregistrer la commande. Veuillez réessayer.");
+      setError("Impossible d'enregistrer la commande. Veuillez rÃ©essayer.");
     } finally {
       setIsLoading(false);
     }
@@ -227,11 +227,11 @@ Merci.`;
                   </p>
                   <div className="flex items-center gap-4">
                     <div className="relative w-16 h-16 shrink-0 rounded-md overflow-hidden bg-[var(--color-bg-elevated)] border border-[var(--color-accent-border)]">
-                      <Image src="/placeholder.png" alt="Pack Découverte" fill className="object-cover opacity-80 mix-blend-screen" />
+                      <Image src="/placeholder.png" alt="Pack DÃ©couverte" fill className="object-cover opacity-80 mix-blend-screen" />
                     </div>
                     <div>
                       <p className="font-[family-name:var(--font-cormorant)] text-base text-[var(--color-accent)] mb-1">
-                        Coffret Découverte
+                        Coffret DÃ©couverte
                       </p>
                       <p className="text-[0.6rem] text-[var(--color-text-subtle)] leading-relaxed">
                         5 Parfums WA Signature & Elegance (30ml)
@@ -262,14 +262,14 @@ Merci.`;
                         <div className="flex-1 min-w-0">
                           <p className="text-xs truncate text-[var(--color-text)]">{item.name}</p>
                           <p className="text-[0.6rem] text-[var(--color-text-subtle)]">
-                            Prix unitaire: {item.price} DH | Qté: {item.quantity}
+                            Prix unitaire: {item.price} DH | QtÃ©: {item.quantity}
                           </p>
                         </div>
                       </div>
                     ))}
                   </div>
                   <div className="mt-3 pt-3 flex justify-between items-center border-t border-[var(--color-border-faint)]">
-                    <span className="text-[0.6rem] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">Total estimé</span>
+                    <span className="text-[0.6rem] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">Total estimÃ©</span>
                     <span className="font-[family-name:var(--font-cormorant)] text-base text-[var(--color-accent)]">
                       {getCartTotal()} DH
                     </span>
@@ -297,10 +297,10 @@ Merci.`;
                   />
                 </div>
 
-                {/* Téléphone */}
+                {/* TÃ©lÃ©phone */}
                 <div>
                   <label htmlFor="wa-phone" className="text-[0.6rem] uppercase tracking-[0.25em] font-medium block mb-1.5 text-[var(--color-text-muted)]">
-                    Téléphone *
+                    TÃ©lÃ©phone *
                   </label>
                   <input
                     id="wa-phone"
@@ -350,7 +350,7 @@ Merci.`;
                       className="overflow-hidden"
                     >
                       <label htmlFor="wa-autre-ville" className="text-[0.6rem] uppercase tracking-[0.25em] font-medium block mb-1.5 text-[var(--color-text-muted)]">
-                        Précisez votre ville *
+                        PrÃ©cisez votre ville *
                       </label>
                       <input
                         id="wa-autre-ville"
@@ -366,17 +366,17 @@ Merci.`;
                   )}
                 </AnimatePresence>
 
-                {/* Adresse détaillée */}
+                {/* Adresse dÃ©taillÃ©e */}
                 <div>
                   <label htmlFor="wa-address" className="text-[0.6rem] uppercase tracking-[0.25em] font-medium block mb-1.5 text-[var(--color-text-muted)]">
-                    Adresse détaillée *
+                    Adresse dÃ©taillÃ©e *
                   </label>
                   <textarea
                     id="wa-address"
                     required
                     minLength={5}
                     rows={3}
-                    placeholder="ex: Quartier, Rue, Résidence, Numéro de porte..."
+                    placeholder="ex: Quartier, Rue, RÃ©sidence, NumÃ©ro de porte..."
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     disabled={isLoading}
@@ -410,10 +410,10 @@ Merci.`;
               {/* Trust badges */}
               <div className="flex items-center justify-center gap-4 mt-4">
                 <span className="text-[0.5rem] uppercase tracking-[0.2em] text-[var(--color-text-subtle)]">
-                  ✦ Livraison partout au Maroc
+                  âœ¦ Livraison partout au Maroc
                 </span>
                 <span className="text-[0.5rem] uppercase tracking-[0.2em] text-[var(--color-text-subtle)]">
-                  ✦ Paiement à la livraison
+                  âœ¦ Paiement Ã  la livraison
                 </span>
               </div>
             </div>
@@ -423,3 +423,4 @@ Merci.`;
     </AnimatePresence>
   );
 }
+

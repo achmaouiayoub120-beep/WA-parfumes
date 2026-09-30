@@ -1,83 +1,96 @@
-﻿import { NextResponse } from 'next/server';
-import { MEN_PRODUCTS } from '@/data/products/men';
-import { WOMEN_PRODUCTS } from '@/data/products/women';
-import { UNISEX_PRODUCTS } from '@/data/products/unisex';
-
-const ALL_PRODUCTS = [...MEN_PRODUCTS, ...WOMEN_PRODUCTS, ...UNISEX_PRODUCTS];
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
-    // Support both the WhatsAppDrawer format (fullName) and SmartOrderForm format (nomComplet)
-    const nomComplet = body.nomComplet || body.fullName;
-    const telephone = body.telephone || body.phone;
-    const adresse = body.adresse || body.address;
-    const ville = body.ville || body.city;
 
-    if (!nomComplet || !telephone || !adresse) {
-      return NextResponse.json({ error: 'Champs manquants' }, { status: 400 });
+    // Support both WhatsAppDrawer format (fullName) and SmartOrderForm format (nomComplet)
+    const fullName = body.nomComplet || body.fullName;
+    const phone = (body.telephone || body.phone || '').replace(/\s+/g, '');
+    const city = body.ville || body.city;
+    const address = body.adresse || body.address;
+
+    if (!fullName || !phone || !address) {
+      return NextResponse.json({ success: false, error: 'Champs manquants' }, { status: 400 });
     }
 
-    const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+    // Build normalized orderData depending on the source
+    let orderData: Record<string, any>;
 
-    if (!webhookUrl) {
-      console.warn('GOOGLE_SHEET_WEBHOOK_URL non dÇ¸fini â€” commande non enregistrÇ¸e dans le Sheet.');
-      return NextResponse.json({ ok: true, success: true, sheet: 'skipped' });
-    }
-
-    // Prepare data to send to webhook
-    let orderData = body;
-    if (body.cartItems) {
-      // Legacy WhatsAppDrawer logic for sheet payload formatting
+    if (body.cartItems && Array.isArray(body.cartItems)) {
+      // ── WhatsAppDrawer flow ──
+      // Cart items already contain all data from the Zustand store (name, selectedPrice, selectedVolume, quantity)
       let calculatedTotal = 0;
       let totalQuantity = 0;
       const productNames: string[] = [];
       const unitPrices: number[] = [];
 
       for (const item of body.cartItems) {
-        const serverProduct = ALL_PRODUCTS.find(p => p.id === item.id);
-        if (serverProduct) {
-          const price = typeof serverProduct.price === 'string' ? parseFloat(serverProduct.price as string) : serverProduct.price;
-          calculatedTotal += price * item.quantity;
-          totalQuantity += item.quantity;
-          productNames.push(serverProduct.name + " (" + item.selectedVolume + ") x" + item.quantity);
-          unitPrices.push(price);
-        }
+        const name = item.name || item.id || 'Produit';
+        const price = item.selectedPrice || item.price || 0;
+        const qty = item.quantity || 1;
+        const volume = item.selectedVolume || 'Standard';
+
+        calculatedTotal += price * qty;
+        totalQuantity += qty;
+        productNames.push(`${name} (${volume}) x${qty}`);
+        unitPrices.push(price);
       }
-      
+
       orderData = {
-        fullName: nomComplet,
-        phone: telephone.replace(/\s+/g, ''),
-        city: ville,
-        address: adresse,
+        fullName,
+        phone,
+        city,
+        address,
         productName: productNames.join(' + '),
         quantity: totalQuantity,
-        unitPrice: unitPrices.length === 1 ? unitPrices[0].toString() : 'Multiple',
-        total: calculatedTotal
+        unitPrice: unitPrices.length === 1 ? String(unitPrices[0]) : unitPrices.join(' / '),
+        total: calculatedTotal,
+      };
+    } else {
+      // ── SmartOrderForm flow ──
+      orderData = {
+        fullName,
+        phone,
+        city,
+        address,
+        productName: body.produit || body.productName || '',
+        quantity: body.quantite || body.quantity || 1,
+        unitPrice: String(body.prixUnitaire || body.unitPrice || 0),
+        total: body.prixTotal || body.total || 0,
       };
     }
 
-        let orderId = 'WA-XXXXX';
-    try {
-      const gRes = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData),
-      });
-      const sheetResult = await gRes.json();
-      if (sheetResult && sheetResult.orderId) {
-        orderId = sheetResult.orderId;
+    // Send to Google Sheets via webhook
+    const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+    let orderId = 'WA-XXXXX';
+
+    if (webhookUrl) {
+      try {
+        const gRes = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData),
+        });
+        const text = await gRes.text();
+        try {
+          const sheetResult = JSON.parse(text);
+          if (sheetResult?.orderId) {
+            orderId = sheetResult.orderId;
+          }
+        } catch {
+          console.warn('Google Sheet response is not JSON:', text.substring(0, 200));
+        }
+      } catch (err) {
+        console.error('Google Sheet inaccessible:', err);
       }
-    } catch (err) {
-      console.error('Google Sheet inaccessible:', err);
+    } else {
+      console.warn('GOOGLE_SHEETS_WEBHOOK_URL not set — order not saved to Sheet.');
     }
 
     return NextResponse.json({ ok: true, success: true, orderData, orderId });
   } catch (error: any) {
-    console.error('Erreur API:', error);
+    console.error('Order API error:', error);
     return NextResponse.json({ success: false, error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
-
-
