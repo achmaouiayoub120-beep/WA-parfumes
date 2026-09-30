@@ -75,7 +75,7 @@ export async function POST(request: Request) {
       };
     }
 
-    // Send to Google Sheets via webhook
+        // Send to Google Sheets via webhook
     const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || process.env.GOOGLE_SHEETS_WEBHOOK_URL;
     let orderId = 'WA-XXXXX';
 
@@ -89,17 +89,36 @@ export async function POST(request: Request) {
         const text = await gRes.text();
         try {
           const sheetResult = JSON.parse(text);
+          if (!sheetResult.success) {
+            console.error('Google Sheets API Error:', sheetResult.error);
+            return NextResponse.json({ 
+              success: false, 
+              error: 'Erreur système: Impossible d\\'enregistrer la commande. ' + (sheetResult.error || 'Veuillez réessayer.')
+            }, { status: 500 });
+          }
           if (sheetResult?.orderId) {
             orderId = sheetResult.orderId;
           }
         } catch {
-          console.warn('Google Sheet response is not JSON:', text.substring(0, 200));
+          console.error('Google Sheet response is not JSON:', text.substring(0, 200));
+          return NextResponse.json({ 
+            success: false, 
+            error: 'Erreur serveur: Réponse invalide de la base de données.'
+          }, { status: 500 });
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error('Google Sheet inaccessible:', err);
+        return NextResponse.json({ 
+          success: false, 
+          error: 'Erreur réseau: Impossible de joindre la base de données.'
+        }, { status: 500 });
       }
     } else {
-      console.warn('GOOGLE_SHEETS_WEBHOOK_URL not set â€” order not saved to Sheet.');
+      console.error('CRITICAL: GOOGLE_SHEETS_WEBHOOK_URL is not set in environment variables.');
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Erreur de configuration serveur. Webhook manquant.'
+      }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true, success: true, orderData, orderId });
@@ -108,5 +127,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
+
 
 
