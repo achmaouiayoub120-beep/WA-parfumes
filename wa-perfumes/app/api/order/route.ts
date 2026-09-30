@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     let orderData: Record<string, any>;
 
     if (body.cartItems && Array.isArray(body.cartItems)) {
-      // ── WhatsAppDrawer flow ──
+      // â”€â”€ WhatsAppDrawer flow â”€â”€
       // Cart items already contain all data from the Zustand store (name, selectedPrice, selectedVolume, quantity)
       let calculatedTotal = 0;
       let totalQuantity = 0;
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
         unitPrices.push(price);
       }
 
-      orderData = {
+            orderData = {
         fullName,
         phone,
         city,
@@ -46,10 +46,19 @@ export async function POST(request: Request) {
         quantity: totalQuantity,
         unitPrice: unitPrices.length === 1 ? String(unitPrices[0]) : unitPrices.join(' / '),
         total: calculatedTotal,
+        // Fallbacks pour ancienne version du script Google
+        nomComplet: fullName,
+        telephone: phone,
+        ville: city,
+        adresse: address,
+        produit: productNames.join(' + '),
+        quantite: totalQuantity,
+        prixUnitaire: unitPrices.length === 1 ? String(unitPrices[0]) : unitPrices.join(' / '),
+        prixTotal: calculatedTotal,
       };
     } else {
-      // ── SmartOrderForm flow ──
-      orderData = {
+      // â”€â”€ SmartOrderForm flow â”€â”€
+            orderData = {
         fullName,
         phone,
         city,
@@ -58,6 +67,15 @@ export async function POST(request: Request) {
         quantity: body.quantite || body.quantity || 1,
         unitPrice: String(body.prixUnitaire || body.unitPrice || 0),
         total: body.prixTotal || body.total || 0,
+        // Fallbacks pour ancienne version du script Google
+        nomComplet: fullName,
+        telephone: phone,
+        ville: city,
+        adresse: address,
+        produit: body.produit || body.productName || '',
+        quantite: body.quantite || body.quantity || 1,
+        prixUnitaire: String(body.prixUnitaire || body.unitPrice || 0),
+        prixTotal: body.prixTotal || body.total || 0,
       };
     }
 
@@ -85,7 +103,7 @@ export async function POST(request: Request) {
         console.error('Google Sheet inaccessible:', err);
       }
     } else {
-      console.warn('GOOGLE_SHEETS_WEBHOOK_URL not set — order not saved to Sheet.');
+      console.warn('GOOGLE_SHEETS_WEBHOOK_URL not set â€” order not saved to Sheet.');
     }
 
     return NextResponse.json({ ok: true, success: true, orderData, orderId });
@@ -94,3 +112,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
+
