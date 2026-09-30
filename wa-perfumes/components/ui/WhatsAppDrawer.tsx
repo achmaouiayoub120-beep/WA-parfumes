@@ -77,10 +77,21 @@ export default function WhatsAppDrawer() {
       let totalEstime = 0;
 
       if (whatsappContext?.type === 'pack') {
+        // Formater les détails du pack pour le nom du produit
+        // Exemple: "🎁 1x Coffret Découverte...\n   - Parfum 1\n   - Parfum 2" -> "Coffret Découverte (Parfum 1, Parfum 2)"
+        let details = 'Coffret Découverte';
+        if (whatsappContext.itemsText) {
+            const lines = whatsappContext.itemsText.split('\n');
+            if (lines.length > 1) {
+                const perfumes = lines.slice(1).map(l => l.replace('   - ', '').trim());
+                details = `Coffret Découverte [${perfumes.join(', ')}]`;
+            }
+        }
+
         // Mock pack item for API validation
         cartItemsPayload = [{
           id: 'pack-decouverte',
-          name: 'Coffret Découverte',
+          name: details,
           quantity: 1,
           selectedVolume: 'Pack',
           selectedPrice: parseInt(whatsappContext.totalText.replace(/\D/g, '') || '0')

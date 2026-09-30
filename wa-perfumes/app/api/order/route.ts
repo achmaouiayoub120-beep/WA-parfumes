@@ -37,44 +37,40 @@ export async function POST(request: Request) {
         unitPrices.push(price);
       }
 
-            orderData = {
-        fullName,
-        phone,
-        city,
-        address,
+                  orderData = {
+        fullName, phone, city, address,
         productName: productNames.join(' + '),
         quantity: totalQuantity,
         unitPrice: unitPrices.length === 1 ? String(unitPrices[0]) : unitPrices.join(' / '),
         total: calculatedTotal,
-        // Fallbacks pour ancienne version du script Google
-        nomComplet: fullName,
-        telephone: phone,
+        // Fallbacks multi-langues
+        nomComplet: fullName, nom: fullName,
+        telephone: phone, tel: phone,
         ville: city,
         adresse: address,
         produit: productNames.join(' + '),
         quantite: totalQuantity,
         prixUnitaire: unitPrices.length === 1 ? String(unitPrices[0]) : unitPrices.join(' / '),
+        prix: calculatedTotal,
         prixTotal: calculatedTotal,
       };
     } else {
       // â”€â”€ SmartOrderForm flow â”€â”€
-            orderData = {
-        fullName,
-        phone,
-        city,
-        address,
+                  orderData = {
+        fullName, phone, city, address,
         productName: body.produit || body.productName || '',
         quantity: body.quantite || body.quantity || 1,
         unitPrice: String(body.prixUnitaire || body.unitPrice || 0),
         total: body.prixTotal || body.total || 0,
-        // Fallbacks pour ancienne version du script Google
-        nomComplet: fullName,
-        telephone: phone,
+        // Fallbacks multi-langues
+        nomComplet: fullName, nom: fullName,
+        telephone: phone, tel: phone,
         ville: city,
         adresse: address,
         produit: body.produit || body.productName || '',
         quantite: body.quantite || body.quantity || 1,
         prixUnitaire: String(body.prixUnitaire || body.unitPrice || 0),
+        prix: body.prixTotal || body.total || 0,
         prixTotal: body.prixTotal || body.total || 0,
       };
     }
@@ -112,4 +108,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: 'Erreur interne du serveur' }, { status: 500 });
   }
 }
+
 
