@@ -2,8 +2,8 @@
 
 import dynamic from 'next/dynamic';
 
+import HeroVideo from "@/components/HeroVideo";
 const Preloader = dynamic(() => import('@/components/ui/Preloader'), { ssr: false });
-const HeroSection = dynamic(() => import('@/components/hero/HeroSection'), { ssr: false });
 const CollectionShowcase = dynamic(() => import('@/components/sections/CollectionShowcase'), { ssr: false });
 const PackDiscoverySection = dynamic(() => import('@/components/sections/PackDiscoverySection'), { ssr: false });
 const MenCollection = dynamic(() => import('@/components/sections/MenCollection'), { ssr: false });
@@ -16,7 +16,7 @@ export default function HomeContent() {
   return (
     <>
       <Preloader />
-      <HeroSection />
+      <HeroVideo />
       <SectionWipe color="var(--color-bg-elevated)">
         <section id="collections">
           <CollectionShowcase />

@@ -266,7 +266,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
           {/* Sticky Sidebar — Desktop */}
           <div className="hidden lg:block w-72 flex-shrink-0">
             <div className="sticky top-28">
-              <DiscoveryBox selectedProducts={selectedProducts} />
+              <DiscoveryBox selectedProducts={selectedProducts} onRemove={toggleProduct} />
               
               <div className="mt-6">
                 {selectedProducts.length === 5 ? (
@@ -285,7 +285,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
         <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--color-bg-glass)] backdrop-blur-md border-t border-[var(--color-border-subtle)] p-4 shadow-2xl">
           <div className="container mx-auto max-w-5xl flex items-center justify-between gap-4">
             <div className="flex-1">
-              <DiscoveryBox selectedProducts={selectedProducts} />
+              <DiscoveryBox selectedProducts={selectedProducts} onRemove={toggleProduct} />
             </div>
             
             <div className="flex-shrink-0">

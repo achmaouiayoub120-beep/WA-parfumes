@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
             console.error('Google Sheets API Error:', sheetResult.error);
             return NextResponse.json({ 
               success: false, 
-              error: 'Erreur système: Impossible d\\'enregistrer la commande. ' + (sheetResult.error || 'Veuillez réessayer.')
+              error: 'Erreur système: Impossible d\'enregistrer la commande. ' + (sheetResult.error || 'Veuillez réessayer.')
             }, { status: 500 });
           }
           if (sheetResult?.orderId) {

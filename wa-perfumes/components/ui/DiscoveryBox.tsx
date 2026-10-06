@@ -14,10 +14,12 @@ import type { Product } from '@/data/products/men';
  */
 export default function DiscoveryBox({ 
   selectedProducts, 
-  maxProducts = 5 
+  maxProducts = 5,
+  onRemove,
 }: { 
   selectedProducts: Product[];
   maxProducts?: number;
+  onRemove?: (product: Product) => void;
 }) {
   const slots = Array.from({ length: maxProducts }, (_, i) => selectedProducts[i] || null);
 
@@ -58,7 +60,7 @@ export default function DiscoveryBox({
               <motion.div
                 key={product ? product.id : `empty-${index}`}
                 layout
-                className="relative aspect-square rounded-md overflow-hidden border"
+                className="relative aspect-square rounded-md overflow-hidden border group/slot"
                 style={{
                   borderColor: product 
                     ? 'var(--color-accent-violet-border)' 
@@ -85,6 +87,19 @@ export default function DiscoveryBox({
                     />
                     {/* Violet shimmer overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[rgba(139,92,246,0.1)] to-transparent" />
+                    {/* Remove button */}
+                    {onRemove && (
+                      <button
+                        type="button"
+                        aria-label={`Retirer ${product.name}`}
+                        onClick={(e) => { e.stopPropagation(); onRemove(product); }}
+                        className="absolute inset-0 z-10 flex items-center justify-center bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity duration-200 cursor-pointer lg:opacity-0 max-lg:opacity-100"
+                      >
+                        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/90 text-white text-[10px] font-bold shadow-md leading-none">
+                          ✕
+                        </span>
+                      </button>
+                    )}
                   </motion.div>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
