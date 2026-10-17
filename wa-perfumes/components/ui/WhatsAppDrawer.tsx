@@ -126,7 +126,7 @@ export default function WhatsAppDrawer() {
       }
 
       // 2. Construction du message WhatsApp
-      const whatsappNum = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212707525317';
+      const whatsappNum = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212785863999';
       const orderId = data.orderId;
       const oData = data.orderData; // contains formatted productName, quantity, unitPrice, total
       

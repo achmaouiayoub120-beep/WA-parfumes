@@ -93,7 +93,8 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
     ];
     const message = lines.join('\n');
 
-    window.open('https://wa.me/212707525317?text=' + encodeURIComponent(message), '_blank');
+    const whatsappNum = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212785863999';
+    window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(message)}`, '_blank');
 
     setIsSubmitting(false);
     onClose();
