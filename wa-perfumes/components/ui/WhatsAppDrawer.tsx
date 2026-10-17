@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Loader2 } from 'lucide-react';
 import { useUIStore } from '@/store/useUIStore';
 import { useCartStore } from '@/store/useCartStore';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 const VILLES_MAROC = [
   'Casablanca',
@@ -126,7 +127,7 @@ export default function WhatsAppDrawer() {
       }
 
       // 2. Construction du message WhatsApp
-      const whatsappNum = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212785863999';
+      const whatsappNum = WHATSAPP_NUMBER;
       const orderId = data.orderId;
       const oData = data.orderData; // contains formatted productName, quantity, unitPrice, total
       

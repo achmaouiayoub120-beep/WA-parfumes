@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Minus, Plus, X } from 'lucide-react';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 interface SmartOrderFormProps {
   isOpen: boolean;
@@ -93,8 +94,7 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
     ];
     const message = lines.join('\n');
 
-    const whatsappNum = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212785863999';
-    window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
 
     setIsSubmitting(false);
     onClose();
