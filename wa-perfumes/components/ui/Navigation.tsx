@@ -25,6 +25,17 @@ const NAV_LINKS = [
   { label: 'Notre Histoire', href: '/#story' },
 ];
 
+const MOBILE_NAV_LINKS = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Collections', href: '/#collections' },
+  { label: 'W&A Homme', href: '/#homme' },
+  { label: 'W&A Femme', href: '/#femme' },
+  { label: 'W&A Unisexe', href: '/#unisexe' },
+  { label: 'Pack Découverte', href: '/#pack-decouverte' },
+  { label: 'Trouvez Votre Parfum', href: '/finder' },
+  { label: 'Notre Histoire', href: '/#story' },
+];
+
 // Helper: get unique fragrance families for a collection
 function getFamilies(products: typeof MEN_PRODUCTS) {
   const ids = new Set(products.map(p => p.fragranceFamily));
@@ -48,6 +59,8 @@ export default function Navigation() {
   
   const pathname = usePathname();
   const openCart = useUIStore((s) => s.openCart);
+  const isMobileMenuOpen = useUIStore((s) => s.isMobileMenuOpen);
+  const setMobileMenuOpen = useUIStore((s) => s.setMobileMenuOpen);
   const cartCount = useCartStore((s) => s.getCartCount());
 
   useEffect(() => {
@@ -55,7 +68,7 @@ export default function Navigation() {
     window.addEventListener('hashchange', handleHashChange);
     
     const handleScroll = () => {
-      setScrolled(window.scrollY > 80);
+      setScrolled(window.scrollY > 40);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     
@@ -65,7 +78,16 @@ export default function Navigation() {
     };
   }, []);
 
-  // Animate menu open/close
+  // Sync mobile menu body scroll lock
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else if (!menuOpen) {
+      document.body.style.overflow = '';
+    }
+  }, [isMobileMenuOpen, menuOpen]);
+
+  // Animate desktop menu open/close
   useEffect(() => {
     if (!menuRef.current || !menuLinksRef.current) return;
 
@@ -124,8 +146,10 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Sticky Pill Header */}
-      <div className="sticky top-0 z-50 w-full flex justify-center">
+      {/* ════════════════════════════════════════════════════════════════
+          1. DESKTOP & TABLET HEADER (≥ 768px) — 100% ORIGINAL PILL DESIGN
+         ════════════════════════════════════════════════════════════════ */}
+      <div className="hidden md:flex sticky top-0 z-50 w-full justify-center">
         <header
           ref={headerRef}
           className="w-[95%] max-w-7xl rounded-full transition-all duration-500 backdrop-blur-xl flex items-center justify-between px-6 h-20 shadow-[0_8px_32px_0_rgba(0,0,0,0.08)] mt-0 border border-white/20 dark:border-white/10"
@@ -133,14 +157,152 @@ export default function Navigation() {
             backgroundColor: 'color-mix(in srgb, var(--color-bg) 40%, transparent)'
           }}
         >
-        {/* Logo (Left) */}
-        <Link href="/" className="relative z-[101] flex items-center hover:scale-105 transition-transform duration-300">
+          {/* Logo (Left) */}
+          <Link href="/" className="relative z-[101] flex items-center hover:scale-105 transition-transform duration-300">
+            <Image
+              src="/logo.png"
+              alt="WA Perfumes"
+              width={200}
+              height={100}
+              className="object-contain w-auto h-14 sm:h-16 lg:h-[4.5rem]"
+              style={mounted && resolvedTheme === 'light' ? {
+                filter: 'brightness(0.15) sepia(1) saturate(0.5) hue-rotate(10deg)',
+              } : undefined}
+              priority
+            />
+          </Link>
+
+          {/* Desktop Navigation (Center) */}
+          <nav 
+            className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2 z-[100]"
+            onMouseLeave={() => setHoveredPath(null)}
+          >
+            {NAV_LINKS.map((link) => {
+              const isHovered = hoveredPath === link.href;
+              const isMatchHash = activeHash === link.href.replace('/', '');
+              const isActive = isHovered || (!hoveredPath && (pathname === link.href || (pathname === '/' && isMatchHash)));
+              const isReallyActive = pathname === link.href || (pathname === '/' && isMatchHash);
+
+              return (
+                <div
+                  key={link.href}
+                  className="relative"
+                  onMouseEnter={() => {
+                    setHoveredPath(link.href);
+                    if (link.megaMenu) handleMegaEnter(link.megaMenu);
+                  }}
+                  onMouseLeave={() => {
+                    if (link.megaMenu) handleMegaLeave();
+                  }}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="active-pill"
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        backgroundColor: 'color-mix(in srgb, var(--color-accent) 10%, transparent)',
+                        border: '1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)',
+                      }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                  
+                  <Link
+                    href={link.href}
+                    className="relative z-10 block px-5 py-2.5 rounded-full whitespace-nowrap text-xs uppercase tracking-[0.15em] font-medium transition-colors duration-300 hover:bg-black/5 dark:hover:bg-white/10"
+                    style={{
+                      color: activeMega === link.megaMenu || isReallyActive ? 'var(--color-accent)' : 'var(--color-text)',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
+                    onMouseLeave={(e) => {
+                      if (activeMega !== link.megaMenu && !isReallyActive) {
+                        e.currentTarget.style.color = 'var(--color-text)';
+                      }
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                </div>
+              );
+            })}
+          </nav>
+
+          {/* Right Actions */}
+          <div className="flex items-center gap-4 sm:gap-6 relative z-[101]">
+            <ThemeToggle />
+
+            {/* Cart Button */}
+            <button
+              onClick={openCart}
+              className="relative transition-colors duration-300 hover:text-amber-500/90"
+              style={{ color: 'var(--color-text)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text)')}
+              aria-label="Ouvrir le panier"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 01-8 0" />
+              </svg>
+              {mounted && cartCount > 0 && (
+                <span
+                  className="absolute -top-2 -right-2 w-5 h-5 bg-amber-600 text-white text-[10px] rounded-full flex items-center justify-center font-semibold shadow-md"
+                >
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
+            {/* Menu Toggle for Tablet md */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="flex flex-col gap-[5px] items-end group lg:hidden"
+              aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+            >
+              <span
+                className={`block h-[1px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  menuOpen ? 'w-6 rotate-45 translate-y-[3px]' : 'w-6 group-hover:w-8'
+                }`}
+                style={{ backgroundColor: 'var(--color-text)' }}
+              />
+              <span
+                className={`block h-[1px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  menuOpen ? 'w-6 -rotate-45 -translate-y-[3px]' : 'w-4 group-hover:w-8'
+                }`}
+                style={{ backgroundColor: 'var(--color-text)' }}
+              />
+            </button>
+          </div>
+        </header>
+      </div>
+
+      {/* ════════════════════════════════════════════════════════════════
+          2. DEDICATED MOBILE HEADER (< 768px)
+         ════════════════════════════════════════════════════════════════ */}
+      <header
+        className="md:hidden fixed left-0 right-0 z-50 h-[60px] px-4 flex items-center justify-between transition-all duration-300"
+        style={{
+          top: 'var(--announce-h, 0px)',
+          backgroundColor: scrolled
+            ? 'color-mix(in srgb, var(--color-bg) 94%, transparent)'
+            : 'color-mix(in srgb, var(--color-bg) 20%, transparent)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
+        }}
+      >
+        {/* Monogram / Brand (Left) */}
+        <Link href="/" className="flex items-center min-w-[44px] min-h-[44px]">
           <Image
             src="/logo.png"
-            alt="WA Perfumes"
-            width={200}
-            height={100}
-            className="object-contain w-auto h-14 sm:h-16 lg:h-[4.5rem]"
+            alt="W&A Perfumes"
+            width={130}
+            height={50}
+            className="object-contain h-10 w-auto"
             style={mounted && resolvedTheme === 'light' ? {
               filter: 'brightness(0.15) sepia(1) saturate(0.5) hue-rotate(10deg)',
             } : undefined}
@@ -148,118 +310,54 @@ export default function Navigation() {
           />
         </Link>
 
-        {/* Desktop Navigation (Center) */}
-        <nav 
-          className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2 z-[100]"
-          onMouseLeave={() => setHoveredPath(null)}
-        >
-          {NAV_LINKS.map((link) => {
-            // Check active state
-            const isHovered = hoveredPath === link.href;
-            const isMatchHash = activeHash === link.href.replace('/', '');
-            const isActive = isHovered || (!hoveredPath && (pathname === link.href || (pathname === '/' && isMatchHash)));
-            const isReallyActive = pathname === link.href || (pathname === '/' && isMatchHash);
-
-            return (
-              <div
-                key={link.href}
-                className="relative"
-                onMouseEnter={() => {
-                  setHoveredPath(link.href);
-                  if (link.megaMenu) handleMegaEnter(link.megaMenu);
-                }}
-                onMouseLeave={() => {
-                  if (link.megaMenu) handleMegaLeave();
-                }}
-              >
-                {/* Framer Motion Active Pill */}
-                {isActive && (
-                  <motion.div
-                    layoutId="active-pill"
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      backgroundColor: 'color-mix(in srgb, var(--color-accent) 10%, transparent)',
-                      border: '1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)',
-                    }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                  />
-                )}
-                
-                <Link
-                  href={link.href}
-                  className="relative z-10 block px-5 py-2.5 rounded-full whitespace-nowrap text-xs uppercase tracking-[0.15em] font-medium transition-colors duration-300 hover:bg-black/5 dark:hover:bg-white/10"
-                  style={{
-                    color: activeMega === link.megaMenu || isReallyActive ? 'var(--color-accent)' : 'var(--color-text)',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
-                  onMouseLeave={(e) => {
-                    if (activeMega !== link.megaMenu && !isReallyActive) {
-                      e.currentTarget.style.color = 'var(--color-text)';
-                    }
-                  }}
-                >
-                  {link.label}
-                </Link>
-              </div>
-            );
-          })}
-        </nav>
-
-        {/* Right Actions */}
-        <div className="flex items-center gap-4 sm:gap-6 relative z-[101]">
-          {/* Theme Toggle */}
+        {/* Right actions: ThemeToggle + Cart + Burger (all ≥ 44px) */}
+        <div className="flex items-center gap-1">
           <ThemeToggle />
 
           {/* Cart Button */}
           <button
             onClick={openCart}
-            className="relative transition-colors duration-300 hover:text-amber-500/90"
+            className="relative w-11 h-11 flex items-center justify-center transition-colors"
             style={{ color: 'var(--color-text)' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text)')}
-            aria-label="Open cart"
+            aria-label="Panier"
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
               <line x1="3" y1="6" x2="21" y2="6" />
               <path d="M16 10a4 4 0 01-8 0" />
             </svg>
             {mounted && cartCount > 0 && (
-              <span
-                className="absolute -top-2 -right-2 w-5 h-5 bg-amber-600 text-white text-[10px] rounded-full flex items-center justify-center font-semibold shadow-md"
-              >
+              <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-amber-600 text-white text-[9px] rounded-full flex items-center justify-center font-bold">
                 {cartCount}
               </span>
             )}
           </button>
 
-          {/* Menu Toggle */}
+          {/* Single clean burger button for mobile */}
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex flex-col gap-[5px] items-end group lg:hidden"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-11 h-11 flex flex-col items-center justify-center gap-1.5 transition-colors"
+            aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
           >
             <span
-              className={`block h-[1px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                menuOpen ? 'w-6 rotate-45 translate-y-[3px]' : 'w-6 group-hover:w-8'
+              className={`block h-[1.5px] w-6 transition-all duration-300 ${
+                isMobileMenuOpen ? 'rotate-45 translate-y-[4.5px]' : ''
               }`}
               style={{ backgroundColor: 'var(--color-text)' }}
             />
             <span
-              className={`block h-[1px] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                menuOpen ? 'w-6 -rotate-45 -translate-y-[3px]' : 'w-4 group-hover:w-8'
+              className={`block h-[1.5px] w-6 transition-all duration-300 ${
+                isMobileMenuOpen ? '-rotate-45 -translate-y-[4.5px]' : ''
               }`}
               style={{ backgroundColor: 'var(--color-text)' }}
             />
           </button>
         </div>
       </header>
-      </div>
 
-      {/* ═══════════════ GLASSMORPHISM MEGA-MENU ═══════════════ */}
+      {/* ════════════════════════════════════════════════════════════════
+          3. GLASSMORPHISM MEGA-MENU (DESKTOP ONLY — ≥ 1024px)
+         ════════════════════════════════════════════════════════════════ */}
       {activeMega && megaData && (
         <div
           ref={megaMenuRef}
@@ -268,9 +366,7 @@ export default function Navigation() {
           onMouseEnter={handleMegaPanelEnter}
           onMouseLeave={handleMegaLeave}
         >
-          <div
-            className="mx-auto max-w-[1440px] px-6 md:px-10"
-          >
+          <div className="mx-auto max-w-[1440px] px-6 md:px-10">
             <div
               className="rounded-b-2xl p-8 transition-all duration-300"
               style={{
@@ -337,7 +433,6 @@ export default function Navigation() {
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                             sizes="200px"
                           />
-                          {/* Hover overlay */}
                           <div
                             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                             style={{
@@ -376,10 +471,12 @@ export default function Navigation() {
         </div>
       )}
 
-      {/* Fullscreen Menu Overlay */}
+      {/* ════════════════════════════════════════════════════════════════
+          4. DESKTOP/TABLET MENU OVERLAY (≥ 768px)
+         ════════════════════════════════════════════════════════════════ */}
       <div
         ref={menuRef}
-        className="fixed inset-0 z-[99]"
+        className="fixed inset-0 z-[99] hidden md:block"
         style={{
           clipPath: 'inset(0% 0% 100% 0%)',
           backgroundColor: 'var(--color-bg)',
@@ -387,7 +484,6 @@ export default function Navigation() {
       >
         <div className="h-full flex flex-col items-center justify-center px-6">
           <div ref={menuLinksRef} className="flex flex-col items-center gap-6 md:gap-8">
-            {/* Theme Toggle in mobile menu */}
             <div className="mb-4">
               <ThemeToggle />
             </div>
@@ -412,7 +508,6 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* Menu Footer */}
           <div className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-4">
             <Link 
               href="https://www.instagram.com/w_a_perfume/"
@@ -432,6 +527,83 @@ export default function Navigation() {
           </div>
         </div>
       </div>
+
+      {/* ════════════════════════════════════════════════════════════════
+          5. DEDICATED MOBILE FULLSCREEN MENU (< 768px)
+         ════════════════════════════════════════════════════════════════ */}
+      {isMobileMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-[120] flex flex-col"
+          style={{
+            backgroundColor: 'var(--color-bg)',
+            height: '100dvh',
+            paddingTop: 'max(14px, env(safe-area-inset-top))',
+            paddingBottom: 'max(20px, env(safe-area-inset-bottom))',
+            paddingLeft: '20px',
+            paddingRight: '20px',
+          }}
+        >
+          {/* Top bar with close button */}
+          <div className="flex items-center justify-between h-[56px] flex-shrink-0 border-b border-[var(--color-border)]">
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
+              <Image
+                src="/logo.png"
+                alt="W&A Perfumes"
+                width={120}
+                height={45}
+                className="object-contain h-9 w-auto"
+                style={mounted && resolvedTheme === 'light' ? {
+                  filter: 'brightness(0.15) sepia(1) saturate(0.5) hue-rotate(10deg)',
+                } : undefined}
+              />
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-11 h-11 flex items-center justify-center text-[var(--color-text)] transition-colors"
+              aria-label="Fermer le menu"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Links list (scrollable, perfectly balanced text sizes) */}
+          <div className="flex-1 overflow-y-auto flex flex-col justify-center py-6 gap-4">
+            {MOBILE_NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-[family-name:var(--font-cormorant)] text-[clamp(1.4rem,6vw,2.1rem)] font-light tracking-[0.06em] uppercase text-center transition-colors duration-200"
+                style={{ color: 'var(--color-text)' }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Bottom branding / Instagram link */}
+          <div className="flex flex-col items-center gap-2 pt-3 border-t border-[var(--color-border)] flex-shrink-0">
+            <Link 
+              href="https://www.instagram.com/w_a_perfume/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[0.7rem] uppercase tracking-[0.2em] py-1.5"
+              style={{ color: 'var(--color-accent)' }}
+            >
+              Instagram @w_a_perfume
+            </Link>
+            <p
+              className="text-[0.6rem] uppercase tracking-[0.3em]"
+              style={{ color: 'var(--color-text-subtle)' }}
+            >
+              Laissez Votre Signature
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 }
