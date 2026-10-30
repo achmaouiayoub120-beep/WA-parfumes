@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 const COLLECTIONS = [
   {
     name: 'WA Signature',
-    tagline: 'Dark & Bold',
+    tagline: 'Sombre & Audacieux',
     description: 'Treize parfums puissants pour le gentleman moderne. Bois profonds, oud riche et épices magnétiques.',
     image: '/images/collections/homme-banner.jpg',
     href: '/#homme',
@@ -17,7 +17,7 @@ const COLLECTIONS = [
   },
   {
     name: 'WA Elegance',
-    tagline: 'Soft & Elegant',
+    tagline: 'Doux & Éléguant',
     description: 'Neuf parfums raffinés pour la femme sophistiquée. Fleurs luxuriantes, vanille chaude et musc éclatant.',
     image: '/images/collections/femme-banner.jpg',
     href: '/#femme',
@@ -57,11 +57,11 @@ export default function CollectionShowcase() {
   };
 
   return (
-    <div className="py-20 bg-[var(--color-bg)]">
+    <div className="py-16 md:py-24 bg-[var(--color-bg)]">
       {/* Section Header */}
-      <div className="text-center px-6 mb-16">
-        <p className="editorial-subtitle mb-4">Our Collections</p>
-        <h2 className="heading-section text-[var(--color-text)]">Three Worlds</h2>
+      <div className="text-center px-6 mb-12 md:mb-16">
+        <p className="editorial-subtitle mb-4">Nos Collections</p>
+        <h2 className="heading-section text-[var(--color-text)]">Trois Mondes</h2>
         <div className="w-16 h-[1px] bg-[var(--color-accent)] mx-auto mt-8 opacity-40" />
       </div>
 
@@ -80,7 +80,7 @@ export default function CollectionShowcase() {
               className="w-full shrink-0 snap-center relative flex flex-col md:flex-row items-center bg-[var(--color-bg-elevated)] border border-[var(--color-border-subtle)]"
             >
               {/* Image Side */}
-              <div className="w-full md:w-1/2 h-[50vh] md:h-[65vh] relative overflow-hidden group">
+              <div className="w-full md:w-1/2 h-[45vh] md:h-[65vh] relative overflow-hidden group">
                 <Image
                   src={col.image}
                   alt={col.name}
@@ -93,9 +93,9 @@ export default function CollectionShowcase() {
               </div>
 
               {/* Content Side */}
-              <div className="w-full md:w-1/2 p-10 md:p-16 lg:p-24 flex flex-col justify-center relative">
+              <div className="w-full md:w-1/2 p-6 sm:p-10 md:p-16 lg:p-24 flex flex-col justify-center relative">
                 {/* Decorative background number */}
-                <span className="absolute top-8 right-8 text-8xl font-[family-name:var(--font-cormorant)] text-[var(--color-text)] opacity-[0.03] select-none pointer-events-none">
+                <span className="absolute top-6 right-6 md:top-8 md:right-8 text-6xl md:text-8xl font-[family-name:var(--font-cormorant)] text-[var(--color-text)] opacity-[0.03] select-none pointer-events-none">
                   0{idx + 1}
                 </span>
 
@@ -104,7 +104,7 @@ export default function CollectionShowcase() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
-                  className="text-[0.65rem] uppercase tracking-[0.35em] mb-4" 
+                  className="text-[0.65rem] uppercase tracking-[0.35em] mb-3 md:mb-4 font-medium" 
                   style={{ color: col.accent }}
                 >
                   {col.tagline}
@@ -115,7 +115,7 @@ export default function CollectionShowcase() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.06em] text-[var(--color-text)] mb-6"
+                  className="font-[family-name:var(--font-cormorant)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.06em] text-[var(--color-text)] mb-4 md:mb-6"
                 >
                   {col.name}
                 </motion.h3>
@@ -125,7 +125,7 @@ export default function CollectionShowcase() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="body-large mb-10 text-[var(--color-text-muted)] leading-relaxed max-w-md"
+                  className="body-large mb-8 md:mb-10 text-[var(--color-text-muted)] leading-relaxed max-w-md text-sm sm:text-base"
                 >
                   {col.description}
                 </motion.p>
@@ -138,7 +138,7 @@ export default function CollectionShowcase() {
                 >
                   <Link href={col.href}>
                     <MagneticButton 
-                      className="px-8 py-3 border text-[0.65rem] uppercase tracking-[0.3em] text-[var(--color-text)] hover:text-[var(--color-bg)] hover:bg-[var(--color-text)] transition-all duration-500 rounded-full"
+                      className="px-6 sm:px-8 py-3 border text-[0.65rem] uppercase tracking-[0.25em] text-[var(--color-text)] hover:text-[var(--color-bg)] hover:bg-[var(--color-text)] transition-all duration-500 rounded-full min-h-[44px] flex items-center justify-center"
                       style={{ borderColor: 'color-mix(in srgb, var(--color-border) 40%, transparent)' }}
                     >
                       Découvrir la collection
@@ -150,27 +150,27 @@ export default function CollectionShowcase() {
           ))}
         </div>
 
-        {/* Navigation Controls */}
-        <div className="flex items-center justify-center gap-8 mt-4">
+        {/* Navigation Controls — Touch targets ≥ 44px */}
+        <div className="flex items-center justify-center gap-6 md:gap-8 mt-4">
           <button 
             onClick={() => scrollTo(Math.max(0, activeIndex - 1))}
-            className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
+            className="w-11 h-11 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
             disabled={activeIndex === 0}
-            aria-label="Previous slide"
+            aria-label="Diapositive précédente"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
           
-          {/* Pagination Dots */}
-          <div className="flex gap-3">
+          {/* Pagination Dots — 44px touch targets */}
+          <div className="flex gap-1">
             {COLLECTIONS.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => scrollTo(idx)}
-                className="group p-2"
-                aria-label={`Go to slide ${idx + 1}`}
+                className="w-11 h-11 flex items-center justify-center group"
+                aria-label={`Aller à la diapositive ${idx + 1}`}
               >
                 <div 
                   className={`h-[2px] transition-all duration-500 ${
@@ -185,9 +185,9 @@ export default function CollectionShowcase() {
 
           <button 
             onClick={() => scrollTo(Math.min(COLLECTIONS.length - 1, activeIndex + 1))}
-            className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
+            className="w-11 h-11 rounded-full flex items-center justify-center border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-30 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-text-muted)]"
             disabled={activeIndex === COLLECTIONS.length - 1}
-            aria-label="Next slide"
+            aria-label="Diapositive suivante"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M9 18l6-6-6-6" />
@@ -196,7 +196,6 @@ export default function CollectionShowcase() {
         </div>
       </div>
       
-      {/* CSS to hide scrollbar for webkit browsers since Tailwind doesn't have a built-in cross-browser class without plugins */}
       <style dangerouslySetInnerHTML={{__html: `
         .scrollbar-none::-webkit-scrollbar {
           display: none;

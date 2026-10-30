@@ -321,6 +321,7 @@ Merci.`;
                     type="text"
                     required
                     minLength={2}
+                    autoComplete="name"
                     placeholder="ex: Ayoub Benali"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
@@ -338,6 +339,7 @@ Merci.`;
                     id="wa-phone"
                     type="tel"
                     inputMode="tel"
+                    autoComplete="tel"
                     required
                     placeholder="06 00 00 00 00"
                     value={phone}
@@ -409,6 +411,7 @@ Merci.`;
                     required
                     minLength={5}
                     rows={3}
+                    autoComplete="street-address"
                     placeholder="ex: Quartier, Rue, Résidence, Numéro de porte..."
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}

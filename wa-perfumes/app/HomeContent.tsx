@@ -1,4 +1,5 @@
 import HeroVideo from '@/components/HeroVideo';
+import TrustBanner from '@/components/ui/TrustBanner';
 import CollectionShowcase from '@/components/sections/CollectionShowcase';
 import PackDiscoverySection from '@/components/sections/PackDiscoverySection';
 import MenCollection from '@/components/sections/MenCollection';
@@ -15,6 +16,9 @@ export default function HomeContent() {
       <ClientPreloader />
       <HeroVideo />
       
+      {/* Bandeau de confiance */}
+      <TrustBanner />
+
       <SectionWipe color="var(--color-bg-elevated)">
         <section id="collections">
           <CollectionShowcase />

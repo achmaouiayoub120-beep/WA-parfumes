@@ -12,7 +12,10 @@ export default function SectionWipe({ children, color, className = "" }: { child
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reducedMotion) return;
+    if (reducedMotion) {
+      if (wipeRef.current) wipeRef.current.style.display = 'none';
+      return;
+    }
 
     const ctx = gsap.context(() => {
       // The wipe starts covering the element, then slides up revealing it
@@ -26,6 +29,9 @@ export default function SectionWipe({ children, color, className = "" }: { child
             trigger: sectionRef.current,
             start: 'top 70%',
             once: true
+          },
+          onComplete: () => {
+            if (wipeRef.current) wipeRef.current.style.display = 'none';
           }
         }
       );
