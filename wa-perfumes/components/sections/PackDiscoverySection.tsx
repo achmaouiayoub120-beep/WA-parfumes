@@ -266,12 +266,12 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
         </div>
 
         {/* Two-column layout: Grid + Sidebar */}
-        <div className="flex flex-col lg:flex-row gap-8 animate-fade-up">
+        <div className="flex flex-col md:flex-row gap-8 animate-fade-up">
           {/* Product Grid */}
           <motion.div 
             layout
             className={`flex-1 grid gap-4 sm:gap-6
-            ${variant === 'fullscreen' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-3'}
+            ${variant === 'fullscreen' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-2 md:grid-cols-2 lg:grid-cols-3'}
           `}>
             <AnimatePresence>
               {filteredProducts.map(product => (
@@ -287,8 +287,8 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
             </AnimatePresence>
           </motion.div>
 
-          {/* Sticky Sidebar — Desktop */}
-          <div className="hidden lg:block w-72 flex-shrink-0">
+          {/* Sticky Sidebar — Desktop & Tablet */}
+          <div className="hidden md:block w-72 flex-shrink-0">
             <div className="sticky top-24">
               <DiscoveryBox selectedProducts={selectedProducts} onRemove={toggleProduct} />
               
@@ -313,7 +313,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 50, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden fixed z-40 left-4"
+              className="md:hidden fixed z-40 left-4"
               style={{
                 bottom: 'calc(16px + env(safe-area-inset-bottom, 0px))',
               }}
@@ -357,7 +357,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsSheetOpen(false)}
-                className="lg:hidden fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm"
+                className="md:hidden fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm"
               />
 
               {/* Sheet container */}
@@ -366,7 +366,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
                 animate={{ y: 0 }}
                 exit={{ y: '100%' }}
                 transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-                className="lg:hidden fixed left-0 right-0 bottom-0 z-[151] rounded-t-3xl border-t border-[var(--color-border)] shadow-2xl overflow-hidden"
+                className="md:hidden fixed left-0 right-0 bottom-0 z-[151] rounded-t-3xl border-t border-[var(--color-border)] shadow-2xl overflow-hidden"
                 style={{
                   backgroundColor: 'var(--color-bg-card)',
                   maxHeight: '85dvh',
