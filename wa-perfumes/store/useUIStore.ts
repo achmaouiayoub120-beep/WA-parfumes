@@ -17,6 +17,9 @@ interface UIStore {
   openWhatsApp: (context?: WhatsAppOrderContext) => void;
   closeWhatsApp: () => void;
   toggleWhatsApp: () => void;
+
+  isMobileMenuOpen: boolean;
+  setMobileMenuOpen: (isOpen: boolean) => void;
 }
 
 export const useUIStore = create<UIStore>((set) => ({
@@ -30,4 +33,7 @@ export const useUIStore = create<UIStore>((set) => ({
   openWhatsApp: (context) => set({ isWhatsAppOpen: true, whatsappContext: context || null }),
   closeWhatsApp: () => set({ isWhatsAppOpen: false }),
   toggleWhatsApp: () => set((state) => ({ isWhatsAppOpen: !state.isWhatsAppOpen })),
+
+  isMobileMenuOpen: false,
+  setMobileMenuOpen: (isOpen) => set({ isMobileMenuOpen: isOpen }),
 }));

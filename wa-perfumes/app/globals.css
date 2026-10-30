@@ -10,6 +10,7 @@
 /* ── Dark Luxury Theme (Default) ── */
 :root,
 [data-theme="dark"] {
+  --announce-h: 0px;
   /* ─── Core Backgrounds ─── */
   --color-bg: #0E0A10;
   --color-bg-elevated: #15101A;
@@ -116,6 +117,7 @@
 
 /* ── Light Luxury Theme ── */
 [data-theme="light"] {
+  --announce-h: 0px;
   --color-bg: #FAF5F0;
   --color-bg-elevated: #F6EFE8;
   --color-bg-card: #EFEAE1;
