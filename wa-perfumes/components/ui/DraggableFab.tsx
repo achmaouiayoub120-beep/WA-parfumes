@@ -2,162 +2,74 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
-import ScentFinderModal from './ScentFinderModal';
 import { useUIStore } from '@/store/useUIStore';
 
 export default function DraggableFab() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isScentFinderOpen, setIsScentFinderOpen] = useState(false);
-  const [bounds, setBounds] = useState({ width: 0, height: 0 });
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const isMobileMenuOpen = useUIStore((s) => s.isMobileMenuOpen);
+  const isCartOpen = useUIStore((s) => s.isCartOpen);
+  const isWhatsAppOpen = useUIStore((s) => s.isWhatsAppOpen);
   const openWhatsApp = useUIStore((s) => s.openWhatsApp);
-  
-  const buttonSize = 64; // px
-  const margin = 24; // px
 
+  // Hide FAB when keyboard is open / input is focused
   useEffect(() => {
-    // Only run on client
-    const updateBounds = () => {
-      setBounds({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
+    const handleFocusIn = (e: FocusEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT')
+      ) {
+        setIsInputFocused(true);
+      }
     };
-    updateBounds();
-    window.addEventListener('resize', updateBounds);
-    return () => window.removeEventListener('resize', updateBounds);
+
+    const handleFocusOut = () => {
+      setIsInputFocused(false);
+    };
+
+    window.addEventListener('focusin', handleFocusIn);
+    window.addEventListener('focusout', handleFocusOut);
+    return () => {
+      window.removeEventListener('focusin', handleFocusIn);
+      window.removeEventListener('focusout', handleFocusOut);
+    };
   }, []);
 
-  if (bounds.width === 0) return null; // Wait for client mount
+  // Condition to show the single WhatsApp FAB
+  const isVisible = !isMobileMenuOpen && !isCartOpen && !isWhatsAppOpen && !isInputFocused;
 
   return (
-    <>
-    <motion.div
-      className="fixed z-[9999]"
-      // Starting position (bottom right)
-      style={{
-        bottom: margin,
-        right: margin,
-      }}
-      drag
-      // Prevent drag from escaping the window
-      // right/bottom are 0 because the element starts at bottom-right.
-      // left/top are negative window dimensions + margins + button size.
-      dragConstraints={{ 
-        left: -(bounds.width - buttonSize - margin * 2), 
-        right: 0, 
-        top: -(bounds.height - buttonSize - margin * 2), 
-        bottom: 0 
-      }}
-      dragElastic={0.1}
-      dragMomentum={false}
-      onDragStart={() => setIsDragging(true)}
-      onDragEnd={() => {
-        // Small delay so a click isn't triggered immediately after dropping
-        setTimeout(() => setIsDragging(false), 150);
-      }}
-    >
-      <div className="relative flex flex-col-reverse items-center gap-3">
-        {/* Main Action Button */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            if (!isDragging) setIsOpen(!isOpen);
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+          className="fixed z-40 right-4"
+          style={{
+            bottom: 'calc(16px + env(safe-area-inset-bottom, 0px))',
           }}
-          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[var(--color-bg-card)] border border-[var(--color-accent-border)] shadow-xl flex items-center justify-center text-[var(--color-accent)] transition-colors duration-300 hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-bg-hover)] relative z-20"
-          aria-label="Menu Contact"
         >
-          {/* Morphing Icon (Hamburger / Close) */}
-          <motion.div
-            initial={false}
-            animate={{ rotate: isOpen ? 45 : 0 }}
-            transition={{ duration: 0.3, ease: 'anticipate' }}
-            className="relative w-6 h-6 flex items-center justify-center"
+          <motion.button
+            whileTap={{ scale: 0.92 }}
+            onClick={() => openWhatsApp()}
+            className="w-[52px] h-[52px] rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg shadow-black/25 transition-transform duration-200"
+            aria-label="Contacter sur WhatsApp"
+            title="Commander via WhatsApp"
           >
-            <span className={`absolute h-0.5 bg-current rounded-full transition-all duration-300 ${isOpen ? 'w-6' : 'w-6 -translate-y-2'}`} />
-            <span className={`absolute h-0.5 bg-current rounded-full transition-all duration-300 ${isOpen ? 'w-0 opacity-0' : 'w-6'}`} />
-            <span className={`absolute h-0.5 bg-current rounded-full transition-all duration-300 ${isOpen ? 'w-6 rotate-90' : 'w-6 translate-y-2'}`} />
-          </motion.div>
-        </motion.button>
-
-        {/* Floating Menu Items */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.8 }}
-              transition={{ duration: 0.3, ease: 'backOut' }}
-              className="absolute bottom-[110%] flex flex-col gap-3 z-10"
+            <svg
+              className="w-7 h-7 fill-current"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
             >
-              {/* WhatsApp Option — opens Smart Drawer */}
-              <motion.button
-                onClick={() => {
-                  openWhatsApp();
-                  setIsOpen(false);
-                }}
-                whileHover={{ scale: 1.1, x: -5 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] shadow-lg flex items-center justify-center text-white"
-                title="Commander via WhatsApp"
-              >
-                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                </svg>
-              </motion.button>
-
-              {/* Instagram Option */}
-              <motion.a
-                href="https://www.instagram.com/w_a_perfume/"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, x: -5 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-lg flex items-center justify-center text-white"
-                style={{ background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)' }}
-                title="Instagram"
-              >
-                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
-                </svg>
-              </motion.a>
-              {/* Scent Finder Option */}
-              <motion.button
-                onClick={() => {
-                  setIsScentFinderOpen(true);
-                  setIsOpen(false);
-                }}
-                whileHover={{ scale: 1.1, x: -5 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#111] flex items-center justify-center text-[var(--color-accent)] relative"
-                title="Trouvez votre Signature Olfactive"
-              >
-                {/* Infinite pulse shadow */}
-                <motion.div
-                  className="absolute inset-0 rounded-full"
-                  animate={{ 
-                    boxShadow: [
-                      '0px 0px 0px 0px rgba(201,203,211,0)',
-                      '0px 0px 15px 4px rgba(201,203,211,0.4)',
-                      '0px 0px 0px 0px rgba(201,203,211,0)'
-                    ] 
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                />
-                <Sparkles className="w-5 h-5 relative z-10" />
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
-    
-    <ScentFinderModal 
-      isOpen={isScentFinderOpen} 
-      onClose={() => setIsScentFinderOpen(false)} 
-    />
-    </>
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+            </svg>
+          </motion.button>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
