@@ -13,24 +13,24 @@ const WORLDS = [
     name: 'Oud Forest',
     description: 'A journey through ancient woods where smoke curls between dark trees and gold dust settles like whispered secrets.',
     notes: ['Oud', 'Cedarwood', 'Smoke'],
-    image: '/images/hero/hero-bg.jpg',
-    gradient: 'linear-gradient(to bottom, #1a1412, var(--color-bg), #0d0b09)',
+    image: '/images/worlds/oud-forest.jpg',
+    gradient: 'linear-gradient(to bottom, rgba(14, 10, 16, 0.6) 0%, rgba(14, 10, 16, 0.35) 50%, rgba(14, 10, 16, 0.85) 100%)',
   },
   {
     num: '02',
     name: 'Amber Desert',
     description: 'Warm sands stretch endlessly under a golden sun, carrying the rich sweetness of amber and sun-baked spice.',
     notes: ['Amber', 'Saffron', 'Vanilla'],
-    image: '/images/gallery/gallery-01.jpg',
-    gradient: 'linear-gradient(to bottom, #2a1a08, var(--color-bg), #1a1408)',
+    image: '/images/worlds/amber-desert.jpg',
+    gradient: 'linear-gradient(to bottom, rgba(32, 16, 8, 0.6) 0%, rgba(32, 16, 8, 0.35) 50%, rgba(14, 10, 16, 0.85) 100%)',
   },
   {
     num: '03',
     name: 'Vanilla Clouds',
     description: 'Floating through cream-soft atmospheres where light filters golden through layers of sweetness and warmth.',
     notes: ['Vanilla', 'Tonka Bean', 'Musk'],
-    image: '/images/gallery/gallery-02.jpg',
-    gradient: 'linear-gradient(to bottom, #1a1816, var(--color-bg), #141210)',
+    image: '/images/worlds/vanilla-clouds.jpg',
+    gradient: 'linear-gradient(to bottom, rgba(22, 18, 24, 0.6) 0%, rgba(22, 18, 24, 0.35) 50%, rgba(14, 10, 16, 0.85) 100%)',
   },
 ];
 
@@ -99,7 +99,7 @@ export default function ScrollStorytelling() {
               const fadeIn = Math.min(localProgress * 3, 1); // Quick fade in
               const fadeOut = localProgress > 0.8 && i < totalWorlds - 1 ? (localProgress - 0.8) * 5 : 0;
               
-              gsap.set(image, { opacity: 0.5 * (fadeIn - fadeOut) });
+              gsap.set(image, { opacity: 0.85 * (fadeIn - fadeOut) });
               gsap.set(content, { 
                 opacity: fadeIn - fadeOut,
                 y: (1 - fadeIn) * 40 + fadeOut * -30,
