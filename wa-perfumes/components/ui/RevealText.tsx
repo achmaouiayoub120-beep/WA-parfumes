@@ -76,7 +76,7 @@ export default function RevealText({
   }, [children, delay, stagger, scrub]);
 
   return (
-    <Component ref={containerRef as React.RefObject<any>} className={className}>
+    <Component ref={containerRef as unknown as React.Ref<never>} className={className}>
       {children}
     </Component>
   );

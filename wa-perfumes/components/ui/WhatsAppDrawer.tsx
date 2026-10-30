@@ -7,6 +7,7 @@ import { X, Send, Loader2 } from 'lucide-react';
 import { useUIStore } from '@/store/useUIStore';
 import { useCartStore } from '@/store/useCartStore';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 const VILLES_MAROC = [
   'Casablanca',
@@ -23,6 +24,13 @@ const VILLES_MAROC = [
   'Autre',
 ];
 
+interface OrderItemPayload {
+  productId: string;
+  volume: string;
+  quantity: number;
+  packDetails?: string;
+}
+
 export default function WhatsAppDrawer() {
   const isOpen = useUIStore((s) => s.isWhatsAppOpen);
   const closeWhatsApp = useUIStore((s) => s.closeWhatsApp);
@@ -31,20 +39,18 @@ export default function WhatsAppDrawer() {
   const getCartTotal = useCartStore((s) => s.getCartTotal);
   const clearCart = useCartStore((s) => s.clearCart);
   
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsMounted();
 
   const [nom, setNom] = useState('');
   const [phone, setPhone] = useState('');
   const [ville, setVille] = useState('Casablanca');
   const [autreVille, setAutreVille] = useState('');
   const [address, setAddress] = useState('');
+  const [hp, setHp] = useState('');
+  const [renderedAt] = useState(() => Date.now());
   
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Lock body scroll when open
   useEffect(() => {
@@ -63,60 +69,62 @@ export default function WhatsAppDrawer() {
     
     // Front-end Validation
     setError(null);
-    if (nom.length < 2) return setError('Le nom doit contenir au moins 2 caractères.');
-    const cleanPhone = phone.replace(/\s+/g, '');
-    if (!/^(06|07)\d{8}$/.test(cleanPhone)) return setError('Le numéro de téléphone doit être un format marocain valide (06 ou 07 + 8 chiffres).');
-    if (address.length < 5) return setError('L\'adresse détaillée est requise.');
-    const villeFinale = ville === 'Autre' ? autreVille : ville;
-    if (ville === 'Autre' && autreVille.length < 2) return setError('Veuillez préciser votre ville.');
+    if (nom.trim().length < 2) return setError('Le nom doit contenir au moins 2 caractères.');
+    const cleanPhone = phone.replace(/[\s\-\.]/g, '');
+    if (!/^(?:(?:\+?212)|0)[67]\d{8}$/.test(cleanPhone)) {
+      return setError('Le numéro de téléphone doit être un format marocain valide (06 ou 07 + 8 chiffres).');
+    }
+    if (address.trim().length < 5) return setError("L'adresse détaillée est requise (au moins 5 caractères).");
+    const villeFinale = ville === 'Autre' ? autreVille.trim() : ville;
+    if (ville === 'Autre' && autreVille.trim().length < 2) return setError('Veuillez préciser votre ville.');
 
     setIsLoading(true);
 
     try {
-      // Préparation du payload
-      let cartItemsPayload: any[] = [];
-      let totalEstime = 0;
+      let itemsPayload: OrderItemPayload[] = [];
 
       if (whatsappContext?.type === 'pack') {
-        // Formater les détails du pack pour le nom du produit
-        // Exemple: "🎁 1x Coffret Découverte...\n   - Parfum 1\n   - Parfum 2" -> "Coffret Découverte (Parfum 1, Parfum 2)"
         let details = 'Coffret Découverte';
         if (whatsappContext.itemsText) {
-            const lines = whatsappContext.itemsText.split('\n');
-            if (lines.length > 1) {
-                const perfumes = lines.slice(1).map(l => l.replace('   - ', '').trim());
-                details = `Coffret Découverte [${perfumes.join(', ')}]`;
-            }
+          const lines = whatsappContext.itemsText.split('\n');
+          if (lines.length > 1) {
+            const perfumes = lines.slice(1).map((l: string) => l.replace('   - ', '').trim());
+            details = `Coffret Découverte [${perfumes.join(', ')}]`;
+          }
         }
 
-        // Mock pack item for API validation
-        cartItemsPayload = [{
-          id: 'pack-decouverte',
-          name: details,
+        itemsPayload = [{
+          productId: 'pack-decouverte',
+          volume: 'Pack 5x30ml',
           quantity: 1,
-          selectedVolume: 'Pack',
-          selectedPrice: parseInt(whatsappContext.totalText.replace(/\D/g, '') || '0')
+          packDetails: details,
         }];
-        totalEstime = cartItemsPayload[0].selectedPrice;
       } else if (items.length > 0) {
-        cartItemsPayload = items;
-        totalEstime = getCartTotal();
+        itemsPayload = items.map((item) => ({
+          productId: item.id,
+          volume: item.selectedVolume || '50ml',
+          quantity: item.quantity,
+        }));
       } else {
         setError('Votre sélection est vide.');
         setIsLoading(false);
         return;
       }
 
-      // 1. Envoi à l'API (qui contactera Google Sheets)
+      // 1. Envoi à l'API (qui vérifie les prix et contacte Google Sheets)
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fullName: nom,
-          phone: cleanPhone,
-          city: villeFinale,
-          address: address.trim(),
-          cartItems: cartItemsPayload,
+          customer: {
+            name: nom.trim(),
+            phone: cleanPhone,
+            city: villeFinale,
+            address: address.trim(),
+          },
+          items: itemsPayload,
+          hp,
+          renderedAt,
         }),
       });
 
@@ -128,10 +136,10 @@ export default function WhatsAppDrawer() {
 
       // 2. Construction du message WhatsApp
       const whatsappNum = WHATSAPP_NUMBER;
-      const orderId = data.orderId;
-      const oData = data.orderData; // contains formatted productName, quantity, unitPrice, total
+      const orderId = data.orderId || `WA-${Date.now().toString().slice(-5)}`;
+      const oData = data.orderData;
       
-      const message = `Bonjour WA Perfumes,
+      const message = `Bonjour W&A Perfumes,
 
 Je souhaite confirmer ma commande :
 
@@ -140,7 +148,7 @@ Je souhaite confirmer ma commande :
 💰 Prix unitaire : ${oData.unitPrice} DH
 💵 Total : ${oData.total} DH
 
-👤 Nom : ${nom}
+👤 Nom : ${nom.trim()}
 📞 Téléphone : ${cleanPhone}
 📍 Ville : ${villeFinale}
 🏠 Adresse : ${address.trim()}
@@ -163,9 +171,9 @@ Merci.`;
       setAutreVille('');
       setAddress('');
       
-    } catch (err: any) {
-      console.error(err);
-      setError("Impossible d'enregistrer la commande. Veuillez réessayer.");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Impossible d'enregistrer la commande. Veuillez réessayer.";
+      setError(msg);
     } finally {
       setIsLoading(false);
     }
@@ -239,14 +247,14 @@ Merci.`;
                   </p>
                   <div className="flex items-center gap-4">
                     <div className="relative w-16 h-16 shrink-0 rounded-md overflow-hidden bg-[var(--color-bg-elevated)] border border-[var(--color-accent-border)]">
-                      <Image src="/placeholder.png" alt="Pack Découverte" fill className="object-cover opacity-80 mix-blend-screen" />
+                      <Image src="/images/hero/hero-poster.jpg" alt="Pack Découverte" fill className="object-cover opacity-80" />
                     </div>
                     <div>
                       <p className="font-[family-name:var(--font-cormorant)] text-base text-[var(--color-accent)] mb-1">
                         Coffret Découverte
                       </p>
                       <p className="text-[0.6rem] text-[var(--color-text-subtle)] leading-relaxed">
-                        5 Parfums WA Signature & Elegance (30ml)
+                        5 Parfums W&A Signature & Elegance (30ml)
                       </p>
                     </div>
                   </div>
@@ -267,14 +275,14 @@ Merci.`;
                   </p>
                   <div className="space-y-3">
                     {items.map((item) => (
-                      <div key={item.id} className="flex items-center gap-3">
+                      <div key={`${item.id}-${item.selectedVolume}`} className="flex items-center gap-3">
                         <div className="relative w-10 h-12 shrink-0 overflow-hidden rounded-sm bg-[var(--color-bg-elevated)]">
                           <Image src={item.image} alt={item.name} fill className="object-cover" sizes="40px" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs truncate text-[var(--color-text)]">{item.name}</p>
                           <p className="text-[0.6rem] text-[var(--color-text-subtle)]">
-                            Prix unitaire: {item.price} DH | Qté: {item.quantity}
+                            {item.selectedVolume} | Prix: {item.selectedPrice || item.price} DH | Qté: {item.quantity}
                           </p>
                         </div>
                       </div>
@@ -291,6 +299,18 @@ Merci.`;
 
               {/* Form */}
               <form id="whatsapp-form" onSubmit={handleSubmit} className="space-y-5">
+                {/* Honeypot field (anti-spam) */}
+                <input
+                  type="text"
+                  name="website"
+                  value={hp}
+                  onChange={(e) => setHp(e.target.value)}
+                  style={{ display: 'none' }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+
                 {/* Nom Complet */}
                 <div>
                   <label htmlFor="wa-nom" className="text-[0.6rem] uppercase tracking-[0.25em] font-medium block mb-1.5 text-[var(--color-text-muted)]">
@@ -305,7 +325,7 @@ Merci.`;
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
                     disabled={isLoading}
-                    className="w-full p-3.5 min-h-[44px] rounded-none text-sm transition-colors duration-300 outline-none bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
+                    className="w-full p-3.5 min-h-[44px] rounded-none text-base transition-colors duration-300 outline-none bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
                   />
                 </div>
 
@@ -317,12 +337,13 @@ Merci.`;
                   <input
                     id="wa-phone"
                     type="tel"
+                    inputMode="tel"
                     required
                     placeholder="06 00 00 00 00"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     disabled={isLoading}
-                    className="w-full p-3.5 min-h-[44px] rounded-none text-sm transition-colors duration-300 outline-none bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
+                    className="w-full p-3.5 min-h-[44px] rounded-none text-base transition-colors duration-300 outline-none bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
                   />
                 </div>
 
@@ -336,7 +357,7 @@ Merci.`;
                     value={ville}
                     onChange={(e) => setVille(e.target.value)}
                     disabled={isLoading}
-                    className="w-full p-3.5 min-h-[44px] rounded-none text-sm transition-colors duration-300 outline-none appearance-none cursor-pointer bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
+                    className="w-full p-3.5 min-h-[44px] rounded-none text-base transition-colors duration-300 outline-none appearance-none cursor-pointer bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
                     style={{
                       backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239A9590' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
                       backgroundRepeat: 'no-repeat',
@@ -372,7 +393,7 @@ Merci.`;
                         value={autreVille}
                         onChange={(e) => setAutreVille(e.target.value)}
                         disabled={isLoading}
-                        className="w-full p-3.5 min-h-[44px] rounded-none text-sm transition-colors duration-300 outline-none bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
+                        className="w-full p-3.5 min-h-[44px] rounded-none text-base transition-colors duration-300 outline-none bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
                       />
                     </motion.div>
                   )}
@@ -392,7 +413,7 @@ Merci.`;
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     disabled={isLoading}
-                    className="w-full p-3.5 min-h-[44px] rounded-none text-sm transition-colors duration-300 outline-none resize-y bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
+                    className="w-full p-3.5 min-h-[44px] rounded-none text-base transition-colors duration-300 outline-none resize-y bg-[var(--color-input-bg)] border border-[var(--color-input-border)] text-[var(--color-text)] focus:border-[var(--color-input-focus)] disabled:opacity-50"
                   />
                 </div>
               </form>

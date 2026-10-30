@@ -1,7 +1,9 @@
 import { MEN_PRODUCTS } from '@/data/products/men';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
 import { UNISEX_PRODUCTS } from '@/data/products/unisex';
-import { Product } from '@/data/products/men';
+import type { Product } from '@/data/products/men';
+
+export const PACK_DISCOVERY_PRICE = 199;
 
 export function getProductById(id: string): Product | undefined {
   const allProducts = [...MEN_PRODUCTS, ...WOMEN_PRODUCTS, ...UNISEX_PRODUCTS];
@@ -14,4 +16,3 @@ export function getAllProductIds(): string[] {
   const slugs = allProducts.map((p) => p.slug).filter(Boolean);
   return Array.from(new Set([...ids, ...slugs]));
 }
-

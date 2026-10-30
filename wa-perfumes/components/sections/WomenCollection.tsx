@@ -92,7 +92,7 @@ export default function WomenCollection() {
           ref={cardsRef}
           className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8"
         >
-          {WOMEN_PRODUCTS.map((product: any, index: number) => (
+          {WOMEN_PRODUCTS.map((product, index: number) => (
             <div
               key={product.id}
               className={`product-card-wrapper ${

@@ -156,7 +156,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
             {/* Symmetrical Subtitle */}
             <div className="flex items-center justify-center gap-4 mb-8 opacity-80">
               <div className="w-12 h-[1px] bg-[var(--color-violet)] opacity-50" />
-              <p className="editorial-subtitle text-[var(--color-violet)]">L'Expérience Découverte</p>
+              <p className="editorial-subtitle text-[var(--color-violet)]">L&apos;Expérience Découverte</p>
               <div className="w-12 h-[1px] bg-[var(--color-violet)] opacity-50" />
             </div>
 
@@ -226,7 +226,7 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
           {['Tous', 'W&A Homme', 'W&A Femme', 'W&A Unisexe'].map(tab => (
             <button
               key={tab}
-              onClick={() => setFilter(tab as any)}
+              onClick={() => setFilter(tab as 'Tous' | 'W&A Homme' | 'W&A Femme' | 'W&A Unisexe')}
               className={`pb-4 text-sm md:text-base uppercase tracking-wider transition-colors relative
                 ${filter === tab ? 'text-[var(--color-violet)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}`}
             >

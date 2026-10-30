@@ -194,7 +194,7 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
                   transition={{ duration: 0.5 }}
                   className="flex flex-col items-center text-center gap-8"
                 >
-                  <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">Quelle est l'attitude recherchée ?</h2>
+                  <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">Quelle est l&apos;attitude recherchée ?</h2>
                   <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
                     {['Élégance', 'Charisme / Séduction'].map((choice) => (
                       <button

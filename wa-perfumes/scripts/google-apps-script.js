@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 function doPost(e) {
   const lock = LockService.getScriptLock();
   
@@ -5,7 +6,7 @@ function doPost(e) {
     // Wait for up to 10 seconds for other processes to finish.
     lock.waitLock(10000); 
 
-    // 1. Ouvrir le tableur par ID exact (doit correspondre parfaitement Ã  l'URL)
+    // 1. Ouvrir le tableur par ID exact (doit correspondre parfaitement à l'URL)
     const spreadsheetId = "1uXfTlz-yXKUaNPHi2PWSLH4tRVFJRi_GYJvv1MDnIYU";
     let spreadsheet;
     try {
@@ -13,7 +14,7 @@ function doPost(e) {
     } catch (err) {
       return ContentService.createTextOutput(JSON.stringify({ 
         success: false, 
-        error: "Impossible d'ouvrir le Spreadsheet via ID. VÃ©rifiez que l'ID est correct et que le script a l'autorisation d'y accÃ©der: " + err.toString() 
+        error: "Impossible d'ouvrir le Spreadsheet via ID. Vérifiez que l'ID est correct et que le script a l'autorisation d'y accéder: " + err.toString() 
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
@@ -26,11 +27,11 @@ function doPost(e) {
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 3. Parser les donnÃ©es envoyÃ©es
+    // 3. Parser les données envoyées
     if (!e || !e.postData || !e.postData.contents) {
        return ContentService.createTextOutput(JSON.stringify({ 
         success: false, 
-        error: "Aucune donnÃ©e reÃ§ue (e.postData.contents est vide)." 
+        error: "Aucune donnée reçue (e.postData.contents est vide)." 
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
@@ -44,7 +45,7 @@ function doPost(e) {
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
-    // 4. GÃ©nÃ©rer un Order ID unique et propre
+    // 4. Générer un Order ID unique et propre
     const lastRow = sheet.getLastRow();
     let orderNumber = 1;
 
@@ -55,7 +56,7 @@ function doPost(e) {
         const num = parseInt(lastOrderId.toString().replace("WA-", ""), 10);
         if (!isNaN(num)) {
           orderNumber = num + 1;
-          break; // TrouvÃ© le plus rÃ©cent
+          break; // Trouvé le plus récent
         }
       }
     }
@@ -72,21 +73,21 @@ function doPost(e) {
         formattedDate,                  // A: Date
         orderId,                        // B: Order ID
         data.fullName || "",            // C: Nom
-        data.phone || "",               // D: TÃ©lÃ©phone
+        data.phone || "",               // D: Téléphone
         data.city || "",                // E: Ville
         data.address || "",             // F: Adresse
         data.productName || "",         // G: Produit
-        data.quantity || "",            // H: QuantitÃ©
+        data.quantity || "",            // H: Quantité
         data.unitPrice || "",           // I: Prix Unitaire
         data.total || "",               // J: Prix Total
         "Nouvelle",                     // K: Statut
-        false,                          // L: Livraison confirmÃ©e
+        false,                          // L: Livraison confirmée
         ""                              // M: Date de livraison
       ]);
     } catch (err) {
        return ContentService.createTextOutput(JSON.stringify({ 
         success: false, 
-        error: "Ã‰chec lors de l'Ã©criture dans Google Sheets (appendRow): " + err.toString() 
+        error: "Échec lors de l'écriture dans Google Sheets (appendRow): " + err.toString() 
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
@@ -98,10 +99,10 @@ function doPost(e) {
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ 
       success: false, 
-      error: "Erreur globale d'exÃ©cution: " + error.toString() 
+      error: "Erreur globale d'exécution: " + error.toString() 
     })).setMimeType(ContentService.MimeType.JSON);
   } finally {
-    // Garantir que le verrou est toujours relÃ¢chÃ©, mÃªme en cas d'erreur
+    // Garantir que le verrou est toujours relâché, même en cas d'erreur
     if (lock) {
       lock.releaseLock();
     }

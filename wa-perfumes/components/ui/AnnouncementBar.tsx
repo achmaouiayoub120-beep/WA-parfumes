@@ -1,30 +1,35 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 export default function AnnouncementBar() {
-  const [visible, setVisible] = useState(true);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    // Check if user has dismissed the bar in this session
-    const dismissed = sessionStorage.getItem('wa-announcement-dismissed');
-    if (dismissed) setVisible(false);
-  }, []);
+  const mounted = useIsMounted();
+  const [dismissed, setDismissed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        return sessionStorage.getItem('wa-announcement-dismissed') === 'true';
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  });
 
   const handleDismiss = () => {
-    setVisible(false);
-    sessionStorage.setItem('wa-announcement-dismissed', 'true');
+    setDismissed(true);
+    try {
+      sessionStorage.setItem('wa-announcement-dismissed', 'true');
+    } catch {}
   };
 
-  if (!mounted || !visible) return null;
+  if (!mounted || dismissed) return null;
 
   return (
     <AnimatePresence>
-      {visible && (
+      {!dismissed && (
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}
@@ -60,30 +65,21 @@ export default function AnnouncementBar() {
                   199 DH
                 </span>
               </span>
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="transition-transform duration-300 group-hover:translate-x-1"
+              <span
+                className="text-[0.55rem] uppercase tracking-[0.15em] transition-transform duration-300 group-hover:translate-x-1"
                 style={{ color: 'var(--color-accent)' }}
               >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+                →
+              </span>
             </Link>
 
             {/* Dismiss button */}
             <button
               onClick={handleDismiss}
-              className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 p-1 transition-colors duration-300"
-              style={{ color: 'var(--color-text-subtle)' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-text)')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text-subtle)')}
-              aria-label="Dismiss announcement"
+              className="p-1 rounded-full text-[var(--color-text-subtle)] hover:text-[var(--color-text)] transition-colors"
+              aria-label="Fermer l'annonce"
             >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>

@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUIStore } from '@/store/useUIStore';
 import { useCartStore } from '@/store/useCartStore';
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 export default function CartSlider() {
   const isOpen = useUIStore((s) => s.isCartOpen);
@@ -15,11 +16,7 @@ export default function CartSlider() {
   const removeItem = useCartStore((s) => s.removeItem);
   const updateQuantity = useCartStore((s) => s.updateQuantity);
   const getCartTotal = useCartStore((s) => s.getCartTotal);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useIsMounted();
 
   // Lock body scroll when open
   useEffect(() => {

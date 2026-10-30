@@ -18,7 +18,6 @@ const LINKS = [
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {

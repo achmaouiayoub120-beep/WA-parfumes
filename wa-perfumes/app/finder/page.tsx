@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import { MEN_PRODUCTS } from '@/data/products/men';
+import { MEN_PRODUCTS, type Product } from '@/data/products/men';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
 import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import Image from 'next/image';
@@ -52,9 +51,7 @@ export default function PerfumeFinder() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isCalculating, setIsCalculating] = useState(false);
-  const [recommendation, setRecommendation] = useState<any>(null);
-  
-  const router = useRouter();
+  const [recommendation, setRecommendation] = useState<Product | null>(null);
 
   const handleSelect = (questionId: string, value: string) => {
     const newAnswers = { ...answers, [questionId]: value };
@@ -192,7 +189,7 @@ export default function PerfumeFinder() {
                 </h2>
                 
                 <p className="body-large mb-8 text-[var(--color-text)]">
-                  D'après vos préférences, nous avons sélectionné ce chef-d'œuvre {recommendation.fragranceFamily}. {recommendation.description}
+                  D&apos;après vos préférences, nous avons sélectionné ce chef-d&apos;œuvre {recommendation.fragranceFamily}. {recommendation.description}
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">

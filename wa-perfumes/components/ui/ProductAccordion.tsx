@@ -75,25 +75,25 @@ export function ProductAccordions() {
         </p>
       </AccordionItem>
 
-      <AccordionItem title="Conseils d'Application">
+      <AccordionItem title={"Conseils d'Application"}>
         <ul className="list-disc list-inside space-y-1.5 marker:text-[var(--color-accent)]">
           <li>Vaporisez généreusement sur les points de pulsion : poignets, creux du cou et arrière des oreilles.</li>
           <li>Maintenez le flacon à une distance de 15 à 20 cm de la peau pour une diffusion homogène.</li>
           <li>Pour maximiser la tenue, appliquez sur une peau préalablement hydratée avec une crème inodore.</li>
-          <li>Conservez votre parfum à l'abri de la lumière directe, de l'humidité et de la chaleur dans un endroit frais.</li>
+          <li>Conservez votre parfum à l&apos;abri de la lumière directe, de l&apos;humidité et de la chaleur dans un endroit frais.</li>
         </ul>
       </AccordionItem>
 
       <AccordionItem title="Livraison & Retours">
         <div className="space-y-2">
           <p>
-            <strong className="text-[var(--color-text)] font-medium">Livraison offerte</strong> sur l'ensemble du Maroc en 2 à 4 jours ouvrés.
+            <strong className="text-[var(--color-text)] font-medium">Livraison offerte</strong> sur l&apos;ensemble du Maroc en 2 à 4 jours ouvrés.
           </p>
           <p>
             Chaque commande est préparée avec le plus grand soin et expédiée dans un <strong className="text-[var(--color-text)] font-medium">emballage discret</strong> et élégant avec échantillons de découverte offerts.
           </p>
           <p>
-            Retours acceptés sous <strong className="text-[var(--color-text)] font-medium">14 jours</strong> à compter de la réception, à condition que le produit soit dans son état d'origine, non ouvert et scellé.
+            Retours acceptés sous <strong className="text-[var(--color-text)] font-medium">14 jours</strong> à compter de la réception, à condition que le produit soit dans son état d&apos;origine, non ouvert et scellé.
           </p>
         </div>
       </AccordionItem>

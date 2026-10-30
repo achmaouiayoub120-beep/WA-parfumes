@@ -9,8 +9,10 @@ interface SmartOrderFormProps {
   isOpen: boolean;
   onClose: () => void;
   product: {
+    id?: string;
     name: string;
     price: number;
+    volume?: string;
     currency?: string;
   };
 }
@@ -31,6 +33,8 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
   const [quantite, setQuantite] = useState(1);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hp, setHp] = useState('');
+  const [renderedAt] = useState(() => Date.now());
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -42,55 +46,87 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
     e.preventDefault();
     setError('');
 
-    if (!formData.nomComplet || !formData.telephone || !formData.adresse) {
+    if (!formData.nomComplet.trim() || !formData.telephone.trim() || !formData.adresse.trim()) {
       setError('Veuillez remplir tous les champs obligatoires.');
       return;
     }
 
-    const villeFinale = formData.ville === 'Autre ville...' ? formData.autreVille : formData.ville;
-    if (formData.ville === 'Autre ville...' && !formData.autreVille) {
+    const cleanPhone = formData.telephone.replace(/[\s\-\.]/g, '');
+    const phoneRegex = /^(?:(?:\+?212)|0)[67]\d{8}$/;
+    if (!phoneRegex.test(cleanPhone)) {
+      setError('Numéro de téléphone marocain invalide (ex: 06 12 34 56 78 ou +212 6...)');
+      return;
+    }
+
+    const villeFinale = formData.ville === 'Autre ville...' ? formData.autreVille.trim() : formData.ville;
+    if (formData.ville === 'Autre ville...' && !formData.autreVille.trim()) {
       setError('Veuillez préciser votre ville.');
       return;
     }
 
     setIsSubmitting(true);
 
-    const prixTotal = product.price * quantite;
-    const cur = product.currency || 'DH';
     const orderPayload = {
-      nomComplet: formData.nomComplet,
-      telephone: formData.telephone,
-      ville: villeFinale,
-      adresse: formData.adresse,
-      produit: product.name,
-      quantite,
-      prixUnitaire: product.price,
-      prixTotal,
+      items: [
+        {
+          productId: product.id || 'wa-sig-01',
+          volume: product.volume || '50ml',
+          quantity: quantite,
+        }
+      ],
+      customer: {
+        name: formData.nomComplet.trim(),
+        phone: cleanPhone,
+        city: villeFinale,
+        address: formData.adresse.trim(),
+      },
+      hp,
+      renderedAt,
     };
 
-    // POST to API (non-blocking)
+    let orderId = `WA-${Date.now().toString().slice(-5)}`;
+    let calculatedTotal = product.price * quantite;
+    const cur = product.currency || 'DH';
+
     try {
-      await fetch('/api/order', {
+      const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderPayload),
       });
-    } catch (err) {
-      console.error('Erreur API Order:', err);
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setError(data.error || 'Erreur lors de la confirmation de commande.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (data.orderId) orderId = data.orderId;
+      if (data.orderData?.total) calculatedTotal = data.orderData.total;
+    } catch {
+      // Si l'API est temporairement indisponible, continuer vers WhatsApp avec les données locales
     }
 
-    // Build WhatsApp message
+    // Construction du message WhatsApp soigné
     const lines = [
-      'Nouvelle commande !',
+      'Bonjour W&A Perfumes,',
       '',
-      'Client: ' + formData.nomComplet,
-      'Tel: ' + formData.telephone,
-      'Ville: ' + villeFinale,
-      'Adresse: ' + formData.adresse,
+      'Je souhaite confirmer ma commande :',
       '',
-      'Produit: ' + product.name,
-      'Quantite: ' + quantite,
-      'Total: ' + prixTotal + ' ' + cur,
+      `🛍️ Produit : ${product.name} (${product.volume || '50ml'})`,
+      `🔢 Quantité : ${quantite}`,
+      `💰 Prix unitaire : ${product.price} ${cur}`,
+      `💵 Total : ${calculatedTotal} ${cur}`,
+      '',
+      `👤 Nom : ${formData.nomComplet.trim()}`,
+      `📞 Téléphone : ${cleanPhone}`,
+      `📍 Ville : ${villeFinale}`,
+      `🏠 Adresse : ${formData.adresse.trim()}`,
+      '',
+      `🏷️ N° commande : ${orderId}`,
+      '',
+      'Merci.'
     ];
     const message = lines.join('\n');
 
@@ -121,8 +157,12 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
           >
             {/* Header */}
             <div className="flex justify-between items-center p-6 border-b border-white/10">
-              <h2 className="text-xl font-cormorant text-[var(--color-gold)]">Finaliser la Commande</h2>
-              <button onClick={onClose} className="text-[var(--color-text-subtle)] hover:text-white transition-colors">
+              <h2 className="text-xl font-[family-name:var(--font-cormorant)] text-[var(--color-gold)]">Finaliser la Commande</h2>
+              <button 
+                onClick={onClose} 
+                className="text-[var(--color-text-subtle)] hover:text-white transition-colors"
+                aria-label="Fermer"
+              >
                 <X size={20} />
               </button>
             </div>
@@ -136,6 +176,18 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
               )}
 
               <form onSubmit={handleSubmit} className="space-y-5">
+                {/* Honeypot field (anti-spam, masqué pour les utilisateurs) */}
+                <input
+                  type="text"
+                  name="website"
+                  value={hp}
+                  onChange={(e) => setHp(e.target.value)}
+                  style={{ display: 'none' }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+
                 {/* Nom Complet */}
                 <div className="space-y-1">
                   <label className="text-xs uppercase tracking-widest text-[var(--color-text-subtle)]">Nom Complet *</label>
@@ -145,21 +197,22 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
                     required
                     value={formData.nomComplet}
                     onChange={handleChange}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-gold)] transition-colors text-base"
                     placeholder="Votre nom"
                   />
                 </div>
 
                 {/* Telephone */}
                 <div className="space-y-1">
-                  <label className="text-xs uppercase tracking-widest text-[var(--color-text-subtle)]">{"Téléphone *"}</label>
+                  <label className="text-xs uppercase tracking-widest text-[var(--color-text-subtle)]">Téléphone *</label>
                   <input
                     type="tel"
+                    inputMode="tel"
                     name="telephone"
                     required
                     value={formData.telephone}
                     onChange={handleChange}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-gold)] transition-colors text-base"
                     placeholder="06 XX XX XX XX"
                   />
                 </div>
@@ -172,7 +225,7 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
                       name="ville"
                       value={formData.ville}
                       onChange={handleChange}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:border-[var(--color-gold)] transition-colors text-base"
                     >
                       {CITIES.map(city => (
                         <option key={city} value={city} className="bg-[#111] text-white">{city}</option>
@@ -183,14 +236,14 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
 
                 {formData.ville === 'Autre ville...' && (
                   <div className="space-y-1">
-                    <label className="text-xs uppercase tracking-widest text-[var(--color-text-subtle)]">{"Précisez votre ville *"}</label>
+                    <label className="text-xs uppercase tracking-widest text-[var(--color-text-subtle)]">Précisez votre ville *</label>
                     <input
                       type="text"
                       name="autreVille"
                       required
                       value={formData.autreVille}
                       onChange={handleChange}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-gold)] transition-colors text-base"
                       placeholder="Nom de la ville"
                     />
                   </div>
@@ -198,34 +251,36 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
 
                 {/* Adresse */}
                 <div className="space-y-1">
-                  <label className="text-xs uppercase tracking-widest text-[var(--color-text-subtle)]">{"Adresse détaillée *"}</label>
+                  <label className="text-xs uppercase tracking-widest text-[var(--color-text-subtle)]">Adresse détaillée *</label>
                   <textarea
                     name="adresse"
                     required
                     rows={3}
                     value={formData.adresse}
                     onChange={handleChange}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-gold)] transition-colors resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-gold)] transition-colors resize-none text-base"
                     placeholder="Quartier, rue, numéro..."
                   />
                 </div>
 
                 {/* Quantite stepper */}
                 <div className="flex items-center justify-between py-2">
-                  <span className="text-sm text-[var(--color-text-subtle)] uppercase tracking-wider">{"Quantité"}</span>
+                  <span className="text-sm text-[var(--color-text-subtle)] uppercase tracking-wider">Quantité</span>
                   <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-lg px-2 py-1">
                     <button
                       type="button"
                       onClick={() => setQuantite(Math.max(1, quantite - 1))}
                       className="p-1 hover:text-[var(--color-gold)] transition-colors"
+                      aria-label="Diminuer la quantité"
                     >
                       <Minus size={16} />
                     </button>
                     <span className="w-6 text-center font-medium">{quantite}</span>
                     <button
                       type="button"
-                      onClick={() => setQuantite(quantite + 1)}
+                      onClick={() => setQuantite(Math.min(10, quantite + 1))}
                       className="p-1 hover:text-[var(--color-gold)] transition-colors"
+                      aria-label="Augmenter la quantité"
                     >
                       <Plus size={16} />
                     </button>
@@ -239,7 +294,7 @@ export default function SmartOrderForm({ isOpen, onClose, product }: SmartOrderF
                     disabled={isSubmitting}
                     className="w-full bg-[var(--color-gold)] hover:bg-[var(--color-gold-light)] text-black font-semibold py-4 rounded-lg transition-colors flex items-center justify-center gap-2"
                   >
-                    {"Commander via WhatsApp — " + (product.price * quantite) + " " + (product.currency || "DH")}
+                    Commander via WhatsApp — {product.price * quantite} {product.currency || 'DH'}
                   </button>
                 </div>
               </form>

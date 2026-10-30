@@ -12,12 +12,12 @@ export default function PackDecouvertePage() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 px-4 bg-[var(--color-bg-elevated)] border-b border-[var(--color-border-subtle)]">
         <div className="container mx-auto max-w-4xl text-center relative z-10">
-          <p className="editorial-subtitle text-[var(--color-violet)] mb-4">L'Édition Spéciale</p>
+          <p className="editorial-subtitle text-[var(--color-violet)] mb-4">L&apos;Édition Spéciale</p>
           <h1 className="heading-display text-5xl md:text-7xl text-[var(--color-text)] mb-6">
             Pack Découverte
           </h1>
           <p className="body-large text-[var(--color-text-muted)] max-w-2xl mx-auto mb-8">
-            Plongez dans l'univers de WA Perfumes. Sélectionnez 5 créations parmi nos collections Signature, Elegance et Unisexe pour composer un coffret sur-mesure. Une expérience olfactive luxueuse, conçue pour vous.
+            Plongez dans l&apos;univers de W&A Perfumes. Sélectionnez 5 créations parmi nos collections Signature, Elegance et Unisexe pour composer un coffret sur-mesure. Une expérience olfactive luxueuse, conçue pour vous.
           </p>
           <div className="inline-block bg-[var(--color-bg)] border border-[var(--color-accent-violet-muted)] px-8 py-3 rounded-full text-[var(--color-violet)] font-medium tracking-wide">
             5 × 30ml — 199 DH

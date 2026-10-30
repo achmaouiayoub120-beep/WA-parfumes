@@ -1,13 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import Lenis from '@studio-freight/lenis';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React from 'react';
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
-  // Lenis disabled entirely to remove any scroll or mouse wheel effects
+  // Lenis disabled for now; will be re-enabled on desktop only in Phase 6
   return <>{children}</>;
 }

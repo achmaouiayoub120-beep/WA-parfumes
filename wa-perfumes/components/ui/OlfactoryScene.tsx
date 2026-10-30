@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Text, Html, ContactShadows } from '@react-three/drei';
+import { Float, Html, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface OlfactorySceneProps {
@@ -17,15 +17,15 @@ function PyramidLayer({
   scale, 
   color, 
   notes, 
-  label, 
-  delay = 0 
+  label,
+  delay: _delay = 0,
 }: { 
   position: [number, number, number], 
   scale: [number, number, number], 
   color: string,
   notes: string[],
   label: string,
-  delay?: number
+  delay?: number,
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);

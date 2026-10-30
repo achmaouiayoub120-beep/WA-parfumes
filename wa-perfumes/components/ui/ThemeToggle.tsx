@@ -1,14 +1,12 @@
 'use client';
 
 import { useTheme } from '@/providers/ThemeProvider';
-import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 export default function ThemeToggle() {
-  const { theme, setTheme, setThemeAnimated, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const { setTheme, setThemeAnimated, resolvedTheme } = useTheme();
+  const mounted = useIsMounted();
 
   if (!mounted) {
     // Render a placeholder with the same dimensions to prevent layout shift

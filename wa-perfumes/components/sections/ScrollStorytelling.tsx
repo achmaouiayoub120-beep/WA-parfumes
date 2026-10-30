@@ -85,7 +85,6 @@ export default function ScrollStorytelling() {
 
         const startProgress = i / totalWorlds;
         const endProgress = (i + 1) / totalWorlds;
-        const midProgress = startProgress + (endProgress - startProgress) * 0.5;
 
         // Image cross-fade
         ScrollTrigger.create({

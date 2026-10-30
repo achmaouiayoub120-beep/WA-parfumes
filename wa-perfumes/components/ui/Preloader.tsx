@@ -16,7 +16,6 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
-  const [complete, setComplete] = useState(false);
   const [shouldSkip] = useState(() => {
     // Check if returning visitor — skip preloader entirely
     if (typeof window !== 'undefined') {
@@ -28,6 +27,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
     }
     return false;
   });
+  const [complete, setComplete] = useState(shouldSkip);
 
   useEffect(() => {
     // Mark as visited for future returns
@@ -47,7 +47,6 @@ export default function Preloader({ onComplete }: { onComplete?: () => void } = 
 
     // If returning visitor, complete immediately
     if (shouldSkip) {
-      setComplete(true);
       if (onComplete) onComplete();
       return;
     }

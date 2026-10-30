@@ -14,6 +14,7 @@ import { MEN_PRODUCTS } from '@/data/products/men';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
 import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import { FRAGRANCE_FAMILIES } from '@/data/products/categories';
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 const NAV_LINKS = [
   { label: 'Collections', href: '/#collections' },
@@ -34,7 +35,7 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeMega, setActiveMega] = useState<'homme' | 'femme' | 'unisexe' | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsMounted();
   const [activeHash, setActiveHash] = useState('');
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   
@@ -50,9 +51,6 @@ export default function Navigation() {
   const cartCount = useCartStore((s) => s.getCartCount());
 
   useEffect(() => {
-    setMounted(true);
-    setActiveHash(window.location.hash);
-    
     const handleHashChange = () => setActiveHash(window.location.hash);
     window.addEventListener('hashchange', handleHashChange);
     
