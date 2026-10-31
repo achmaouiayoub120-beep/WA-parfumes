@@ -191,46 +191,8 @@ export default function PackDiscoverySection({ variant = 'section' }: { variant?
               Composez <span className="italic text-[var(--color-text-muted)] font-light">Votre Signature</span>
             </h2>
 
-            {/* Features & Price Badge Container */}
+            {/* Price Badge Container */}
             <div className="relative max-w-4xl mx-auto flex flex-col items-center mt-2">
-              {/* 3 Steps / Icons Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-10 text-center">
-                
-                {/* Feature 1 */}
-                <div className="flex flex-col items-center group">
-                  <div className="w-12 h-12 rounded-full border border-[var(--color-border-subtle)] flex items-center justify-center text-[var(--color-silver)] mb-4 group-hover:border-[var(--color-silver)] group-hover:scale-105 transition-all duration-300">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-                  </div>
-                  <h3 className="text-xs md:text-sm uppercase tracking-[0.18em] text-[var(--color-text)] mb-2 font-medium">5 Essences Rares</h3>
-                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
-                    Sélectionnez vos 5 flacons 30ml parmi l&apos;ensemble de nos collections.
-                  </p>
-                </div>
-
-                {/* Feature 2 */}
-                <div className="flex flex-col items-center group">
-                  <div className="w-12 h-12 rounded-full border border-[var(--color-border-subtle)] flex items-center justify-center text-[var(--color-silver)] mb-4 group-hover:border-[var(--color-silver)] group-hover:scale-105 transition-all duration-300">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
-                  </div>
-                  <h3 className="text-xs md:text-sm uppercase tracking-[0.18em] text-[var(--color-text)] mb-2 font-medium">Rituel Sur-Mesure</h3>
-                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
-                    Une véritable écriture olfactive façonnée selon vos envies et occasions.
-                  </p>
-                </div>
-
-                {/* Feature 3 */}
-                <div className="flex flex-col items-center group">
-                  <div className="w-12 h-12 rounded-full border border-[var(--color-border-subtle)] flex items-center justify-center text-[var(--color-silver)] mb-4 group-hover:border-[var(--color-silver)] group-hover:scale-105 transition-all duration-300">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                  </div>
-                  <h3 className="text-xs md:text-sm uppercase tracking-[0.18em] text-[var(--color-text)] mb-2 font-medium">L&apos;Écrin Absolu</h3>
-                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
-                    Un coffret luxueux pour explorer et porter chaque jour une nouvelle signature.
-                  </p>
-                </div>
-
-              </div>
-
               {/* Price Badge — luxury gold/cream palette */}
               <div className="inline-flex items-center justify-center gap-4 px-6 py-2.5 border border-[var(--color-border)] bg-[var(--color-bg-elevated)] rounded-full">
                 <span className="font-[family-name:var(--font-cormorant)] text-xl sm:text-2xl italic tracking-wide text-[var(--color-text)]">
