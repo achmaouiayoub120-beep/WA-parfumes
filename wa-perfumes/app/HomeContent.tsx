@@ -5,7 +5,6 @@ import PackDiscoverySection from '@/components/sections/PackDiscoverySection';
 import MenCollection from '@/components/sections/MenCollection';
 import WomenCollection from '@/components/sections/WomenCollection';
 import UnisexCollection from '@/components/sections/UnisexCollection';
-import ScrollStorytelling from '@/components/sections/ScrollStorytelling';
 import Footer from '@/components/sections/Footer';
 import SectionWipe from '@/components/animations/SectionWipe';
 import ClientPreloader from '@/components/ui/ClientPreloader';
@@ -48,10 +47,6 @@ export default function HomeContent() {
           <UnisexCollection />
         </section>
       </SectionWipe>
-
-      <section id="story">
-        <ScrollStorytelling />
-      </section>
 
       <Footer />
     </>

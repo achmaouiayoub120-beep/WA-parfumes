@@ -22,7 +22,6 @@ const NAV_LINKS = [
   { label: 'W&A Femme', href: '/#femme', megaMenu: 'femme' as const },
   { label: 'W&A Unisexe', href: '/#unisexe', megaMenu: 'unisexe' as const },
   { label: 'Pack Découverte', href: '/#pack-decouverte' },
-  { label: 'Notre Histoire', href: '/#story' },
 ];
 
 const MOBILE_NAV_LINKS = [
@@ -33,7 +32,6 @@ const MOBILE_NAV_LINKS = [
   { label: 'W&A Unisexe', href: '/#unisexe' },
   { label: 'Pack Découverte', href: '/#pack-decouverte' },
   { label: 'Trouvez Votre Parfum', href: '/finder' },
-  { label: 'Notre Histoire', href: '/#story' },
 ];
 
 // Helper: get unique fragrance families for a collection
