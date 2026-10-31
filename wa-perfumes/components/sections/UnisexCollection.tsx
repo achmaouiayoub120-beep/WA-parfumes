@@ -6,7 +6,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import ProductCard from '@/components/ui/ProductCard';
-import OlfactoryPyramid from '@/components/ui/OlfactoryPyramid';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,18 +73,11 @@ export default function UnisexCollection() {
 
         {/* Text Container */}
         <div className="relative max-w-2xl mx-auto flex flex-col items-center">
-          <p className="body-large text-[var(--color-text-muted)] leading-relaxed mb-8 text-center text-sm sm:text-base">
+          <p className="body-large text-[var(--color-text-muted)] leading-relaxed text-center text-sm sm:text-base">
             Sept créations olfactives universelles transcendant les genres.{' '}
             <strong className="text-[var(--color-text)] font-medium">Universel, audacieux, sans limites.</strong>
           </p>
         </div>
-
-        {/* Olfactory Notes */}
-        <OlfactoryPyramid 
-          top="Néroli, Bergamote, Poivre Rose" 
-          heart="Santal, Rose, Ambroxan" 
-          base="Musc Blanc, Cèdre, Vanille" 
-        />
       </div>
 
       {/* ═══════════════════════════════════════════════════════

@@ -6,7 +6,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { WOMEN_PRODUCTS } from '@/data/products/women';
 import ProductCard from '@/components/ui/ProductCard';
-import OlfactoryPyramid from '@/components/ui/OlfactoryPyramid';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -81,18 +80,11 @@ export default function WomenCollection() {
 
           {/* Text Container */}
           <div className="relative max-w-2xl mx-auto flex flex-col items-center">
-            <p className="body-large text-[var(--color-text-muted)] leading-relaxed mb-8 text-center text-sm sm:text-base">
+            <p className="body-large text-[var(--color-text-muted)] leading-relaxed text-center text-sm sm:text-base">
               Neuf fragrances raffinées façonnées pour la femme sophistiquée.{' '}
               <strong className="text-[var(--color-text)] font-medium">Fleurs luxuriantes, vanille solaire et musc éclatant.</strong>
             </p>
           </div>
-
-          {/* Olfactory Notes */}
-          <OlfactoryPyramid 
-            top="Fleur d'Oranger, Pêche, Mandarine" 
-            heart="Rose de Mai, Jasmin, Tubéreuse" 
-            base="Vanille de Madagascar, Patchouli Blanc, Musc" 
-          />
         </div>
 
         {/* ═══════════════════════════════════════════════════════
