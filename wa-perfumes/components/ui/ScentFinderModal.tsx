@@ -8,6 +8,7 @@ import { WOMEN_PRODUCTS } from '@/data/products/women';
 import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import { useCartStore } from '@/store/useCartStore';
 import { useUIStore } from '@/store/useUIStore';
+import { getCardNotes } from '@/lib/olfactory';
 
 interface ScentFinderModalProps {
   isOpen: boolean;
@@ -230,6 +231,15 @@ export default function ScentFinderModal({ isOpen, onClose }: ScentFinderModalPr
                   <p className="text-white/60 text-sm md:text-base font-serif italic max-w-md">
                     Inspiré par {recommendedProduct.inspiredBy}
                   </p>
+                  {getCardNotes(recommendedProduct, 3).length > 0 && (
+                    <div className="flex flex-wrap items-center justify-center gap-2 max-w-xs -mt-4">
+                      {getCardNotes(recommendedProduct, 3).map((note) => (
+                        <span key={note} className="text-[0.6rem] uppercase tracking-widest px-2.5 py-1 bg-white/5 border border-white/15 text-white/90 rounded-full">
+                          {note}
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
                   <div className="relative w-48 h-64 md:w-64 md:h-80 mt-4 mb-4">
                     {/* Dramatic light behind bottle */}

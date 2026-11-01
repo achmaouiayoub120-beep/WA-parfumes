@@ -7,6 +7,8 @@
 // ============================================================================
 
 import type { Longevity, Projection } from './categories';
+import type { Pyramid } from './pyramids';
+import { PYRAMIDS, FLAT_NOTES } from './pyramids';
 
 export interface Product {
   id: string;
@@ -37,9 +39,11 @@ export interface Product {
   inStock: boolean;
   isNew?: boolean;
   isBestseller?: boolean;
+  pyramid?: Pyramid;
+  mainNotes?: string[];
 }
 
-export const MEN_PRODUCTS: Product[] = [
+const RAW_MEN_PRODUCTS: Omit<Product, 'pyramid' | 'mainNotes'>[] = [
   {
     id: 'wa-sig-01',
     slug: 'wa-signature-01',
@@ -49,7 +53,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Stronger With You Intensely',
     description:
-      'A powerful oriental gourmand that wraps you in an irresistible aura of warmth. Bold lavender meets sweet toffee and vanilla, layered over a smoky amber base. Designed for the man who leads with confidence and leaves a lasting impression.',
+      "Un oriental gourmand puissant qui vous enveloppe d'une irrésistible aura de chaleur. La lavande audacieuse rencontre le toffee sucré et la vanille, reposant sur un fond d'ambre fumé. Conçu pour l'homme qui s'impose avec assurance et laisse une empreinte inoubliable.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -77,7 +81,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Le Male Elixir',
     description:
-      'An intoxicating elixir that blurs the line between sweetness and raw masculinity. Rich lavender intertwines with honeyed amber and smoky vanilla, creating a scent trail that is impossible to ignore. For the man who embodies seduction.',
+      "Un élixir enivrant qui efface la frontière entre douceur et masculinité brute. Une lavande riche s'entrelace avec un ambre miellé et une vanille fumée, créant un sillage impossible à ignorer. Pour l'homme qui incarne la séduction.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -105,7 +109,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Spicebomb Extreme',
     description:
-      'An explosive cocktail of fiery spices and dark tobacco. Black pepper detonates against cinnamon and saffron, settling into a smoky base of leather and oud. This is not a fragrance — it\'s a statement of dominance.',
+      "Un cocktail explosif d'épices ardentes et de tabac sombre. Le poivre noir détonne contre la cannelle et le safran, s'adoucissant sur un fond fumé de cuir et d'oud. Plus qu'un parfum, une affirmation d'autorité.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -133,7 +137,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Le Beau Paradise Garden',
     description:
-      'A tropical escape bottled in luxury. Vibrant coconut milk and lush green fig leaf dance with exotic ylang-ylang, anchored by a warm base of sandalwood and ambergris. Paradise in every spray.',
+      "Une évasion tropicale capturée dans un flacon d'exception. L'eau de coco vibrante et la feuille de figuier luxuriante dansent avec l'ylang-ylang exotique, soutenus par un fond chaleureux de bois de santal et d'ambre gris. Le paradis à chaque vaporisation.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -159,9 +163,9 @@ export const MEN_PRODUCTS: Product[] = [
     number: '05',
     collection: 'homme',
     gender: 'homme',
-    inspiredBy: 'La Nuit de L\'Homme Le Parfum',
+    inspiredBy: "La Nuit de L'Homme Le Parfum",
     description:
-      'A midnight masterpiece of dark elegance. Mysterious cardamom and refined lavender are enveloped in rich cedar and smoky incense. Crafted for the nocturnal gentleman who thrives in the shadows.',
+      "Un chef-d'œuvre nocturne à l'élégance sombre. La cardamome mystérieuse et la lavande raffinée s'enveloppent d'un cèdre riche et d'un encens fumé. Conçu pour le gentleman nocturne qui révèle son magnétisme dans l'ombre.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -188,7 +192,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Baccarat Rouge 540',
     description:
-      'The crown jewel of the collection. A crystalline fusion of saffron and jasmine draped in amber and cedarwood. Ethereal, hypnotic, and universally admired. This is the scent of pure luxury, crafted for those who need no introduction.',
+      "Le joyau de la collection. Une fusion cristalline de safran et de jasmin drapée d'ambre et de bois de cèdre. Éthéré, hypnotique et universellement admiré. L'essence même du pur luxe, pour ceux qui n'ont besoin d'aucune présentation.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -216,7 +220,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Dior Homme Intense',
     description:
-      'Refined intensity in its purest form. A sophisticated blend of powdery iris, warm amber, and velvety cedar wrapped in Haitian vetiver. For the modern gentleman who wears his elegance as effortlessly as his suit.',
+      "L'intensité raffinée dans sa forme la plus pure. Une alliance sophistiquée d'iris poudré, d'ambre chaleureux et de cèdre velouté, sublimée par le vétiver d'Haïti. Pour le gentleman moderne qui porte l'élégance avec une aisance naturelle.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -243,7 +247,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'The Most Wanted Parfum',
     description:
-      'Irresistibly addictive. Burnt toffee and dark rum accord clash with smoky incense and golden amber. A dangerously charming scent that turns every entrance into an event.',
+      "Irrésistiblement addictif. Un toffee caramélisé et un accord chaleureux rencontrent un encens fumé et un ambre doré. Une fragrance au charme redoutable qui transforme chaque apparition en événement.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -271,7 +275,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Light Blue Intense Pour Homme',
     description:
-      'Mediterranean freshness intensified. Crisp juniper and frozen grapefruit meet aquatic marine accords, grounded by musky amberwood. Like diving into crystal-clear waters under the Amalfi sun.',
+      "La fraîcheur méditerranéenne intensifiée. Le genévrier vif et le pamplemousse givré rencontrent des accords marins aquatiques, portés par un bois d'ambre musqué. Comme une immersion dans des eaux cristallines sous le soleil d'Italie.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -298,7 +302,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Scandal Absolu',
     description:
-      'Scandal in a bottle. An audacious fusion of sweet caramel and raw leather, underscored by dark vetiver and smoldering tonka. For the man who breaks the rules and rewrites them in his favor.',
+      "L'audace à l'état pur. Une fusion provocante de caramel fondant et de cuir brut, soulignée par un vétiver sombre et une fève tonka chaleureuse. Pour l'homme qui bouscule les codes et impose ses propres règles.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -326,7 +330,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'One Million Elixir',
     description:
-      'Liquid gold. Opulent honey and rich vanilla are amplified by aromatic lavender and dark patchouli. An unapologetically luxurious scent that announces your arrival before you enter the room.',
+      "De l'or liquide. Un miel opulent et une vanille riche sont sublimés par une lavande aromatique et un patchouli profond. Une fragrance résolument luxueuse qui annonce votre présence avec éclat.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -353,7 +357,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Imagination',
     description:
-      'A voyage of the senses. Delicate orange blossom and exotic jasmine drift over a foundation of smoky oud and warm amber. A fragrance that blurs boundaries and sparks the imagination.',
+      "Un voyage des sens. La fleur d'oranger délicate et le thé noir se posent sur un fond d'ambre et d'agrumes nobles. Une fragrance qui éveille les sens et nourrit l'imagination.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -380,7 +384,7 @@ export const MEN_PRODUCTS: Product[] = [
     gender: 'homme',
     inspiredBy: 'Boss Bottled Absolu',
     description:
-      'Absolute sophistication distilled. Warm apple and rich cinnamon blend seamlessly into a heart of dark wood and earthy patchouli. A fragrance of quiet confidence and unwavering presence.',
+      "La sophistication absolue distillée. La pomme chaleureuse et la cannelle se fondent harmonieusement dans un cœur de bois sombre et de patchouli terreux. Un parfum d'assurance sereine et de présence affirmée.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -399,3 +403,9 @@ export const MEN_PRODUCTS: Product[] = [
     inStock: true,
   },
 ];
+
+export const MEN_PRODUCTS: Product[] = RAW_MEN_PRODUCTS.map((product) => ({
+  ...product,
+  pyramid: PYRAMIDS[product.id],
+  mainNotes: FLAT_NOTES[product.id],
+}));

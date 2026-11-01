@@ -7,8 +7,9 @@
 // ============================================================================
 
 import type { Product } from './men';
+import { PYRAMIDS, FLAT_NOTES } from './pyramids';
 
-export const WOMEN_PRODUCTS: Product[] = [
+const RAW_WOMEN_PRODUCTS: Omit<Product, 'pyramid' | 'mainNotes'>[] = [
   {
     id: 'wa-ele-01',
     slug: 'wa-elegance-01',
@@ -18,7 +19,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     gender: 'femme',
     inspiredBy: 'Burberry Her Elixir',
     description:
-      'A sumptuous elixir of dark berries and intoxicating jasmine. Rich blackcurrant cascades into warm amber and sensual musk, creating a trail that is both playful and profoundly seductive. For the woman who leaves an unforgettable impression.',
+      "Un élixir somptueux de baies sombres et de jasmin envoûtant. Le cassis intense se mêle à un ambre chaleureux et un musc sensuel, créant un sillage à la fois espiègle et profondément séducteur. Pour la femme qui laisse une empreinte inoubliable.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -46,7 +47,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     gender: 'femme',
     inspiredBy: 'Light Blue Eau Intense',
     description:
-      'Mediterranean elegance intensified. Sparkling Granny Smith apple and bright lemon dance with delicate jasmine and white rose, resting on a bed of warm musks and creamy cedarwood. Like a sun-kissed Italian coastline.',
+      "L'élégance méditerranéenne intensifiée. La pomme Granny Smith croquante et le citron vif s'accordent avec un jasmin délicat et une rose blanche, reposant sur un lit de muscs chaleureux et de bois de cèdre crémeux. Telle une côte italienne baignée de soleil.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -73,7 +74,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     gender: 'femme',
     inspiredBy: 'Vanilla 28',
     description:
-      'Pure vanilla obsession. Lush Madagascar vanilla is layered with brown sugar, warm tonka bean, and soft musk for a scent that is both indulgent and intimately comforting. A dessert for the senses, crafted for the woman who savors every moment.',
+      "Un chef-d'œuvre gourmand et sophistiqué : l'alliance envoûtante de la vanille riche et du sucre brun fondu, sublimée par la chaleur du bois ambré et la douceur du musc.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -99,9 +100,9 @@ export const WOMEN_PRODUCTS: Product[] = [
     number: '04',
     collection: 'femme',
     gender: 'femme',
-    inspiredBy: 'L\'Interdit Rouge',
+    inspiredBy: "L'Interdit Rouge",
     description:
-      'Forbidden beauty in crimson. A daring blend of fiery ginger and dark tuberose, laced with smoky vetiver and addictive oud. For the woman who breaks conventions and embraces the thrill of the forbidden.',
+      "Une fragrance sulfureuse et envoûtante où la fraîcheur éclatante de l'orange sanguine et du gingembre s'embrase au contact d'un cœur floral opulent, sur un fond boisé chaud et captivant.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -127,9 +128,9 @@ export const WOMEN_PRODUCTS: Product[] = [
     number: '05',
     collection: 'femme',
     gender: 'femme',
-    inspiredBy: 'L\'Impératrice',
+    inspiredBy: "L'Impératrice",
     description:
-      'Regal freshness with a playful heart. Watermelon and kiwi burst open to reveal a bouquet of pink cyclamen and jasmine, settling into a warm base of musk and sandalwood. A fragrance fit for an empress.',
+      "Une fraîcheur souveraine au cœur pétillant. Des notes fruitées éclatantes révèlent un bouquet délicat de fleurs fraîches et de jasmin, reposant sur un fond chaleureux de musc et de bois de santal. Une fragrance digne d'une impératrice.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -156,7 +157,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     gender: 'femme',
     inspiredBy: 'Prada Paradoxe Intense',
     description:
-      'A paradox of contrasts. Ethereal neroli clashes with dark amber and addictive vanilla in a composition that defies convention. Clean yet sensual, bright yet deep. For the woman who contains multitudes.',
+      "Un paradoxe de contrastes. Le néroli aérien rencontre l'ambre profond et une vanille addictive dans une composition singulière. Pure mais sensuelle, lumineuse mais profonde. Pour la femme aux multiples facettes.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -184,7 +185,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     gender: 'femme',
     inspiredBy: 'The One',
     description:
-      'Timeless femininity defined. Velvety peach and lychee open into a golden heart of lily and jasmine, deepening into warm vetiver and vanilla. A classic that transcends trends and speaks to the eternal allure of womanhood.',
+      "La féminité intemporelle par excellence. La pêche veloutée et le litchi s'ouvrent sur un cœur doré de lys et de jasmin, s'enrichissant d'un vétiver chaleureux et de vanille. Un classique qui traverse les époques avec une grâce infinie.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -212,7 +213,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     gender: 'femme',
     inspiredBy: 'Coco Vanille',
     description:
-      'A tropical indulgence. Creamy coconut milk swirls with rich Tahitian vanilla and warm sandalwood, creating a scent that is both exotic and comforting. Like a luxurious escape to a sun-drenched island paradise.',
+      "Une gourmandise tropicale. L'onctuosité de la noix de coco s'enroule autour d'une vanille riche et d'un bois de santal chaleureux, créant un sillage à la fois exotique et réconfortant. Une escapade luxueuse vers une île baignée de soleil.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -239,7 +240,7 @@ export const WOMEN_PRODUCTS: Product[] = [
     gender: 'femme',
     inspiredBy: 'Coco Mademoiselle Intense',
     description:
-      'Parisian chic amplified. Bright Sicilian orange and fresh patchouli are intensified with rich Bourbon vanilla and warm tonka bean. A fragrance of effortless sophistication that captures the spirit of the modern Parisienne.',
+      "Une dose intense de patchouli, enveloppée par la chaleur de la vanille et de la fève tonka, et magnifiée par un cœur floral noble.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -259,3 +260,10 @@ export const WOMEN_PRODUCTS: Product[] = [
     isBestseller: true,
   },
 ];
+
+export const WOMEN_PRODUCTS: Product[] = RAW_WOMEN_PRODUCTS.map((product) => ({
+  ...product,
+  description: PYRAMIDS[product.id]?.description || product.description,
+  pyramid: PYRAMIDS[product.id],
+  mainNotes: FLAT_NOTES[product.id],
+}));

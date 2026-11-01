@@ -8,6 +8,7 @@ import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import Image from 'next/image';
 import Link from 'next/link';
 import MagneticButton from '@/components/ui/MagneticButton';
+import { getCardNotes } from '@/lib/olfactory';
 
 type Question = {
   id: string;
@@ -184,9 +185,19 @@ export default function PerfumeFinder() {
                   Votre Parfum Signature
                 </span>
                 
-                <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl text-[var(--color-text)] mb-4 font-light">
+                <h2 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl lg:text-6xl text-[var(--color-text)] mb-2 font-light">
                   {recommendation.name}
                 </h2>
+
+                <p className="text-[var(--color-text-subtle)] italic text-sm mb-2">
+                  Inspiré par {recommendation.inspiredBy}
+                </p>
+
+                {getCardNotes(recommendation, 3).length > 0 && (
+                  <p className="text-[var(--color-violet)] text-xs uppercase tracking-widest mb-4">
+                    Notes : {getCardNotes(recommendation, 3).join(' • ')}
+                  </p>
+                )}
                 
                 <p className="body-large mb-8 text-[var(--color-text)]">
                   D&apos;après vos préférences, nous avons sélectionné ce chef-d&apos;œuvre {recommendation.fragranceFamily}. {recommendation.description}

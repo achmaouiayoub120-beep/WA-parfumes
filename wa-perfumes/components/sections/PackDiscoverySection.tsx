@@ -12,6 +12,7 @@ import type { Product } from '@/data/products/men';
 import MagneticButton from '@/components/ui/MagneticButton';
 import DiscoveryBox from '@/components/ui/DiscoveryBox';
 import { useUIStore } from '@/store/useUIStore';
+import { getCardNotes } from '@/lib/olfactory';
 
 // Shared hook for pack selection
 export function usePackSelection() {
@@ -32,7 +33,10 @@ export function usePackSelection() {
   }, []);
 
   const openWhatsAppPack = useCallback(() => {
-    const itemsListText = `• 1x Coffret Découverte 5 Parfums (30ml)\n${selectedProducts.map((p) => `   - ${p.name}`).join('\n')}`;
+    const itemsListText = `• 1x Coffret Découverte 5 Parfums (30ml)\n${selectedProducts.map((p) => {
+      const notes = getCardNotes(p, 2).join(', ');
+      return `   - ${p.name}${notes ? ` (${notes})` : ''}`;
+    }).join('\n')}`;
     
     useUIStore.getState().openWhatsApp({
       type: 'pack',
@@ -97,7 +101,7 @@ const ProductCard = memo(({
       <div className={`p-3 sm:p-4 text-center ${large ? 'md:p-6' : ''}`}>
         <p className="text-[var(--color-text-subtle)] text-[0.65rem] uppercase tracking-widest mb-1">{product.collection}</p>
         <h3 className={`font-[family-name:var(--font-cormorant)] text-[var(--color-text)] ${large ? 'text-xl' : 'text-base sm:text-lg'} font-light line-clamp-1`}>{product.name}</h3>
-        <p className="text-[var(--color-text-muted)] text-xs mt-1 truncate max-w-full px-1">{product.topNotes?.slice(0, 2).join(', ')}</p>
+        <p className="text-[var(--color-text-muted)] text-xs mt-1 truncate max-w-full px-1">{getCardNotes(product, 2).join(', ')}</p>
       </div>
     </motion.div>
   );

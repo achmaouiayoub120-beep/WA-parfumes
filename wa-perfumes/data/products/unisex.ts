@@ -7,8 +7,9 @@
 // ============================================================================
 
 import type { Product } from './men';
+import { PYRAMIDS, FLAT_NOTES } from './pyramids';
 
-export const UNISEX_PRODUCTS: Product[] = [
+const RAW_UNISEX_PRODUCTS: Omit<Product, 'pyramid' | 'mainNotes'>[] = [
   {
     id: 'wa-uni-01',
     slug: 'wa-unisexe-01',
@@ -18,7 +19,7 @@ export const UNISEX_PRODUCTS: Product[] = [
     gender: 'unisexe',
     inspiredBy: 'Santal 33',
     description:
-      'Un bois de santal crémeux sublimé par des cuirs doux et des notes de cardamome fumée. Une signature olfactive universelle qui s\'adapte à chaque peau pour créer quelque chose d\'unique.',
+      "Un bois de santal crémeux sublimé par des cuirs doux et des notes de cardamome fumée. Une signature olfactive universelle qui s'adapte à chaque peau pour créer quelque chose d'unique.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -46,7 +47,7 @@ export const UNISEX_PRODUCTS: Product[] = [
     gender: 'unisexe',
     inspiredBy: 'Oud Satin Mood',
     description:
-      'La rencontre magistrale entre la rose de Damas et l\'oud précieux. Un parfum d\'une richesse infinie qui enveloppe d\'une aura mystérieuse et envoûtante, sans distinction de genre.',
+      "La rencontre magistrale entre la rose de Damas et l'oud précieux. Un parfum d'une richesse infinie qui enveloppe d'une aura mystérieuse et envoûtante, sans distinction de genre.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -73,7 +74,7 @@ export const UNISEX_PRODUCTS: Product[] = [
     gender: 'unisexe',
     inspiredBy: 'Neroli Portofino',
     description:
-      'La fraîcheur méditerranéenne dans sa forme la plus pure. Néroli lumineux, petit grain et musc blanc créent une aura de propreté luxueuse. Un souffle d\'air pur sur la Côte d\'Azur.',
+      "La fraîcheur méditerranéenne dans sa forme la plus pure. Néroli lumineux, petit grain et musc blanc créent une aura de propreté luxueuse. Un souffle d'air pur sur la Côte d'Azur.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -101,7 +102,7 @@ export const UNISEX_PRODUCTS: Product[] = [
     gender: 'unisexe',
     inspiredBy: 'Tobacco Vanille',
     description:
-      'L\'opulence à l\'état pur. Feuilles de tabac riches, vanille crémeuse et fèves de cacao se mêlent dans un accord gourmand et enivrant. Un classique intemporel qui défie les conventions.',
+      "L'opulence à l'état pur. Feuilles de tabac riches, vanille crémeuse et fèves de cacao se mêlent dans un accord gourmand et enivrant. Un classique intemporel qui défie les conventions.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -129,7 +130,7 @@ export const UNISEX_PRODUCTS: Product[] = [
     gender: 'unisexe',
     inspiredBy: 'Ambre Nuit',
     description:
-      'La nuit a son propre parfum. Ambre précieux et rose bulgare se rencontrent dans un tête-à-tête sensuel, tandis que le bois de gaïac apporte une profondeur hypnotique. L\'élégance nocturne incarnée.',
+      "La nuit a son propre parfum. Ambre précieux et rose bulgare se rencontrent dans un tête-à-tête sensuel, tandis que le bois de gaïac apporte une profondeur hypnotique. L'élégance nocturne incarnée.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -154,9 +155,9 @@ export const UNISEX_PRODUCTS: Product[] = [
     number: '06',
     collection: 'unisexe',
     gender: 'unisexe',
-    inspiredBy: 'Terre d\'Hermès',
+    inspiredBy: "Terre d'Hermès",
     description:
-      'La terre et le ciel réunis. Vétiver haïtien, pamplemousse pétillant et poivre de Sichuan composent un accord minéral et boisé d\'une pureté absolue. Pour ceux qui cherchent l\'essentiel.',
+      "La terre et le ciel réunis. Vétiver haïtien, pamplemousse pétillant et poivre de Sichuan composent un accord minéral et boisé d'une pureté absolue. Pour ceux qui cherchent l'essentiel.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -183,7 +184,7 @@ export const UNISEX_PRODUCTS: Product[] = [
     gender: 'unisexe',
     inspiredBy: 'Not A Perfume',
     description:
-      'Le minimalisme olfactif porté à son apogée. Un musc blanc d\'une pureté cristalline, rehaussé de notes boisées ambrées. Une seconde peau qui s\'adapte et évolue avec vous.',
+      "Le minimalisme olfactif porté à son apogée. Un musc blanc d'une pureté cristalline, rehaussé de notes boisées ambrées. Une seconde peau qui s'adapte et évolue avec vous.",
     price: 50,
     currency: 'DH',
     volume: '30ml',
@@ -203,3 +204,9 @@ export const UNISEX_PRODUCTS: Product[] = [
     isNew: true,
   },
 ];
+
+export const UNISEX_PRODUCTS: Product[] = RAW_UNISEX_PRODUCTS.map((product) => ({
+  ...product,
+  pyramid: PYRAMIDS[product.id],
+  mainNotes: FLAT_NOTES[product.id],
+}));

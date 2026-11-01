@@ -53,6 +53,10 @@ export const FRAGRANCE_NOTES: FragranceNote[] = [
   { id: 'oud',            name: 'Oud',             nameFr: 'Oud',               family: 'woody',    description: 'Rich, dark, and animalic wood',  icon: '🪵' },
   { id: 'patchouli',      name: 'Patchouli',       nameFr: 'Patchouli',         family: 'woody',    description: 'Dark, earthy, slightly sweet',   icon: '🍂' },
   { id: 'guaiac',         name: 'Guaiac Wood',     nameFr: 'Bois de Gaïac',     family: 'woody',    description: 'Smoky, resinous wood',           icon: '🪵' },
+  { id: 'guaiac-wood',    name: 'Guaiac Wood',     nameFr: 'Bois de Gaïac',     family: 'woody',    description: 'Smoky, resinous wood',           icon: '🪵' },
+  { id: 'cedarwood',      name: 'Cedarwood',       nameFr: 'Cèdre',             family: 'woody',    description: 'Dry, pencil-shaving warmth',    icon: '🌲' },
+  { id: 'wood',           name: 'Woody Notes',     nameFr: 'Notes Boisées',     family: 'woody',    description: 'Warm, dry wood accords',        icon: '🪵' },
+  { id: 'iso-e-super',    name: 'Iso E Super',     nameFr: 'Iso E Super',       family: 'woody',    description: 'Velvety cedar-amber skin scent', icon: '🪵' },
   { id: 'birch',          name: 'Birch',           nameFr: 'Bouleau',           family: 'woody',    description: 'Smoky leather-like wood',         icon: '🌳' },
 
   // ── ORIENTAL ──────────────────────────────────────────────────
@@ -60,24 +64,33 @@ export const FRAGRANCE_NOTES: FragranceNote[] = [
   { id: 'incense',        name: 'Incense',         nameFr: 'Encens',            family: 'oriental', description: 'Sacred, smoky, mystical',         icon: '🕯️' },
   { id: 'myrrh',          name: 'Myrrh',           nameFr: 'Myrrhe',            family: 'oriental', description: 'Balsamic, warm, slightly bitter', icon: '🫧' },
   { id: 'benzoin',        name: 'Benzoin',         nameFr: 'Benjoin',           family: 'oriental', description: 'Sweet balsamic vanilla',          icon: '🍯' },
+  { id: 'tobacco',        name: 'Tobacco',         nameFr: 'Tabac',             family: 'oriental', description: 'Warm, sweet, smoky leaves',      icon: '🍂' },
+  { id: 'labdanum',       name: 'Labdanum',        nameFr: 'Labdanum',          family: 'oriental', description: 'Deep, resinous, warm ambery note', icon: '✨' },
+  { id: 'ambroxan',       name: 'Ambroxan',        nameFr: 'Ambroxan',          family: 'oriental', description: 'Sensual, velvety ambery warmth',  icon: '✨' },
 
   // ── FLORAL ────────────────────────────────────────────────────
   { id: 'rose',           name: 'Rose',            nameFr: 'Rose',              family: 'floral',   description: 'Classic, romantic, velvety',      icon: '🌹' },
   { id: 'jasmine',        name: 'Jasmine',         nameFr: 'Jasmin',            family: 'floral',   description: 'Rich, intoxicating white floral', icon: '🌸' },
   { id: 'tuberose',       name: 'Tuberose',        nameFr: 'Tubéreuse',         family: 'floral',   description: 'Creamy, heady, narcotic',         icon: '🌺' },
   { id: 'iris',           name: 'Iris',            nameFr: 'Iris',              family: 'floral',   description: 'Powdery, elegant, refined',       icon: '💜' },
+  { id: 'violet',         name: 'Violet',          nameFr: 'Violette',          family: 'floral',   description: 'Delicate, powdery floral',        icon: '💜' },
   { id: 'lavender',       name: 'Lavender',        nameFr: 'Lavande',           family: 'floral',   description: 'Herbal, clean, aromatic',         icon: '💐' },
   { id: 'orange-blossom', name: 'Orange Blossom',  nameFr: 'Fleur d\'Oranger',  family: 'floral',   description: 'Fresh, creamy, honeyed floral',   icon: '🌼' },
+  { id: 'neroli',         name: 'Neroli',          nameFr: 'Néroli',            family: 'floral',   description: 'Radiant, fresh bitter-orange blossoms', icon: '🌼' },
   { id: 'ylang-ylang',    name: 'Ylang-Ylang',     nameFr: 'Ylang-Ylang',       family: 'floral',   description: 'Exotic, sweet, tropical floral',  icon: '🌺' },
   { id: 'peony',          name: 'Peony',           nameFr: 'Pivoine',           family: 'floral',   description: 'Soft, fresh, light floral',       icon: '🌸' },
+  { id: 'geranium',       name: 'Geranium',        nameFr: 'Géranium',          family: 'floral',   description: 'Aromatic, green rosy floral',     icon: '🌸' },
 
   // ── FRESH ─────────────────────────────────────────────────────
   { id: 'mint',           name: 'Mint',            nameFr: 'Menthe',            family: 'fresh',    description: 'Cool, invigorating, clean',       icon: '🍃' },
   { id: 'eucalyptus',     name: 'Eucalyptus',      nameFr: 'Eucalyptus',        family: 'fresh',    description: 'Camphoraceous, clean, sharp',     icon: '🌿' },
+  { id: 'flint',          name: 'Flint',           nameFr: 'Silex',             family: 'fresh',    description: 'Mineral, flinty, earthy stone',   icon: '🪨' },
+  { id: 'aldehydes',      name: 'Aldehydes',       nameFr: 'Aldéhydes',         family: 'fresh',    description: 'Sparkling, airy, crystalline',    icon: '✨' },
 
   // ── CITRUS ────────────────────────────────────────────────────
   { id: 'bergamot',       name: 'Bergamot',        nameFr: 'Bergamote',         family: 'citrus',   description: 'Bright, bitter-sweet citrus',     icon: '🍊' },
   { id: 'lemon',          name: 'Lemon',           nameFr: 'Citron',            family: 'citrus',   description: 'Sharp, zesty, sparkling',         icon: '🍋' },
+  { id: 'citron',         name: 'Citron',          nameFr: 'Cédrat',            family: 'citrus',   description: 'Dry, elegant, sun-drenched citrus', icon: '🍋' },
   { id: 'grapefruit',     name: 'Grapefruit',      nameFr: 'Pamplemousse',      family: 'citrus',   description: 'Tart, juicy, energizing',         icon: '🍊' },
   { id: 'mandarin',       name: 'Mandarin',        nameFr: 'Mandarine',         family: 'citrus',   description: 'Sweet, juicy, tangy',             icon: '🍊' },
   { id: 'blood-orange',   name: 'Blood Orange',    nameFr: 'Orange Sanguine',   family: 'citrus',   description: 'Rich, slightly bitter citrus',    icon: '🍊' },
@@ -86,16 +99,19 @@ export const FRAGRANCE_NOTES: FragranceNote[] = [
   { id: 'cinnamon',       name: 'Cinnamon',        nameFr: 'Cannelle',          family: 'spicy',    description: 'Warm, sweet, fiery spice',        icon: '🫚' },
   { id: 'cardamom',       name: 'Cardamom',        nameFr: 'Cardamome',         family: 'spicy',    description: 'Aromatic, warm, slightly sweet',  icon: '🌿' },
   { id: 'pepper',         name: 'Black Pepper',    nameFr: 'Poivre Noir',       family: 'spicy',    description: 'Sharp, warm, pungent',            icon: '🌶️' },
+  { id: 'pink-pepper',    name: 'Pink Pepper',     nameFr: 'Poivre Rose',       family: 'spicy',    description: 'Spicy, sparkling, berry-like',    icon: '🌸' },
   { id: 'saffron',        name: 'Saffron',         nameFr: 'Safran',            family: 'spicy',    description: 'Metallic, leathery, exotic',      icon: '🧡' },
   { id: 'ginger',         name: 'Ginger',          nameFr: 'Gingembre',         family: 'spicy',    description: 'Fresh, spicy, slightly sweet',    icon: '🫚' },
   { id: 'nutmeg',         name: 'Nutmeg',          nameFr: 'Muscade',           family: 'spicy',    description: 'Warm, sweet, aromatic',            icon: '🥜' },
   { id: 'clove',          name: 'Clove',           nameFr: 'Girofle',           family: 'spicy',    description: 'Warm, sweet, numbing spice',      icon: '🌿' },
+  { id: 'spices',         name: 'Spices',          nameFr: 'Épices',            family: 'spicy',    description: 'Rich, warm, aromatic spice blend', icon: '🌶️' },
 
   // ── GOURMAND ──────────────────────────────────────────────────
   { id: 'vanilla',        name: 'Vanilla',         nameFr: 'Vanille',           family: 'gourmand', description: 'Sweet, creamy, comforting',       icon: '🍦' },
   { id: 'tonka',          name: 'Tonka Bean',      nameFr: 'Fève Tonka',        family: 'gourmand', description: 'Almond-like, warm, sweet',        icon: '🫘' },
   { id: 'caramel',        name: 'Caramel',         nameFr: 'Caramel',           family: 'gourmand', description: 'Buttery, sweet, indulgent',       icon: '🍬' },
   { id: 'chocolate',      name: 'Chocolate',       nameFr: 'Chocolat',          family: 'gourmand', description: 'Rich, bitter-sweet, luxurious',   icon: '🍫' },
+  { id: 'cacao',          name: 'Cacao',           nameFr: 'Cacao',             family: 'gourmand', description: 'Raw, bitter, aromatic cocoa',     icon: '🍫' },
   { id: 'coffee',         name: 'Coffee',          nameFr: 'Café',              family: 'gourmand', description: 'Dark, roasted, energizing',       icon: '☕' },
   { id: 'honey',          name: 'Honey',           nameFr: 'Miel',              family: 'gourmand', description: 'Sweet, warm, golden',             icon: '🍯' },
   { id: 'praline',        name: 'Praline',         nameFr: 'Praliné',           family: 'gourmand', description: 'Nutty, caramelized, sweet',       icon: '🥜' },
@@ -125,6 +141,10 @@ export const FRAGRANCE_NOTES: FragranceNote[] = [
   { id: 'plum',           name: 'Plum',            nameFr: 'Prune',             family: 'fruity',   description: 'Rich, sweet, slightly tart',      icon: '🍇' },
   { id: 'apple',          name: 'Apple',           nameFr: 'Pomme',             family: 'fruity',   description: 'Crisp, fresh, fruity',            icon: '🍎' },
   { id: 'lychee',         name: 'Lychee',          nameFr: 'Litchi',            family: 'fruity',   description: 'Sweet, exotic, floral-fruity',    icon: '🍒' },
+  { id: 'dried-fruits',   name: 'Dried Fruits',    nameFr: 'Fruits Secs',       family: 'fruity',   description: 'Sweet, rich concentrated fruits', icon: '🍇' },
+
+  // ── AROMATIC ──────────────────────────────────────────────────
+  { id: 'rosemary',       name: 'Rosemary',        nameFr: 'Romarin',           family: 'aromatic', description: 'Fresh, herbaceous, pine-like',   icon: '🌿' },
 ];
 
 // Helper function to get notes by IDs

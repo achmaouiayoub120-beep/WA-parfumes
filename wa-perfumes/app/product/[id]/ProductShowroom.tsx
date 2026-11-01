@@ -137,12 +137,12 @@ export default function ProductShowroom({ product }: { product: Product }) {
 
               {/* ── Inspiration ── */}
               <p className="reveal-item text-sm text-[var(--color-text-subtle)] italic">
-                Profil olfactif inspiré par {product.inspiredBy}
+                Pyramide olfactive, inspirée de {product.inspiredBy}
               </p>
               
               {/* ── Description ── */}
               <p className="reveal-item text-[0.85rem] leading-relaxed text-[var(--color-text-muted)] max-w-lg mt-2">
-                {product.description}
+                {product.pyramid?.description || product.description}
               </p>
 
               {/* ── Price & Volume Selector ── */}
@@ -202,6 +202,8 @@ export default function ProductShowroom({ product }: { product: Product }) {
                 Architecture du Parfum
               </h3>
               <EditorialOlfactory
+                pyramid={product.pyramid}
+                mainNotes={product.mainNotes}
                 topNotes={product.topNotes || []}
                 heartNotes={product.heartNotes || []}
                 baseNotes={product.baseNotes || []}
@@ -225,11 +227,11 @@ export default function ProductShowroom({ product }: { product: Product }) {
             <div className="reveal-item grid grid-cols-2 gap-x-8 gap-y-5 max-w-sm">
               <div>
                 <span className="text-[0.5rem] text-[var(--color-text-subtle)] uppercase tracking-[0.3em] block mb-1">Famille</span>
-                <span className="text-sm text-[var(--color-text)] capitalize">{product.fragranceFamily}</span>
+                <span className="text-sm text-[var(--color-text)] capitalize">{product.pyramid?.family || product.fragranceFamily}</span>
               </div>
               <div>
-                <span className="text-[0.5rem] text-[var(--color-text-subtle)] uppercase tracking-[0.3em] block mb-1">Mood</span>
-                <span className="text-sm text-[var(--color-text)] capitalize">{product.mood}</span>
+                <span className="text-[0.5rem] text-[var(--color-text-subtle)] uppercase tracking-[0.3em] block mb-1">{product.pyramid?.style ? 'Ambiance' : 'Mood'}</span>
+                <span className="text-sm text-[var(--color-text)] capitalize">{product.pyramid?.style || product.mood}</span>
               </div>
               <div>
                 <span className="text-[0.5rem] text-[var(--color-text-subtle)] uppercase tracking-[0.3em] block mb-1">Saisons</span>

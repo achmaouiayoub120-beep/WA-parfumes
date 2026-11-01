@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCartStore } from '@/store/useCartStore';
 import { useUIStore } from '@/store/useUIStore';
+import type { Pyramid } from '@/data/products/pyramids';
+import { getCardNotes } from '@/lib/olfactory';
 
 export interface Product {
   id: string;
@@ -17,6 +19,8 @@ export interface Product {
   heartNotes?: string[];
   baseNotes?: string[];
   volume?: string;
+  pyramid?: Pyramid;
+  mainNotes?: string[];
   [key: string]: unknown;
 }
 
@@ -38,6 +42,8 @@ export default function ProductCard({ product }: { product: Product }) {
       : product.collection === 'unisexe'
       ? 'Unisexe'
       : 'Femme';
+
+  const cardNotes = getCardNotes(product, 3);
 
   const badgeColor =
     product.collection === 'homme'
@@ -119,13 +125,13 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="hidden md:block absolute inset-0 shadow-[inset_0_0_0_1px_rgba(201,203,211,0)] group-hover:shadow-[inset_0_0_20px_rgba(201,203,211,0.15)] transition-shadow duration-700 pointer-events-none" />
 
           {/* Desktop-only: Notes on hover */}
-          {product.topNotes && product.topNotes.length > 0 && (
+          {cardNotes.length > 0 && (
             <div
               className={`hidden md:flex absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-20 gap-1.5 flex-wrap transition-all duration-500 ${
                 isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              {product.topNotes.slice(0, 3).map((note, idx) => (
+              {cardNotes.slice(0, 3).map((note, idx) => (
                 <span
                   key={note}
                   className="text-[0.45rem] sm:text-[0.55rem] uppercase tracking-[0.2em] px-1.5 py-0.5 sm:px-2 sm:py-1 bg-[var(--color-bg-overlay-medium)] backdrop-blur-sm text-[var(--color-accent)] border border-[var(--color-accent-border)] rounded-sm transition-all duration-500"
@@ -156,9 +162,9 @@ export default function ProductCard({ product }: { product: Product }) {
             )}
 
             {/* Mobile-only visible notes */}
-            {product.topNotes && product.topNotes.length > 0 && (
+            {cardNotes.length > 0 && (
               <p className="md:hidden text-[0.68rem] text-[var(--color-text-muted)] line-clamp-1 mb-2 font-normal">
-                {product.topNotes.slice(0, 2).join(', ')}
+                {cardNotes.slice(0, 2).join(', ')}
               </p>
             )}
           </div>

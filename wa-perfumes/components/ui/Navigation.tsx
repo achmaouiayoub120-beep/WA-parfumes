@@ -15,6 +15,7 @@ import { WOMEN_PRODUCTS } from '@/data/products/women';
 import { UNISEX_PRODUCTS } from '@/data/products/unisex';
 import { FRAGRANCE_FAMILIES } from '@/data/products/categories';
 import { useIsMounted } from '@/hooks/useIsMounted';
+import { getCardNotes } from '@/lib/olfactory';
 
 const NAV_LINKS = [
   { label: 'Collections', href: '/#collections' },
@@ -456,7 +457,10 @@ export default function Navigation() {
                         <p className="text-[0.55rem] text-[var(--color-text-subtle)] italic mt-0.5">
                           Inspiré par {product.inspiredBy}
                         </p>
-                        <p className="text-[0.6rem] mt-1.5 tracking-wider" style={{ color: megaData.accent }}>
+                        <p className="text-[0.55rem] text-[var(--color-text-muted)] mt-0.5 line-clamp-1">
+                          {getCardNotes(product, 2).join(' • ')}
+                        </p>
+                        <p className="text-[0.6rem] mt-1 tracking-wider" style={{ color: megaData.accent }}>
                           {product.price} DH
                         </p>
                       </Link>

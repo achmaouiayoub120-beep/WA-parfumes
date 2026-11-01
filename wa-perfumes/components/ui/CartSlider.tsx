@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useUIStore } from '@/store/useUIStore';
 import { useCartStore } from '@/store/useCartStore';
 import { useIsMounted } from '@/hooks/useIsMounted';
+import { getCardNotes } from '@/lib/olfactory';
 
 export default function CartSlider() {
   const isOpen = useUIStore((s) => s.isCartOpen);
@@ -136,6 +137,11 @@ export default function CartSlider() {
                           <p className="text-[11px] text-[var(--color-text-subtle)] uppercase tracking-wider mt-0.5">
                             {item.selectedVolume}
                           </p>
+                          {getCardNotes(item, 2).length > 0 && (
+                            <p className="text-[10px] text-[var(--color-text-muted)] line-clamp-1 mt-0.5 italic">
+                              {getCardNotes(item, 2).join(', ')}
+                            </p>
+                          )}
                           <p className="text-sm font-semibold text-[var(--color-text)] mt-1">
                             {item.selectedPrice} DH
                           </p>
